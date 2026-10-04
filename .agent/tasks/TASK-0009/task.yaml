@@ -1,0 +1,200 @@
+protocol_version: 3
+
+task_id: TASK-0009
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0009
+  gap_id: PTE-PRACTICE-WRITE-FROM-DICTATION-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Listening/Writing slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest feature-specific Supabase/browser-native implementation"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; schema -> content -> browser playback -> interaction -> proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0008/review.yaml in the exact handoff snapshot"
+    role: "accepted Study/Practice/Supabase baseline after three implemented Practice task types"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "PTE-owned Study/Practice, browser-native capability, Supabase and engineering truth"
+    precedence: 2
+  - source: "Pearson current Listening format: https://www.pearsonpte.com/pte-academic/test-format/listening/"
+    role: "current Write from Dictation mechanics: short spoken sentence, one-listen test behavior, Listening+Writing, partial credit by correct words"
+    precedence: 3
+  - source: "Pearson July-2025 task-feature research for Write from Dictation"
+    role: "current supporting task-shape evidence: approximately 8-11 words"
+    precedence: 4
+  - source: "Supabase explicit Data API grant guidance already bound by prior tasks"
+    role: "public table exposure remains explicit GRANT + RLS"
+    precedence: 5
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "existing feature-specific Practice table/route precedent plus existing write-from-dictation-strategy Study item"
+  rationale: "Authorize one feature-specific WFD content table and one /practice route subtree. Reuse the existing Study strategy instead of adding another content owner. Do not generalize four Practice slices into shared question/scoring infrastructure."
+
+objective: "Ship a useful PTE Academic Write from Dictation practice slice using original short sentences, browser-native SpeechSynthesis playback, ephemeral typed response state and deterministic word-sequence practice accuracy, with a direct Study bridge and no external audio provider, microphone, STT, runtime AI or official-score claim."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0009 revision 1, bound TASK-0008 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer before mutation. A clean correctly bound local main may be ordinary FF-only synchronized to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly the accepted five migrations through 20261004224452_create_write_essay_items; public schema is exactly the accepted eight application tables; Study remains exactly 11 active / 0 mappings; Reading FIB=8, SWT=6, Write Essay=6; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.write_from_dictation_items. Do not create generic listening_items/practice_items/questions/attempts/results/scoring tables."
+    - "write_from_dictation_items owns: id bigint generated always as identity primary key; slug text unique not null; sentence text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple DB checks only: slug lowercase kebab-case; sentence/difficulty/source_type/created_by/updated_by non-empty after trim; difficulty/source_type lowercase snake_case. Do not add enums, functions, triggers, generic metadata, audio URLs, media tables or scoring infrastructure."
+    - "Enable RLS on write_from_dictation_items. Revoke all anon/authenticated privileges, then explicitly GRANT SELECT only and create one active=true SELECT policy. No browser write grant or policy is authorized."
+    - "Persist exactly twelve active original starter sentences through privileged connected Supabase authoring after migration, not through the migration. Use created_by=updated_by=chatgpt_task_0009, source_type=project_authored and source_ref=https://www.pearsonpte.com/pte-academic/test-format/listening/ for all twelve."
+    - "Every sentence must be original project-authored academic/general-English prose of 8..11 whitespace-delimited words, syntactically natural, with no copied Pearson sample sentence. Use a balanced mix of starter/developing difficulty and avoid proper nouns that browser TTS may pronounce unpredictably."
+    - "Persist these exact slugs:
+        1) library-closes-earlier-friday
+        2) students-submit-assignments-online
+        3) research-team-reviewed-results
+        4) lecture-begins-after-short-break
+        5) weather-changes-affect-crop-growth
+        6) committee-published-final-report
+        7) regular-practice-improves-listening-memory
+        8) scientists-compare-evidence-before-conclusions
+        9) university-offers-free-language-workshops
+       10) public-transport-reduces-city-congestion
+       11) careful-notes-help-recall-details
+       12) new-policy-takes-effect-next-month."
+    - "Do not add a new Study row. Reuse existing Study slug write-from-dictation-strategy and preserve its body/metadata/hash."
+    - "Implement /practice/write-from-dictation as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first valid active item or a clear empty state."
+    - "Update /practice to visibly expose all four implemented Practice task types: Reading FIB, Summarize Written Text, Write Essay and Write from Dictation."
+    - "Implement one feature-local client component owning only playback-used state, typed response, checked result and reveal state. No global state, localStorage, cookies, auth or database persistence."
+    - "Playback must use browser-native window.speechSynthesis and SpeechSynthesisUtterance only. No external TTS service, audio asset, Cloudinary, YouTube or API key. Prefer an available English voice in this order: en-AU, then en-GB, then en-US, then any en-* voice, otherwise browser default. Use a bounded, intelligible rate between 0.85 and 1.0."
+    - "Official Pearson behavior plays the sentence once. For this self-practice slice, the UI must begin with a Play sentence button that can be used exactly once for the current item before Check/Reset. After the first invocation it is disabled and labelled Played once. Reset re-enables one practice playback. Changing item resets playback-used state. Do not claim this browser TTS reproduces Pearson voice/accent/acoustic conditions."
+    - "If SpeechSynthesis is unavailable in the learner browser, show a clear unsupported-browser message and keep the typed practice interaction disabled/fail-safe rather than silently exposing the sentence before checking."
+    - "The sentence text must not be visually exposed before Check. It may exist in the public client payload because this is self-practice content, but UI/source must not intentionally render it before evaluation."
+    - "Learner response is a single text input/textarea. Check is allowed after playback; an empty response receives 0 matched words."
+    - "Implement one small feature-local deterministic word-sequence matcher. Normalize both expected and response by Unicode lowercase, trim whitespace, split on whitespace, and strip surrounding ASCII punctuation from each token while preserving internal apostrophes. Compute matched words using Longest Common Subsequence so only correctly spelled words in relative order receive credit. Do not add a scoring dependency."
+    - "After Check, display 'Practice word accuracy: M / N' where N is expected normalized word count and M is the LCS matched count. Label it explicitly as local practice accuracy, not Pearson score/points. Reveal the exact expected sentence only after Check and provide a per-token or clearly understandable comparison of learner vs expected text."
+    - "Provide Reset clearing response/result/reveal state and re-enabling exactly one practice playback. Changing item resets all local state. No hidden attempt persistence."
+    - "Add a direct bidirectional Study bridge: existing /study/write-from-dictation-strategy links visibly to /practice/write-from-dictation and Practice links back. Do not create generalized recommendation infrastructure."
+    - "Do not modify existing Study content bodies/metadata, Reading FIB, SWT or Write Essay content. Preserve all accepted hashes/counts."
+    - "Do not install/update/remove npm dependencies. Browser SpeechSynthesis is a native NO_KEY capability and package.json/pnpm-lock.yaml must remain byte-identical to base."
+    - "After authoring, prove exactly twelve active WFD rows with exact slugs/provenance; every sentence is 8..11 words and non-duplicated; prior Study/FIB/SWT/Essay counts and hashes remain unchanged."
+    - "Prove public Data API with the existing publishable key reads exactly twelve active WFD rows; browser write authority remains absent by grants/policies. Never print/persist the key."
+    - "Regenerate src/types/database.ts from exact project ayqcpsdebldtzohwdmer and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0009-attributable Security finding is required. Report performance INFO truthfully; no speculative indexes."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on exact candidate."
+    - "Run bounded production HTTP proof: /practice shows all four task types; /practice/write-from-dictation returns 200 with the route/task title but does not expose the expected sentence in visible pre-check markup; selected and invalid item behaviors work; /study/write-from-dictation-strategy contains Practice Write from Dictation link. Stop server and prove port release."
+    - "Run real browser/DevTools interaction proof without adding test dependencies. In a real Chrome page, instrument only the page-local speechSynthesis.speak boundary before user interaction so the test can observe the utterance text/voice/rate without requiring audible host output; do not change application source. Prove: SpeechSynthesis capability is detected; initial sentence is not visibly rendered; Play invokes speak exactly once with the exact DB sentence and a rate within 0.85..1.0; second Play is disabled; submit an intentionally imperfect response that should LCS-match a known subset and prove displayed Practice word accuracy exactly matches independent expected M/N; expected sentence becomes visible only after Check; Reset clears response/result and permits one new playback; changing item resets playback/result state. Also prove there is no official Pearson score claim or persistent browser storage."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0009/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0010."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/practice/page.tsx"
+    - "src/app/practice/write-from-dictation and feature-local source files"
+    - "src/app/study/[slug]/page.tsx solely for WFD Practice link"
+    - "src/app/globals.css for smallest responsive styling additions"
+    - "existing Supabase clients for use only"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0009/report.yaml"
+    - "Supabase public.write_from_dictation_items exact twelve authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "All WFD sentences are original project-authored prose."
+  - "Speech playback uses native browser SpeechSynthesis only; no external TTS/media provider."
+  - "Expected sentence is not visibly revealed before Check."
+  - "Displayed M/N is local practice word accuracy using the explicitly authorized LCS matcher, never official Pearson scoring."
+  - "No learner attempt/progress/auth persistence."
+  - "No microphone, learner audio retention, STT, runtime AI, media storage or deployment consequence."
+  - "No npm dependency drift or generic Practice abstraction."
+  - "Existing Study/FIB/SWT/Essay truth remains unchanged."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite canonical history."
+  - "Create generic Practice/Listening/question/attempt/result/scoring owners."
+  - "Create auth/profile/progress, Study mappings/subskills, media/storage, audio URL, functions, views, SECURITY DEFINER, Realtime, Edge Functions, cron, queues or workers."
+  - "Install/update/remove npm dependencies."
+  - "Use external TTS, Cloudinary, YouTube, browser SpeechRecognition, remote STT, OpenAI/LLM or speech-scoring service."
+  - "Call local M/N an official PTE score/points or claim to reproduce Pearson audio conditions."
+  - "Copy Pearson sample sentences or arbitrary web prose."
+  - "Modify existing Study bodies/metadata or prior Practice data."
+  - "Use localStorage/cookies for hidden attempt persistence."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new feature-specific WFD table with exactly twelve valid original active 8..11-word sentences, while all previously accepted content remains unchanged."
+    evidence_required: "Migration/schema identity; exact twelve-row slug/provenance/word-count/uniqueness proof; prior Study/FIB/SWT/Essay counts and hashes unchanged."
+  - id: AC-2
+    requirement: "Learners can load WFD practice through public active-only RLS-backed Supabase data and invoke one browser-native practice playback per reset/item."
+    evidence_required: "RLS/grant/Data API proof, production HTTP route proof, and browser observation of exact SpeechSynthesisUtterance payload/rate plus one-play gating."
+  - id: AC-3
+    requirement: "The client computes deterministic local practice word accuracy using the authorized LCS word-sequence matcher and reveals the sentence only after Check."
+    evidence_required: "Real browser proof with an independently chosen imperfect response and independently computed expected M/N, pre-check sentence-hidden proof, post-check expected-sentence reveal, Reset and item-change reset."
+  - id: AC-4
+    requirement: "Existing WFD Study strategy and WFD Practice are directly linked without generalized recommendation infrastructure."
+    evidence_required: "Study detail links visibly to Practice and Practice links back; Study hash unchanged."
+  - id: AC-5
+    requirement: "Application/database remain secure and mechanically healthy with zero dependency drift."
+    evidence_required: "Public SELECT-only/no-write proof, fresh generated-type byte-match, fresh advisors, package/lock base identity, frozen install/lint/typecheck/build/diff-check PASS, secret/env/storage hygiene and clean server/browser teardown."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
