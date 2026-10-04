@@ -1,0 +1,168 @@
+protocol_version: 3
+
+task_id: TASK-0003
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: user_request
+  task_id: TASK-0003
+  gap_id: PTE-SUPABASE-TAXONOMY-FOUNDATION
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; scoped outcome and acceptance normalization only"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest conforming data foundation only"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; migration/proof ordering only"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0002/review.yaml in the exact handoff snapshot"
+    role: "accepted scaffold/stack/credential baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md, docs/ENGINEERING_RULES.md and AGENTS.md in the exact handoff snapshot"
+    role: "PTE-owned product, shared-taxonomy, Supabase, security, stack and execution truth"
+    precedence: 2
+  - source: "Current operator objective: proceed toward the smallest usable V1 after stack/credential closure."
+    role: "program progression intent"
+    precedence: 3
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance and verification semantics"
+    precedence: 4
+  - source: "Supabase current official documentation: https://supabase.com/docs/guides/database/postgres/row-level-security ; https://supabase.com/docs/guides/deployment/database-migrations ; https://supabase.com/docs/guides/api/securing-your-api ; https://supabase.com/docs/guides/database/database-advisors ; https://supabase.com/docs/reference/javascript/typescript-support"
+    role: "current implementation/security HOW and evidence semantics; target authority still governs product behavior"
+    precedence: 5
+
+structure_authority:
+  status: RESOLVED
+  source: "docs/ARCHITECTURE.md and docs/STUDY.md"
+  rationale: "Study and Practice both require stable neutral skill/subskill identifiers. Authorize one minimal shared database taxonomy foundation plus generated database typing; do not create Study, Practice or auth feature ownership."
+
+objective: "Establish the first migration-backed Supabase data foundation for PTE by materializing a minimal neutral skill/subskill taxonomy with public read-only RLS, exact live-project alignment, and generated TypeScript database types, without implementing Study content, Practice behavior, learner auth/profile state, or any other product schema."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0003 revision 1, the bound TASK-0002 ACCEPTED review, canonical GitHub main, the designated local checkout /Users/tienphat/Developer/pte, and the exact Supabase target before mutation. A clean correctly bound local main may be ordinary FF-only synchronized to the TASK-0003 handoff base; preserve ignored .DS_Store and ignored real env files."
+    - "Bind live database mutation only to Supabase project ref ayqcpsdebldtzohwdmer. Re-prove immediately before the first remote mutation that local NEXT_PUBLIC_SUPABASE_URL resolves to that exact ref, the connected project is ACTIVE_HEALTHY, public has zero application tables, migration history is empty, and security/performance advisors have no existing findings. Any project/ref mismatch or unexpected schema/migration drift is BLOCKED."
+    - "Create one repository migration under supabase/migrations representing the exact live migration applied to ayqcpsdebldtzohwdmer. Use a current supported Supabase migration workflow or connected Supabase migration capability; do not invent a migration-history identity that does not correspond to the applied canonical migration. Do not add Supabase CLI or another package to package.json solely for migration ceremony."
+    - "The migration must create exactly three shared public taxonomy tables: skills, subskills, and skill_subskills. Use stable lowercase snake_case text codes as semantic identifiers rather than UUIDs or database enums."
+    - "skills owns code text primary key, label text not null, and sort_order smallint not null with a non-negative check. Seed exactly the four already-authorized communicative skills in deterministic order: listening, speaking, reading, writing. Labels are Listening, Speaking, Reading, Writing. Do not seed task types or speculative taxonomies."
+    - "subskills owns code text primary key, label text not null, and nullable description text. Do not seed subskills in this task; future Study/Practice tasks own concrete subskill vocabulary."
+    - "skill_subskills owns skill_code and subskill_code foreign keys to the two taxonomy owners and a composite primary key. Use restrictive deletion semantics so referenced taxonomy cannot disappear implicitly. Do not encode many-to-many relationships in arrays or comma-separated fields."
+    - "Apply a simple lowercase snake_case code-format check to skills.code and subskills.code so shared identifiers remain stable/reconstructible. Do not add generic taxonomy registries, JSON metadata bags, versioning tables, triggers, audit tables, soft-delete machinery or speculative hierarchy."
+    - "Enable RLS on all three public tables. Explicitly remove write privileges from anon and authenticated. Grant SELECT only to anon and authenticated and create SELECT policies for those roles. No browser-facing INSERT/UPDATE/DELETE policy is authorized. Privileged operational/database-owner tooling may mutate taxonomy outside learner browser credentials."
+    - "Do not create profiles, learner tables, auth triggers, user-owned state, Study content tables, study_content_subskills, attempts/results, media/provenance tables, storage buckets, functions, views, realtime publications, Edge Functions, cron, queues or any other schema."
+    - "After the live migration succeeds, generate TypeScript database types from the exact bound project and persist the generated database contract under src/types/database.ts or the smallest equivalent neutral shared type owner consistent with current source structure. Wire the existing Supabase browser/server client factories to the generated Database generic without changing authentication/session behavior."
+    - "Do not add, remove or update npm dependencies. Preserve package.json, pnpm-lock.yaml, pnpm-workspace.yaml and the existing locked package versions exactly."
+    - "Prove live schema shape after migration: exactly the three authorized public application tables, expected columns/primary keys/foreign keys/check constraints, RLS enabled on all three, exact four skills rows and zero subskills/skill_subskills rows."
+    - "Prove privilege/RLS behavior through both catalog inspection and the real Data API using the existing local publishable key: anonymous/public GET of skills succeeds and returns exactly the four ordered seeded rows; GET of empty subskills succeeds; an anonymous/public write attempt is rejected and leaves data unchanged. Never print or persist the key."
+    - "Run fresh Supabase security and performance advisors after the migration. No new security finding attributable to TASK-0003 is acceptable. Any performance finding attributable to the three-table foundation must be resolved only if it is local, necessary and inside this exact schema boundary; otherwise stop/report truthfully."
+    - "Verify generated database types correspond to the live schema and the existing Supabase client files use Database typing without introducing privileged credentials, auth product behavior or another data-access abstraction."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck and pnpm build on the exact candidate. Also run git diff --check and prove no real env/operator credential file is tracked."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0003/report.yaml as its sole report-only child, publish by ordinary non-force fast-forward to canonical main, fresh-resolve GitHub closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel, or create TASK-0004."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts or one smallest equivalent neutral generated database-type owner"
+    - "src/lib/supabase/client.ts"
+    - "src/lib/supabase/server.ts"
+    - "package.json and lock/toolchain files only for byte-identity verification; dependency mutation is forbidden"
+    - ".agent/tasks/TASK-0003/report.yaml"
+
+invariants:
+  - "MAIN_ONLY remains exact: no branch/worktree branch/tag/release creation."
+  - "The only authorized live external mutation target is Supabase project ayqcpsdebldtzohwdmer."
+  - "Supabase remains canonical structured-data authority and schema evolution is migration-backed."
+  - "skills/subskills are neutral shared identifiers for later Study and Practice; TASK-0003 does not create either feature's content or behavior."
+  - "Browser users have public read-only access to this reference taxonomy and no write authority."
+  - "No service-role/secret credential enters browser code, NEXT_PUBLIC_* or committed files."
+  - "No learner identity/profile/auth UX or user-owned schema is introduced."
+  - "The four top-level skills are existing target truth, not newly inferred product taxonomy. Concrete subskill vocabulary remains deliberately unseeded."
+  - "No runtime paid API or new third-party provider is introduced."
+  - "No dependency version changes are authorized."
+
+forbidden_changes:
+  - "Create any Git branch/worktree branch/tag/release or force/rewrite canonical history."
+  - "Mutate any Supabase project other than ayqcpsdebldtzohwdmer."
+  - "Proceed if the bound project's pre-mutation public-table or migration baseline has drifted from the Architect-observed empty baseline."
+  - "Add/update/remove package dependencies or install Supabase CLI into the repository manifest."
+  - "Create Study content/schema, Study-to-subskill mapping, Practice attempts/results/weakness tables, learner progress, profiles, auth triggers/UI, media/provenance schema, storage, Realtime, Edge Functions, cron, queues or crawler infrastructure."
+  - "Grant anon/authenticated INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES or TRIGGER privileges on the taxonomy tables."
+  - "Add permissive browser write policies, SECURITY DEFINER helpers, views, custom Postgres roles, database enums, generic repository/data-access abstractions or JSON metadata bags."
+  - "Seed any subskill/task-type/question-type rows."
+  - "Print, log, commit or otherwise expose publishable/secret/operator credential values beyond the bounded request mechanism needed for proof."
+  - "Modify product/Study semantics, stack/credential inventory, Vercel state or deployment configuration."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "PTE has one canonical migration-backed neutral taxonomy consisting only of skills, subskills and skill_subskills, with deterministic stable identifiers and exactly four seeded top-level communicative skills."
+    evidence_required: "Exact migration artifact/live migration identity; live table/column/constraint/FK/row inventory; zero unauthorized public application tables and zero seeded subskills/mappings."
+  - id: AC-2
+    requirement: "The taxonomy is safely browser-readable but not browser-writable."
+    evidence_required: "RLS-enabled proof for all three tables; grants/policy inventory; Data API GET proof with exact four skill rows plus empty subskills; rejected anonymous write proof followed by unchanged-row proof."
+  - id: AC-3
+    requirement: "Repository TypeScript has an exact generated Database contract for the live schema and the existing Supabase clients use it without changing auth/session semantics."
+    evidence_required: "Generated-type provenance from exact project; source inspection/typecheck; no privileged env references or new data-access layer."
+  - id: AC-4
+    requirement: "The live Supabase project remains clean from a security/performance perspective after the bounded migration."
+    evidence_required: "Fresh post-migration security/performance advisor output plus catalog proof; no unresolved TASK-0003-attributable security finding."
+  - id: AC-5
+    requirement: "The accepted application stack remains mechanically healthy with no dependency drift."
+    evidence_required: "package.json/pnpm-lock/pnpm-workspace exact base identity; pnpm install --frozen-lockfile, lint, typecheck, build and git diff --check all PASS; no tracked real env/operator credentials."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main for independent Architect review."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
