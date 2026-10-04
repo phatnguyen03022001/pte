@@ -439,6 +439,97 @@ a {
   color: #fff;
 }
 
+
+.swt-passage {
+  margin-bottom: 1.5rem;
+  border: 1px solid #d9d9d4;
+  border-radius: 1rem;
+  background: #fff;
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+
+.swt-passage h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.swt-passage p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.swt-timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #d9d9d4;
+  padding-bottom: 1rem;
+}
+
+.swt-timer > div:first-child {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.swt-timer__label,
+.swt-response > span {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.swt-timer strong {
+  font-size: 1.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.swt-timer__actions {
+  margin-top: 0;
+}
+
+.swt-response {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.swt-response textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #9c9c96;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  font: inherit;
+  line-height: 1.55;
+}
+
+.swt-response textarea:focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 2px;
+}
+
+.swt-word-count {
+  margin: 0.6rem 0 0;
+  font-weight: 800;
+}
+
+.swt-checks,
+.swt-key-ideas ol {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding-left: 1.4rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .swt-timer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 720px) {
   .study-filters,
   .study-grid {

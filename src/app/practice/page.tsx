@@ -10,8 +10,8 @@ export default function PracticePage() {
         <p className="study-eyebrow">Practice</p>
         <h1>Focused drills for current PTE task types.</h1>
         <p className="study-intro">
-          Start with Reading Fill in the Blanks (Dropdown), then use the linked Study
-          strategy to review how each choice works in context.
+          Practice focused PTE task types with original project-authored content and
+          task-specific self-review.
         </p>
       </div>
 
@@ -26,6 +26,18 @@ export default function PracticePage() {
             feedback.
           </p>
           <Link href="/practice/reading-fill-in-blanks">Open practice →</Link>
+        </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Writing</span>
+          </div>
+          <h2>Summarize Written Text</h2>
+          <p>
+            Write one sentence from an original passage, check local form rules, and
+            reveal key ideas for self-review.
+          </p>
+          <Link href="/practice/summarize-written-text">Open practice →</Link>
         </article>
       </section>
     </main>
