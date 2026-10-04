@@ -40,6 +40,8 @@ Unselected ECC siblings do not apply implicitly.
 - Handle errors explicitly; do not silently swallow failures.
 - Keep secrets out of source and browser bundles.
 - Naming should reveal intent without explanatory comments.
+- Preserve source/provenance when product content or media is externally derived.
+- Discovery/reference ingestion and materializing third-party bytes are separate consequences and require separate authority/rights checks.
 
 ### TypeScript
 
@@ -57,6 +59,8 @@ Unselected ECC siblings do not apply implicitly.
 - Browser-only microphone/STT logic must stay behind a client boundary.
 - UI tests should prove user-observable behavior rather than component internals.
 - Deep Next.js behavior must follow the current official Next.js documentation for the repository's locked version; ECC React material is not a substitute for framework-version truth.
+- Markdown or rich-text rendering must not create an XSS path. Prefer a renderer that escapes raw HTML by default; if raw HTML is ever allowed, sanitization and tests are required.
+- YouTube playback, when authorized, must use currently supported official embed/player mechanisms rather than copied audiovisual bytes.
 
 ### Supabase
 
@@ -67,7 +71,26 @@ Target-owned invariants already require:
 - no service-role/secret key in public clients;
 - RLS/security proof for exposed user-owned data;
 - authorization based on actual ownership/permission, not merely an authenticated role;
-- migration-backed schema evolution once schema work begins.
+- migration-backed schema evolution once schema work begins;
+- privileged ChatGPT authoring/administration remains outside the learner browser credential boundary.
+
+### Study / content ingestion
+
+Study content is target-owned product content. External-source handling follows `docs/STUDY.md`.
+
+For any ingestion task:
+
+1. identify the source and intended use;
+2. record provenance sufficient to reconstruct the source;
+3. distinguish a reference/metadata record from persisted third-party media bytes;
+4. verify reuse/storage rights before materializing media bytes;
+5. store only the minimum structured metadata needed;
+6. preserve nullable `asset_url` semantics — absence means reference-only, not ingestion failure;
+7. re-check mutable platform policies at implementation time when a provider such as YouTube is involved.
+
+YouTube is reference/embed-only by default. Do not download, import, cache, or store YouTube audiovisual copies without the required permission/rights. If using YouTube API Data, apply the then-current YouTube storage/refresh/display obligations rather than assuming indefinite cacheability.
+
+Do not build a crawler daemon, scheduled ingestion pipeline, or generalized scraping framework merely because ChatGPT/operator-driven bounded ingestion exists.
 
 ## Adapted or rejected upstream guidance
 
@@ -89,7 +112,8 @@ Examples:
 
 - auth/RLS/data mutation → Supabase security/database evidence;
 - browser microphone/STT → browser/runtime plus relevant React/client rules;
-- UI behavior → React/accessibility/testing;
+- Study Markdown UI → React/accessibility/security/testing plus Study content contract;
+- external media/content ingestion → provenance/rights/provider-policy evidence;
 - database migration → Supabase/Postgres/security;
 - ordinary small pure TypeScript change → only general/TypeScript rules needed.
 
