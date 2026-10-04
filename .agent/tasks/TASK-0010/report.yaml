@@ -1,0 +1,77 @@
+protocol_version: 3
+
+task_id: TASK-0010
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0010/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "64236b49f0a8ccb8c96ec4dbe21716443010b735"
+  final_execution_head: "21786be56ad52a5b50978b4a569882897a4d3047"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase schema, data, migration-authoring, advisor, Data API and type-generation capability
+    - bounded local repository mutation, verification and commit capability
+    - real Chrome DevTools browser interaction with microphone/local-model proof
+    - ordinary non-force canonical publication capability
+  available:
+    - Agent Runtime repository, filesystem and terminal capabilities
+    - connected Supabase read/query, advisor and project-observation capability
+    - local Node.js v26.5.0, pnpm v11.22.0 and Google Chrome 154.0.8037.93
+    - ordinary Git commit and publication capability
+  missing:
+    - connected Supabase DDL migration-authoring capability on this execution surface; two apply_migration dispatch attempts were blocked by the platform before provider execution
+  passed: false
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0010 does not designate a separate authoritative verifier; execution terminated before a qualified implementation candidate existed."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: NOT_PROVEN
+    evidence: "Pre-mutation gate passed exactly: project ayqcpsdebldtzohwdmer was ACTIVE_HEALTHY with the six accepted migrations through 20261004230739_create_write_from_dictation_items, exactly nine public application tables, Study=11 active / 0 mappings, FIB=8, SWT=6, Essay=6, WFD=12 and zero Security Advisor findings. The required repeat_sentence_items migration could not be dispatched because the connected Supabase apply_migration action was blocked by the platform before provider execution. Fresh post-attempt reads proved migration history remained at six entries and public schema remained at nine tables; no Repeat Sentence table or rows were created."
+
+  - criterion_id: AC-2
+    status: NOT_PROVEN
+    evidence: "Partial repository work pins @huggingface/transformers exactly 4.3.0, records onnx-community/whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58, and implements a dedicated browser Web Worker with WebGPU preference and WASM fallback. pnpm add resolved the authorized dependency but exited non-zero because pnpm blocked transitive onnxruntime-node/protobufjs lifecycle scripts; no build-script allowlist expansion was authorized or retained. Real browser/model inference proof was not reached."
+
+  - criterion_id: AC-3
+    status: NOT_PROVEN
+    evidence: "Partial source implements one-shot browser SpeechSynthesis playback, local-STT preparation, getUserMedia/MediaRecorder capture, explicit Stop plus 15-second cap, local decode/downmix/resample to mono Float32 16 kHz, worker transcription and Practice content accuracy M / N. No live Repeat Sentence data/types existed and real Chrome fake-microphone/local-model end-to-end proof was not reached."
+
+  - criterion_id: AC-4
+    status: NOT_PROVEN
+    evidence: "Partial source keeps capture in memory, stops MediaStream tracks, transfers the Float32Array buffer to the worker, clears stale results with request identities, and contains no learner-audio upload or persistence path. Runtime storage scans and fake-audio/profile cleanup proof were not reached."
+
+  - criterion_id: AC-5
+    status: NOT_PROVEN
+    evidence: "Partial source extracts the accepted WFD normalization/LCS matcher into one neutral helper reused by WFD and Repeat Sentence, adds direct Study/Practice navigation and introduces no generic scoring layer. Partial-state pnpm lint and git diff --check passed. Live type regeneration/byte-match, final advisors, exact frozen install, typecheck, production build, HTTP proof and WFD/Repeat Sentence browser smoke were not reached."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Implementation checkpoint 21786be56ad52a5b50978b4a569882897a4d3047 is a direct child of exact authorized base 64236b49f0a8ccb8c96ec4dbe21716443010b735 and preserves work performed before the capability blocker. It is intentionally not represented as a qualified candidate. Immediately before report authorship, canonical remote main still equaled the exact authorized base and exposed only main."
+
+local_hygiene:
+  result: PASS
+  evidence: "No task-owned Next.js server, Chrome profile, fake-microphone fixture or browser process was started before the capability blocker. The implementation checkpoint worktree was clean; the unintended pnpm-workspace.yaml placeholder change created by pnpm was removed before checkpointing."
+
+result: CURRENT_PHASE_CAPABILITY_UNAVAILABLE
