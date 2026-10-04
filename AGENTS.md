@@ -23,6 +23,25 @@ This repository is **MAIN_ONLY**.
 
 This policy may change only through an explicit current operator decision.
 
+## Working-tree hygiene
+
+Consequential execution starts only from a clean, correctly bound checkout.
+
+Before mutation, require:
+
+- exact repository identity and `origin` binding;
+- current branch exactly `main`;
+- local/canonical base identity required by the active task;
+- clean tracked worktree and index;
+- no unrelated untracked files;
+- no in-progress merge/rebase/cherry-pick/revert or equivalent Git operation.
+
+If pre-existing dirt, unrelated untracked state, identity drift, or Git-operation state exists, stop. Do not reset, clean, stash, rebase, adopt, overwrite, or delete it to make the task proceed.
+
+During execution, only task-authorized paths/effects may become dirty. Before qualifying a candidate and again at terminal publication closure, require a clean worktree/index with no unrelated residue.
+
+Real environment values belong in ignored local files such as `.env.local`; they must not be staged or committed.
+
 ## Architecture
 
 - Prefer the smallest sufficient modular monolith.
@@ -32,7 +51,15 @@ This policy may change only through an explicit current operator decision.
 - Prefer delete → merge → simplify → adapt/reuse → small new abstraction.
 - No Redis, queues, microservices, event buses, generic repository layers, or speculative scale machinery without a current requirement and Architect authority.
 
-See `docs/PRODUCT.md` and `docs/ARCHITECTURE.md` for durable target truth.
+See `docs/PRODUCT.md`, `docs/STUDY.md`, and `docs/ARCHITECTURE.md` for durable target truth.
+
+## Environment contract
+
+- `.env.example` is committed and contains placeholders/documentation only.
+- Real local values go in ignored `.env.local`.
+- Current browser-visible Supabase contract is limited to `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- Never place secret/service-role/private credentials in `NEXT_PUBLIC_*` variables.
+- Do not invent new environment variables or secret requirements outside task/product authority.
 
 ## Implementation boundary
 
