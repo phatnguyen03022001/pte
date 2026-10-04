@@ -1,0 +1,187 @@
+protocol_version: 3
+
+task_id: TASK-0008
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0008
+  gap_id: PTE-PRACTICE-WRITE-ESSAY-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Writing vertical slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest feature-specific Study/Practice boundary"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; schema -> content -> Study bridge -> interaction -> proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0007/review.yaml in the exact handoff snapshot"
+    role: "accepted Study/Practice/Supabase baseline after Reading FIB and Summarize Written Text"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "PTE-owned Study/Practice, Supabase, framework and engineering truth"
+    precedence: 2
+  - source: "Pearson current Speaking & Writing format: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current Write Essay mechanics: 2-3 sentence prompt, 200-300 word target, 20-minute response window; scoring traits are factual reference only"
+    precedence: 3
+  - source: "Supabase breaking-change guidance: https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically"
+    role: "explicit Data API GRANT requirement; RLS remains separate"
+    precedence: 4
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 5
+
+structure_authority:
+  status: RESOLVED
+  source: "existing feature-specific Practice table/route precedent plus Study content owner"
+  rationale: "Authorize one feature-specific Write Essay prompt table, one new Study strategy item and one /practice route subtree. Do not generalize three Practice slices into shared question/scoring infrastructure."
+
+objective: "Complete the current PTE Academic Writing practice coverage with a truthful Write Essay Study + Practice vertical slice: one concise Study strategy, six original Supabase-backed essay prompts, a 20-minute ephemeral drafting UI, deterministic 200-300-word practice-form guidance, and planning-point self-review without pretending to score Pearson content, development, grammar, vocabulary or overall writing quality."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0008 revision 1, bound TASK-0007 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer before mutation. A clean correctly bound local main may be ordinary FF-only synchronized to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly the accepted four migrations through 20261004221958_create_summarize_written_text_items; public schema is exactly the accepted seven application tables; Study remains exactly 10 active / 0 mappings; Reading FIB remains 8 active; SWT remains 6 active; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.write_essay_items. Do not create generic practice_items/questions/attempts/results/scoring tables."
+    - "write_essay_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; prompt text not null; planning_points jsonb not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple DB checks only: slug lowercase kebab-case; title/prompt/difficulty/source_type/created_by/updated_by non-empty after trim; difficulty/source_type lowercase snake_case; planning_points is a JSON array of length 3..5. Do not add enums, functions, triggers, generic metadata, search or scoring infrastructure."
+    - "The planning_points JSON is a feature-local self-review contract: ordered array of 3..5 non-empty project-authored strings. Implement one small feature-local TypeScript parser/guard that fails closed on malformed rows. Do not add Zod or another dependency."
+    - "Enable RLS on write_essay_items. Revoke all anon/authenticated privileges, then explicitly GRANT SELECT only and create one active=true SELECT policy for anon/authenticated. Do not rely on Supabase default table grants; no browser INSERT/UPDATE/DELETE policy or grant is authorized."
+    - "Persist exactly six active original starter prompts through privileged connected Supabase authoring after migration, not through the migration. Use created_by=updated_by=chatgpt_task_0008, source_type=project_authored and source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/ for all six."
+    - "Persist these exact slugs/titles/difficulties:
+        1) university-attendance-flexibility — 'Flexible university attendance' — starter
+        2) public-funding-for-arts — 'Public funding for the arts' — starter
+        3) technology-and-childhood — 'Technology in childhood' — starter
+        4) international-tourism-impact — 'The impact of international tourism' — developing
+        5) working-from-home-long-term — 'Long-term working from home' — developing
+        6) environmental-responsibility — 'Who should carry environmental responsibility?' — developing."
+    - "Each prompt must be original project-authored English of exactly 2 or 3 sentences, concise enough to mirror the current task shape without copying Pearson examples. Each row must have exactly three non-empty planning points that identify reasonable angles/evidence areas, not a model essay or official answer key."
+    - "Add exactly one new Study item through privileged Study authoring: slug write-essay-strategy; type strategy; skill_code writing; task_type write_essay; title 'Write Essay: plan, develop, control'; target_score 40; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/; created_by=updated_by=chatgpt_task_0008; active=true. Its original body_markdown must cover current mechanics (200-300 words, 20 minutes), a short plan-draft-check method, common mistakes, and one self-practice drill; it must not claim a guaranteed score or reproduce Pearson prose."
+    - "Do not alter the body/metadata of the pre-existing ten Study rows; Study grows from 10 to exactly 11 active rows and study_content_subskills remains zero."
+    - "Implement /practice/write-essay as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first valid active prompt or a clear empty state."
+    - "Update /practice to visibly expose Reading FIB, Summarize Written Text and Write Essay. No search/discovery infrastructure."
+    - "Implement one feature-local client component that owns only essay text, timer, local form-check and reveal state. No global state, localStorage, cookies, auth or database persistence."
+    - "Display live word count. Local practice form guidance is deterministic and explicitly non-official: target range is 200..300 whitespace-delimited words. Check form shows Pass only when within 200..300 and otherwise shows whether the draft is below or above the target. It must not produce a score, band, points or claim to evaluate Content, Development/Structure/Coherence, Grammar, General Linguistic Range, Vocabulary Range or Spelling."
+    - "Provide Reveal planning ideas showing exactly the row's three project-authored planning points with a disclaimer that they are self-review prompts, not an official Pearson answer/model essay."
+    - "Implement an ephemeral 20:00 countdown with Start/Pause/Reset. Timer reaching zero shows Time is up but preserves the draft; there is no auto-submit."
+    - "Changing item resets essay text, form-check state, planning ideas and timer. Provide bounded item navigation."
+    - "Add a direct bidirectional bridge: Study write-essay-strategy links to /practice/write-essay and Practice links back to /study/write-essay-strategy. Do not create a generalized recommendation engine."
+    - "Do not install/update/remove npm dependencies. Preserve package.json and pnpm-lock.yaml byte-identical to the execution base."
+    - "After authoring, prove exactly six active Write Essay rows with exact authorized metadata/provenance, each prompt exactly 2..3 sentences and exactly three planning points. Prove existing Reading FIB and SWT rows/hashes unchanged; prove the original ten Study hashes unchanged plus one exact new Study row; mappings remain zero."
+    - "Prove public Data API with the existing publishable key reads exactly six active Write Essay rows; browser write authority remains absent by grants/policies. Never print/persist the key."
+    - "Regenerate src/types/database.ts from exact project ayqcpsdebldtzohwdmer and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0008-attributable Security finding is required. Report performance INFO truthfully; no speculative index work."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on exact candidate."
+    - "Run bounded production HTTP proof: /practice shows all three task types; /practice/write-essay returns 200 with first prompt; ?item=environmental-responsibility returns 200; invalid item falls back; /study/write-essay-strategy returns 200 and contains Practice Write Essay link. Stop server and prove port release."
+    - "Run real browser/DevTools interaction proof without adding test dependencies: initial textarea empty / Word count 0 / timer 20:00; a 199-word draft fails below-target; a 200-word draft passes; a 301-word draft fails above-target; no official-score/scoring-trait claim appears; Reveal planning ideas shows exactly three items and disclaimer; Start decrements timer; Pause holds it; Reset clears text/results/ideas and returns 20:00; create draft/timer state then switch item and prove all local state resets. If browser automation capability is unavailable, stop CURRENT_PHASE_CAPABILITY_UNAVAILABLE."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0008/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0009."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/practice/page.tsx"
+    - "src/app/practice/write-essay and feature-local source files"
+    - "src/app/study/[slug]/page.tsx solely for the Write Essay Practice link"
+    - "src/app/globals.css for smallest responsive styling additions"
+    - "existing Supabase clients for use only"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0008/report.yaml"
+    - "Supabase public.write_essay_items exact six authorized rows"
+    - "Supabase public.study_content exact one authorized new write-essay-strategy row"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Write Essay content is original project-authored prose; no copied Pearson sample prompt/model answer."
+  - "Local checks are practice-form guidance only, never official scoring."
+  - "No persistent learner attempts/progress/auth state."
+  - "No runtime AI, grammar scorer, semantic scorer, embeddings, media or deployment consequence."
+  - "No npm dependency drift or generic Practice abstraction."
+  - "Existing accepted Study/Reading-FIB/SWT content remains unchanged except the exact one new Study row."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite canonical history."
+  - "Create generic practice/question/attempt/result/scoring owners or learner persistence."
+  - "Create auth/profile/progress, Study mappings/subskills, media/storage, functions, views, SECURITY DEFINER, Realtime, Edge Functions, cron, queues or workers."
+  - "Install/update/remove npm dependencies."
+  - "Use runtime OpenAI/LLM, grammar/essay scoring SaaS or semantic similarity."
+  - "Call local form checks an official PTE score or claim to evaluate Pearson scoring traits."
+  - "Copy Pearson sample prompts/model essays or arbitrary web prose."
+  - "Modify existing six schema owners or existing Study/FIB/SWT content beyond the exact authorized navigation/source additions."
+  - "Use localStorage/cookies for hidden draft persistence."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new feature-specific Write Essay table with six valid original active prompts and exactly one new Write Essay Study strategy, while all previously accepted content remains unchanged."
+    evidence_required: "Migration/schema identity; six prompt metadata/sentence-count/planning-point proof; original ten Study hashes unchanged plus exact new Study row; FIB/SWT hashes/counts unchanged; zero mappings."
+  - id: AC-2
+    requirement: "Learners can browse/load Write Essay practice through public active-only RLS-backed Supabase data."
+    evidence_required: "RLS/grant/Data API proof plus production HTTP default/selected/invalid/practice-landing proof."
+  - id: AC-3
+    requirement: "The client gives truthful 200-300-word practice-form guidance, three planning ideas and an ephemeral 20-minute timer without scoring/persistence."
+    evidence_required: "Real browser proof for 199 fail, 200 pass, 301 fail, no scoring-trait claim, exactly three planning ideas, timer decrement/pause/reset and item-change reset."
+  - id: AC-4
+    requirement: "Write Essay Study and Practice are directly linked without generalized recommendation infrastructure."
+    evidence_required: "New Study detail visibly links to Practice and Practice links back; no generic mapping/recommendation layer."
+  - id: AC-5
+    requirement: "Application/database remain secure and mechanically healthy with zero dependency drift."
+    evidence_required: "Public SELECT-only/no-write proof, fresh generated-type byte-match, fresh advisors, package/lock base identity, frozen install/lint/typecheck/build/diff-check PASS, secret/env hygiene and clean server/browser teardown."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
