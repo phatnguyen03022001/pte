@@ -1,0 +1,40 @@
+protocol_version: 3
+task_id: TASK-0009
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0009/report.yaml
+  commit: "0595bc5b57b78ef784c52921a8b04339a2ca7dc2"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0009 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 581d6f991a2c9864f529bb5a5a237ff6607c2a3e is the sole direct child of exact authorized base a24161657001128e8ff98726012e43525d131c5e. Report 0595bc5b57b78ef784c52921a8b04339a2ca7dc2 is the candidate's sole direct child and changes only .agent/tasks/TASK-0009/report.yaml. Fresh remote main equals the reviewed report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly migration 20261004230739_create_write_from_dictation_items as the TASK-0009 schema consequence. public.write_from_dictation_items contains exactly twelve active unique authorized rows, split 6 starter / 6 developing, every sentence is 9..10 whitespace-delimited words and all slugs/sentences are distinct with exact provenance. Study remains exactly 11 rows / 0 mappings; write-from-dictation-strategy body SHA-256 remains 702cea5cef88603b764f96d69161cbf825f4a01bb1f7af99d12346ff50551aa0; FIB=8, SWT=6 and Write Essay=6 remain unchanged."
+  - "AC-2 PASS: WFD table has RLS enabled, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Independent public Data API replay with the existing publishable credential returned HTTP 200 and exactly twelve active rows from exact project ayqcpsdebldtzohwdmer. Independent Chrome/CDP replay proved SpeechSynthesis/SpeechSynthesisUtterance support, initial sentence-hidden state, exact first DB sentence passed to SpeechSynthesisUtterance at rate 0.92, one-play gating, Reset-enabled replay and item-change playback reset."
+  - "AC-3 PASS: independent Chrome/CDP replay proved empty response -> Practice word accuracy 0 / 10 and independently chosen imperfect response 'Library, closes every winter term!' -> Practice word accuracy 5 / 10 with matched ordered words library closes every winter term. The exact expected sentence was hidden before Check, revealed after Check, hidden again after response edit, and Reset/item-change cleared result/reveal/response state. localStorage, sessionStorage and document.cookie remained empty."
+  - "AC-4 PASS: /study/write-from-dictation-strategy links directly to /practice/write-from-dictation and Practice links directly back. The existing Study row body/metadata hash is unchanged and no generic recommendation layer was introduced."
+  - "AC-5 PASS: fresh generated TypeScript contract from exact project ayqcpsdebldtzohwdmer is byte-identical to committed src/types/database.ts. Fresh Security Advisor returns zero findings and no TASK-0009-attributable performance finding. package.json and pnpm-lock.yaml are byte-identical to the authorized base. Architect rerun reproduced pnpm install --frozen-lockfile, lint, typecheck, production build and git diff --check PASS. No privileged Supabase credential, SpeechRecognition/STT surface, persistent browser storage or tracked real env file exists. Review-owned Next.js/Chrome sessions were terminated; ports 3121/9338 were released and the bounded review browser profile was removed."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report 0595bc5b57b78ef784c52921a8b04339a2ca7dc2; base -> candidate -> report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "Current Pearson evidence remains consistent with the task shape: Write from Dictation uses a short approximately 8-11-word sentence, is heard once, contributes to Listening and Writing, and receives partial credit for correctly spelled words. TASK-0009 intentionally reports only local practice word-sequence accuracy and does not simulate official scoring."
+  - "Voice-selection nuance is non-blocking: on the first independent review playback the Web Speech API had not yet exposed an en-AU voice and the app selected en-GB at rate 0.92. Later the browser voice registry populated en-AU. Source preference order is correctly en-AU -> en-GB -> en-US -> any en-*; the task did not require waiting for a later voiceschanged event before the user's first explicit Play action."
+  - "A raw SSR marker check initially missed selected/fallback labels because Next.js inserts comment boundaries inside text nodes (for example Item <!-- -->7<!-- --> of <!-- -->12). Direct raw inspection confirmed selected item 7 and deterministic invalid-item fallback to item 1; this was a harness string issue, not application behavior."
+  - "TASK-0009 is accepted. Acceptance does not itself authorize microphone capture, local STT, additional Listening/Speaking task types, learner persistence/auth, runtime AI, media storage or deployment except through a separate approved task."
