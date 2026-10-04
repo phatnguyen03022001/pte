@@ -1,0 +1,38 @@
+protocol_version: 3
+task_id: TASK-0005
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0005/report.yaml
+  commit: "12f71d6773dec7f6b3491c5ced6772b99acbc17c"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0005 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 8a79dadadfe9566f15a1117a086ce1ee7717b780 is the sole direct child of exact authorized base 4d184822633f919b51d8f1dec20f24130e73e6b0. Report 12f71d6773dec7f6b3491c5ced6772b99acbc17c is the candidate's sole direct child and changes only .agent/tasks/TASK-0005/report.yaml. Fresh remote main equals the report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer contains exactly ten Study rows, all active with ten unique authorized slugs, exact task-authorized metadata, created_by/updated_by chatgpt_task_0005, and zero study_content_subskills rows. Independent live SHA-256 recomputation for every body_markdown exactly matches the report evidence. Current Pearson official pages still confirm 9 Speaking & Writing question types, 5 Reading question types, 8 Listening question types, and the post-7-August-2025 addition of Summarize Group Discussion and Respond to a Situation. Reviewed content is original project-authored guidance and contains no guaranteed-score or invented scoring-weight claim."
+  - "AC-2 PASS: /study is server-first and uses the existing typed Supabase server client. Skill/type filtering is deterministic from validated query parameters; unsupported values are ignored safely. Independent production HTTP replay on the published tree returned 200 for /study and for /study?skill=speaking; the speaking result contained Repeat Sentence and excluded Write from Dictation."
+  - "AC-3 PASS: /study/[slug] performs active-only Supabase lookup and uses Next.js notFound() for missing content. Markdown rendering uses react-markdown 10.1.0 plus remark-gfm 4.0.1 with no rehype-raw, dangerouslySetInnerHTML, MDX or client-side unsafe renderer. Independent in-memory rendering of raw <script> markup produced escaped text and no executable script element. Production HTTP replay returned 200 for the 7-day plan detail and 404 for a nonexistent slug."
+  - "AC-4 PASS: package.json adds exactly react-markdown 10.1.0 and remark-gfm 4.0.1 as direct production dependencies; docs/STACK.md changes only their lifecycle/version from deferred to installed. Candidate file boundary is exactly docs/STACK.md, package.json, pnpm-lock.yaml, src/app/globals.css, src/app/page.tsx, src/app/study/content.ts, src/app/study/page.tsx and src/app/study/[slug]/page.tsx. No shadcn/Tailwind/rehype-raw/MDX dependency is activated."
+  - "AC-5 PASS: live Study tables retain RLS and anon/authenticated SELECT-only grants with active-only visibility; public Data API using the existing publishable credential returns exactly ten active rows from exact project ayqcpsdebldtzohwdmer. Fresh Security Advisor returns zero findings. Performance Advisor INFO remains non-blocking: the concrete dataset is ten rows and no measured regression justifies speculative indexing. Independent rerun reproduced frozen install, lint, typecheck, Next.js production build and git diff --check PASS. Production HTTP server teardown was explicitly completed and port 3115 was verified released. No real env/operator credential is tracked and no privileged Supabase secret, dangerous HTML API, rehype-raw or Study client component is present under source."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals reviewed report 12f71d6773dec7f6b3491c5ced6772b99acbc17c; base -> candidate -> report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "A first Architect HTTP harness attempt failed before app assertions because the wrapper invoked pnpm start with invalid argument forwarding and lacked killpg permission; reconciliation proved no listening process remained. The corrected bounded next-start session then produced the required HTTP proof and was terminated cleanly. This harness deviation does not alter candidate evidence."
+  - "TASK-0005 is accepted. Acceptance authorizes no learner auth/progress, Practice implementation, media ingestion, AI runtime or deployment except through a separate approved task."
