@@ -1,0 +1,225 @@
+protocol_version: 3
+
+task_id: TASK-0006
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0006/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "06111d0107b7e0d5eb9fc881bca8808fc0071fdc"
+  final_execution_head: "9c0138040b874c4b6fefd5a7d791e44d8013c861"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase project observation, migration, SQL authoring, Data API read/write denial, advisors, and TypeScript generation
+    - bounded filesystem and local Git mutation on the exact main checkout
+    - repository-native Node.js and pnpm qualification commands
+    - bounded production HTTP server lifecycle
+    - real browser interaction through an already-available browser/DevTools surface without dependency installation
+    - ordinary non-force publication capability
+  available:
+    - connected GitHub repository read capability
+    - connected Supabase project-scoped tooling
+    - Agent Runtime bounded filesystem, terminal, local Git, process lifecycle, commit, and remote-ref observation capabilities
+    - local Node.js v26.5.0 and pnpm v11.22.0
+    - installed Google Chrome with remote DevTools protocol plus native Node.js WebSocket/fetch support
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+      - "20261004203857_create_study_content_foundation"
+    pre_mutation_public_tables:
+      - skills
+      - subskills
+      - skill_subskills
+      - study_content
+      - study_content_subskills
+    pre_mutation_study_content_rows: 10
+    pre_mutation_active_study_content_rows: 10
+    pre_mutation_study_content_subskills_rows: 0
+    pre_mutation_security_findings: 0
+    remote_main_at_database_mutation: "06111d0107b7e0d5eb9fc881bca8808fc0071fdc"
+    remote_main_before_candidate_commit: "06111d0107b7e0d5eb9fc881bca8808fc0071fdc"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004212252"
+    name: create_reading_fill_in_blanks_items
+    repository_path: supabase/migrations/20261004212252_create_reading_fill_in_blanks_items.sql
+    repository_sha256: "52fb42e419d4d529996dfdc2e674a4cd8ddb6f2f413d7fef7597c72c535fa407"
+    live_apply_result: PASS
+    table: public.reading_fill_in_blanks_items
+    extra_practice_tables: 0
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    simple_checks: "PASS; kebab-case slug, required non-empty text, snake_case difficulty/source_type, and blanks JSON array length 1..8."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated receive SELECT only."
+    select_policy: "PASS; reading_fill_in_blanks_items_public_read_active permits SELECT to anon/authenticated only when active=true."
+    browser_write_policy: "PASS; no INSERT/UPDATE/DELETE grant or policy exists for anon/authenticated."
+    generated_types:
+      path: src/types/database.ts
+      sha256: "3554982d4daebf1cec5fdf627e484a23657f2e7aa93a5a798dd9476bcd609755"
+      exact_live_generation_match: PASS
+
+  practice_content:
+    authoring_path: "Privileged connected Supabase SQL authoring after schema migration; no data migration."
+    total_rows: 8
+    active_rows: 8
+    exact_metadata_rows: 8
+    provenance_rows: 8
+    created_by: chatgpt_task_0006
+    updated_by: chatgpt_task_0006
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/reading/"
+    contract_validation: "PASS; every row has exactly four ordered b1..b4 blanks, four unique non-empty options per blank, answer exactly in options, non-empty explanation, exactly one declared placeholder per blank, and no undeclared placeholder."
+    word_counts:
+      academic-research-collaboration: 107
+      renewable-energy-storage: 106
+      urban-green-spaces: 109
+      language-learning-memory: 113
+      public-health-communication: 111
+      remote-work-productivity: 125
+      ocean-plastic-reduction: 118
+      scientific-peer-review: 121
+
+  study_preservation:
+    total_rows: 10
+    active_rows: 10
+    mapping_rows: 0
+    body_md5_before_and_after:
+      describe-image-template: "6ad9f407c8e8e5f8030cf558c10fdf0c"
+      pte-40-plus-priority-playbook: "f57df0f67548eaa598c9b3fcbea5c13c"
+      pte-academic-format-2025-plus: "1202d4a2c7bf0b11411d21e20023e19c"
+      pte-seven-day-40-plus-plan: "066c1cf48ab9fd1499b285ae5f4b8f9f"
+      reading-fill-in-blanks-dropdown-strategy: "f7309a6f268a05919f6e3d3c47c5cef7"
+      repeat-sentence-strategy: "ff4109fb8e5b7790d274f729b3ea16a9"
+      respond-to-a-situation-strategy: "c648ee143d14ce1c8655f4d43e7903b0"
+      summarize-group-discussion-strategy: "59e7a40ca23a3203ff473027abaf26a8"
+      summarize-written-text-strategy: "c37bc790830f102ad0464fdc337c519b"
+      write-from-dictation-strategy: "6b53da8c7ec0bcc7f69a8a2922768e6e"
+
+  data_api:
+    publishable_key_disclosed: false
+    read: "PASS; HTTP 200 with exactly eight authorized active rows in deterministic id order."
+    write_attempt: "PASS; PATCH of an existing row to its identical title was rejected with HTTP 401 / PostgreSQL 42501, proving current anon write denial without logical data mutation."
+
+  application:
+    practice_landing: "PASS; /practice exposes only Reading Fill in the Blanks (Dropdown)."
+    practice_route: "PASS; server-first typed Supabase read with active=true filter, deterministic first-item fallback for missing/invalid item, and clear empty state."
+    parser: "PASS; feature-local runtime guard validates ordered IDs, option count/uniqueness/content, answer membership, explanation content, and exact placeholder identity/order; malformed rows are omitted fail-closed."
+    client_state: "PASS; one feature-local client exercise owns local selections/result only; no attempt persistence, auth state, localStorage, or cookie state."
+    scoring_label: "PASS; result is explicitly labeled Practice accuracy and never represented as official PTE score."
+    navigation: "PASS; Home retains Study CTA and adds Practice CTA; Reading FIB Study detail links to Practice; Practice links back to the exact Study strategy; no recommendation abstraction."
+
+  production_http:
+    server_port: 3116
+    root_study_marker: "PASS; HTTP 200 with Open Study library."
+    root_practice_marker: "PASS; HTTP 200 with Start Practice."
+    practice_landing: "PASS; HTTP 200 with Fill in the Blanks (Dropdown)."
+    practice_default: "PASS; HTTP 200 with Academic research collaboration."
+    practice_selected: "PASS; ?item=scientific-peer-review HTTP 200 with Scientific peer review."
+    invalid_item: "PASS; unknown item HTTP 200 with deterministic fallback to Academic research collaboration."
+    study_practice_bridge: "PASS; Study detail HTTP 200 with Practice Reading Fill in the Blanks (Dropdown)."
+    cleanup: "PASS; exact task-owned server session terminated and TCP port 3116 was released."
+
+  browser_interaction:
+    surface: "Installed Google Chrome headless via CDP on task-owned port 9223, driven by Node.js native WebSocket; no browser dependency installed."
+    initial: "PASS; Academic research collaboration loaded with exactly four selects labeled Blank 1..Blank 4, Check answers disabled, and no result."
+    incomplete_gate: "PASS; after selecting only three answers, Check answers remained disabled and no score was present."
+    completed_score: "PASS; deliberate answers avoid/explain/responsible/robust produced Practice accuracy: 3 / 4 against the database contract."
+    feedback: "PASS; Blank 1 reported Incorrect with correct answer involve and stored explanation; blanks 2..4 reported Correct."
+    reset: "PASS; Reset cleared all four select values, hid the result, and disabled Check answers."
+    item_change: "PASS; after creating selection state, navigating to Renewable energy storage reset all four values/result and disabled Check answers."
+    cleanup: "PASS; exact task-owned Chrome session terminated, TCP port 9223 released, and the guarded run-owned browser profile was removed."
+
+  advisors:
+    security: "PASS; zero findings after migration, authoring and Data API proof."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0006_attributable_performance_findings: 0
+
+  verification:
+    candidate: "9c0138040b874c4b6fefd5a7d791e44d8013c861"
+    candidate_parent: "06111d0107b7e0d5eb9fc881bca8808fc0071fdc"
+    candidate_tree: "40fb6c3626530e8046aadb51ae6ca35ae8ab83cd"
+    candidate_clean: PASS
+    dependency_bytes:
+      package_json_sha256: "9c070ed95642e448529129d18b4309f91b999ba5f908d4f30555bafd40f3a5de"
+      pnpm_lock_sha256: "d060aa54677bcbe34302cc254f0c89db436fe2e7d91c8bc42dd8b3f668569dbc"
+      base_identity: PASS
+    local_env: "PASS; .env.local remains ignored and untracked."
+    frozen_install: "PASS; pnpm install --frozen-lockfile on exact clean candidate."
+    lint: "PASS; pnpm lint on exact clean candidate."
+    typecheck: "PASS; pnpm typecheck on exact clean candidate."
+    production_build: "PASS; pnpm build on exact clean candidate with /practice static and /practice/reading-fill-in-blanks dynamic."
+    diff_check: "PASS; git diff --check 06111d0107b7e0d5eb9fc881bca8808fc0071fdc..9c0138040b874c4b6fefd5a7d791e44d8013c861."
+    topology: "PASS; candidate is the direct child of the exact authorized base."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Next.js and Chrome processes were terminated by exact runtime session identity; ports 3116 and 9223 were released; the exact run-owned .next/task-0006-browser-profile root was deleted only after realpath containment and non-symlink checks."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0006 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer has migration 20261004212252/create_reading_fill_in_blanks_items and exactly one new public table, reading_fill_in_blanks_items. It contains exactly eight active authorized rows; all eight exact metadata/provenance checks pass, every payload passes the nested blanks/placeholder contract, and word counts are 106..125. Existing Study remains 10/10 active, zero mappings, with all ten recorded body MD5 values identical before and after TASK-0006."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "The new table has RLS enabled, anon/authenticated SELECT-only grants and one active=true SELECT policy. Real publishable-key Data API read returned HTTP 200 with exactly eight rows. Production HTTP proof returned 200 for /practice, the default first item, ?item=scientific-peer-review, and an invalid-item deterministic fallback."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Google Chrome CDP interaction proved four accessible Blank 1..Blank 4 selects; Check answers stayed disabled at 3/4 selections; completing all four with one deliberate wrong answer produced Practice accuracy: 3 / 4 with database-matching per-blank correctness, correct answer and stored explanation; Reset cleared result/selections; switching to Renewable energy storage reset state again. No persistent attempt/auth state or official-score claim was introduced."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Production HTTP and source proof show the exact Reading FIB Study detail links visibly to /practice/reading-fill-in-blanks and the Practice route links back to /study/reading-fill-in-blanks-dropdown-strategy. The implementation uses direct links only and adds no recommendation/mapping abstraction."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Public PATCH was rejected HTTP 401 / PostgreSQL 42501 while public read succeeded; fresh Security Advisor has zero findings and no TASK-0006-attributable Performance finding. package.json and pnpm-lock.yaml retain exact base SHA-256 values. Exact candidate 9c0138040b874c4b6fefd5a7d791e44d8013c861 passes frozen install, lint, typecheck, production build and diff-check; .env.local remains ignored; task-owned server/browser teardown and port release pass."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 9c0138040b874c4b6fefd5a7d791e44d8013c861 is the fully qualified direct child of exact base 06111d0107b7e0d5eb9fc881bca8808fc0071fdc, candidate worktree is clean, and fresh origin exposes only main still at the exact authorized base immediately before candidate commit. This report is authored as the required sole report-only child for one ordinary non-force single publication. Final remote closure is proven only after the report commit is published."
+
+deviations:
+  - "One combined read-only Supabase evidence bundle was blocked by the platform safety layer after an earlier query result; narrower project-scoped reads were used to reconstruct the required counts, grants, policies, hashes and advisors without additional mutation."
+  - "The first production HTTP proof wrapper was blocked by the platform safety layer before dispatch because it used temporary files. It was replaced with pure Node.js fetch checks; no server state changed."
+  - "The pre-existing Chrome DevTools endpoint on port 9222 returned HTTP 404 and agent-browser CLI was not installed. The required browser proof remained available without dependency installation through the installed Google Chrome binary, a task-owned CDP endpoint on port 9223, and Node.js native WebSocket/fetch."
+  - "TASK-0006 describes Pearson's current maximum Reading Fill in the Blanks prompt length as 300 words, while the current Pearson Reading page observed during execution states text up to 200 words. No task rewrite was attempted; all eight authorized passages are 106..125 words and therefore satisfy both bounds."
+
+result: NEEDS_REVIEW
