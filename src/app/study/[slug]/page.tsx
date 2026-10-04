@@ -62,6 +62,14 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           </p>
         ) : null}
 
+        {item.slug === "write-from-dictation-strategy" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/write-from-dictation">
+              Practice Write from Dictation →
+            </Link>
+          </p>
+        ) : null}
+
         {sourceUrl ? (
           <p className="study-source">
             Reference:{" "}

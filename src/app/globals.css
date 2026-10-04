@@ -605,6 +605,47 @@ a {
   line-height: 1.55;
 }
 
+.wfd-playback {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.wfd-response {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.wfd-response > span {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.wfd-response textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #9c9c96;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  font: inherit;
+  line-height: 1.55;
+}
+
+.wfd-response textarea:focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 2px;
+}
+
+.wfd-comparison {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.wfd-comparison p {
+  margin: 0;
+  line-height: 1.55;
+}
+
 @media (max-width: 720px) {
   .swt-timer,
   .write-essay-timer {

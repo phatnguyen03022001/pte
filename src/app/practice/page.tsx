@@ -51,6 +51,19 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/write-essay">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Listening</span>
+            <span>Writing</span>
+          </div>
+          <h2>Write from Dictation</h2>
+          <p>
+            Listen once with browser speech, type the sentence from memory, and
+            check local word-sequence accuracy.
+          </p>
+          <Link href="/practice/write-from-dictation">Open practice →</Link>
+        </article>
       </section>
     </main>
   );
