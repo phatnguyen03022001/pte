@@ -40,6 +40,14 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.body_markdown}</ReactMarkdown>
         </div>
 
+        {item.slug === "reading-fill-in-blanks-dropdown-strategy" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/reading-fill-in-blanks">
+              Practice Reading Fill in the Blanks (Dropdown) →
+            </Link>
+          </p>
+        ) : null}
+
         {sourceUrl ? (
           <p className="study-source">
             Reference:{" "}

@@ -9,9 +9,14 @@ export default function Home() {
         <p className="landing__summary">
           A free-first workspace for focused PTE learning and practice.
         </p>
-        <Link className="landing__cta" href="/study">
-          Open Study library
-        </Link>
+        <div className="landing__actions">
+          <Link className="landing__cta" href="/study">
+            Open Study library
+          </Link>
+          <Link className="landing__cta landing__cta--secondary" href="/practice">
+            Start Practice
+          </Link>
+        </div>
       </section>
     </main>
   );
