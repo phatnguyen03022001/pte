@@ -1,0 +1,211 @@
+protocol_version: 3
+
+task_id: TASK-0007
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0007/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "5d20491e357e977002ca864e62d8da312734f400"
+  final_execution_head: "c8895abe320984a2ff2e5d6cb753a28abf007ef9"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and local mirror identity proof
+    - connected Supabase schema/data/RLS/advisor/type-generation capability
+    - bounded local repository mutation, qualification and commit capability
+    - production HTTP lifecycle capability
+    - real browser interaction through an already-available Chrome DevTools surface
+    - ordinary non-force canonical publication capability
+  available:
+    - Agent Runtime repository, filesystem, terminal and process lifecycle capabilities
+    - connected Supabase project-scoped tooling
+    - local Node.js v26.5.0 and pnpm v11.22.0
+    - installed Google Chrome 154 with CDP 1.3 and Node.js native WebSocket/fetch
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+      - "20261004203857_create_study_content_foundation"
+      - "20261004212252_create_reading_fill_in_blanks_items"
+    pre_mutation_public_table_count: 6
+    pre_mutation_study_active_rows: 10
+    pre_mutation_study_mapping_rows: 0
+    pre_mutation_reading_fib_active_rows: 8
+    pre_mutation_security_findings: 0
+    remote_main_at_database_mutation: "5d20491e357e977002ca864e62d8da312734f400"
+    remote_main_before_candidate_commit: "5d20491e357e977002ca864e62d8da312734f400"
+    remote_main_before_report_authorship: "5d20491e357e977002ca864e62d8da312734f400"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004221958"
+    name: create_summarize_written_text_items
+    repository_path: supabase/migrations/20261004221958_create_summarize_written_text_items.sql
+    repository_sha256: "335966d3ee56f7a9b923123fe10874a37afd01a5b4e3c6e8b3e1adc4146ee04a"
+    live_apply_result: PASS
+    table: public.summarize_written_text_items
+    final_public_table_count: 7
+    extra_practice_tables: 0
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    simple_checks: "PASS; kebab-case slug, required non-empty text, snake_case difficulty/source_type, and key_points JSON array length 2..5."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated receive SELECT only."
+    select_policy: "PASS; summarize_written_text_items_public_read_active permits SELECT to anon/authenticated only when active=true."
+    browser_write_policy: "PASS; no INSERT/UPDATE/DELETE grant or policy exists for anon/authenticated."
+    generated_types:
+      path: src/types/database.ts
+      sha256: "26d00a3b99b7f23629343dbd2209293a494227d8d61238c5687659b23a50e096"
+      exact_live_generation_match: PASS
+
+  practice_content:
+    authoring_path: "Privileged connected Supabase SQL authoring after schema migration; no data migration."
+    total_rows: 6
+    active_rows: 6
+    invalid_passage_word_count_rows: 0
+    invalid_key_points_rows: 0
+    invalid_provenance_rows: 0
+    created_by: chatgpt_task_0007
+    updated_by: chatgpt_task_0007
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    word_counts:
+      open-data-scientific-research: 171
+      public-transport-growing-cities: 170
+      sleep-and-learning: 175
+      biodiversity-and-agriculture: 172
+      remote-healthcare-access: 177
+      artificial-light-and-wildlife: 177
+    key_points_per_row: 3
+
+  preservation:
+    study_active_rows: 10
+    study_mapping_rows: 0
+    reading_fib_active_rows: 8
+    study_hashes_match_pre_mutation: PASS
+    reading_fib_hashes_match_pre_mutation: PASS
+
+  data_api:
+    publishable_key_disclosed: false
+    read: "PASS; HTTP 200 with exactly six authorized active rows in deterministic id order."
+    write_attempt: "PASS; PATCH was rejected with HTTP 401 / PostgreSQL 42501 permission denied; no learner/browser write authority exists."
+
+  application:
+    practice_landing: "PASS; /practice visibly exposes Reading Fill in the Blanks (Dropdown) and Summarize Written Text."
+    practice_route: "PASS; server-first typed Supabase read filters active rows and deterministically falls back to the first valid active item for missing/invalid item values."
+    parser: "PASS; one feature-local runtime guard requires key_points to be an ordered array of 2..5 non-empty strings and omits malformed rows fail-closed."
+    client_state: "PASS; exactly one SWT feature-local client component owns textarea, timer, form-check and reveal state only; no auth, cookies, localStorage or attempt persistence."
+    form_checks: "PASS; checks are independently reported for 5..75 whitespace words, uppercase Latin start, and exactly one final full stop; successful copy says only that local form checks pass."
+    key_ideas: "PASS; Reveal key ideas displays stored project-authored key points and explicitly disclaims an official Pearson answer key."
+    timer: "PASS; local 10:00 Start/Pause/Reset countdown preserves draft at zero by implementation and never submits or persists."
+    navigation: "PASS; item navigation resets local component state; SWT Practice and summarize-written-text-strategy Study detail link directly to each other."
+
+  production_http:
+    server_port: 3117
+    practice_landing: "PASS; HTTP 200 and both task types visible."
+    practice_default: "PASS; HTTP 200 with Open data in scientific research."
+    practice_selected: "PASS; ?item=artificial-light-and-wildlife HTTP 200 with Artificial light and wildlife."
+    invalid_item: "PASS; unknown item HTTP 200 with deterministic fallback to Open data in scientific research."
+    study_practice_bridge: "PASS; Study detail HTTP 200 with Practice Summarize Written Text."
+    cleanup: "PASS; task-owned Next.js session terminated and TCP port 3117 released."
+
+  browser_interaction:
+    surface: "Installed Google Chrome 154 headless through task-owned CDP port 9334, driven by Node.js native WebSocket; no browser-test dependency installed."
+    initial: "PASS; first authorized item loaded with empty textarea, Word count: 0 and timer 10:00."
+    four_word_failure: "PASS; 'This has four words.' showed Word count: 4 and failed the 5..75 criterion."
+    two_sentence_failure: "PASS; a two-sentence response failed the exactly-one-final-full-stop criterion."
+    valid_response: "PASS; a valid one-sentence response produced three independent Pass results and only 'This response meets the local form checks.'; no positive official-score claim was present."
+    key_ideas: "PASS; Reveal key ideas displayed exactly three items and the non-official-answer-key disclaimer."
+    timer: "PASS; Start changed 10:00 to 9:58; Pause held 9:58 across the observation interval."
+    reset: "PASS; Reset cleared textarea/results/key ideas and restored Word count: 0 and timer 10:00."
+    item_change: "PASS; after creating draft/timer state, client navigation to public-transport-growing-cities reset textarea/results and timer to 10:00."
+    cleanup: "PASS; task-owned Chrome session terminated, TCP port 9334 released, and task-owned browser profile removed."
+
+  advisors:
+    security: "PASS; zero findings after migration, data authoring and Data API proof."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0007_attributable_performance_findings: 0
+
+  verification:
+    candidate: "c8895abe320984a2ff2e5d6cb753a28abf007ef9"
+    candidate_parent: "5d20491e357e977002ca864e62d8da312734f400"
+    candidate_tree: "dcf56f7cb83afaf072ad88cbf5c9a15b7d0a81d2"
+    candidate_clean: PASS
+    dependency_bytes:
+      package_json_sha256: "9c070ed95642e448529129d18b4309f91b999ba5f908d4f30555bafd40f3a5de"
+      pnpm_lock_sha256: "d060aa54677bcbe34302cc254f0c89db436fe2e7d91c8bc42dd8b3f668569dbc"
+      base_identity: PASS
+    local_env: "PASS; .env.local remains ignored and untracked."
+    frozen_install: "PASS; pnpm install --frozen-lockfile on exact clean candidate."
+    lint: "PASS; pnpm lint on exact clean candidate."
+    typecheck: "PASS; pnpm typecheck on exact clean candidate."
+    production_build: "PASS; pnpm build on exact clean candidate with /practice/summarize-written-text as a dynamic route."
+    diff_check: "PASS; git diff --check 5d20491e357e977002ca864e62d8da312734f400..c8895abe320984a2ff2e5d6cb753a28abf007ef9."
+    topology: "PASS; candidate is the direct child of the exact authorized base."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Next.js and Chrome processes were terminated by exact runtime session identity; ports 3117 and 9334 were released; the task-owned .git browser profile was removed."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0007 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer has exactly one new migration/table, 20261004221958/create_summarize_written_text_items. The table contains exactly six active authorized rows; all passages are 170..177 words, each row has exactly three non-empty key points, and provenance/metadata checks pass. Existing Study remains 10 active / 0 mappings and Reading FIB remains 8 active with pre/post content hashes unchanged."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "The SWT table has RLS enabled, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Publishable-key Data API GET returned HTTP 200 with exactly six rows while PATCH was denied. Production HTTP returned 200 for /practice, default SWT, selected artificial-light-and-wildlife, invalid-item fallback, and the Study bridge."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome CDP proof showed initial count 0; four-word failure; two-sentence full-stop failure; a valid response passing all three independent local checks without an official-score claim; exactly three revealed key ideas; timer decrement and pause; Reset clearing draft/results/key ideas and restoring 10:00; and item-change state reset. State is feature-local and ephemeral."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Production/source proof shows summarize-written-text-strategy links directly to /practice/summarize-written-text and Practice links directly back to /study/summarize-written-text-strategy. No generic recommendation or mapping abstraction was added."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Public writes are denied; fresh generated types byte-match the live project; fresh Security Advisor has zero findings and no TASK-0007-attributable Performance finding exists. package.json and pnpm-lock.yaml retain exact base SHA-256 values. Exact candidate passes frozen install, lint, typecheck, production build, diff-check, ignored-env proof and clean server/browser teardown."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate c8895abe320984a2ff2e5d6cb753a28abf007ef9 is the fully qualified direct child of exact base 5d20491e357e977002ca864e62d8da312734f400; candidate worktree is clean; fresh origin exposes only main still at the exact authorized base immediately before report authorship. This report is authored as the required sole report-only child. Final remote closure is proven only after ordinary non-force publication."
+
+deviations:
+  - "The pre-existing Chrome DevTools endpoint on port 9222 returned HTTP 404 and agent-browser CLI was absent. Browser capability remained available without dependency installation through the installed Chrome binary on task-owned CDP port 9334."
+  - "Two rehearsal-only CDP harness attempts failed before final evidence: one orchestration script had a local syntax error, and one waited for Page.loadEventFired across a Next.js client-side Link transition and timed out. Neither mutated repository, database or application state; the corrected CDP proof passed on the exact candidate."
+
+result: NEEDS_REVIEW
