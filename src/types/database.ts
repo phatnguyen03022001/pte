@@ -62,6 +62,101 @@ export type Database = {
         }
         Relationships: []
       }
+      study_content: {
+        Row: {
+          active: boolean
+          body_markdown: string
+          created_at: string
+          created_by: string
+          difficulty: string | null
+          id: number
+          skill_code: string | null
+          slug: string
+          source_ref: string | null
+          source_type: string
+          target_score: number | null
+          task_type: string | null
+          title: string
+          type: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          active?: boolean
+          body_markdown: string
+          created_at?: string
+          created_by: string
+          difficulty?: string | null
+          id?: never
+          skill_code?: string | null
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          target_score?: number | null
+          task_type?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          active?: boolean
+          body_markdown?: string
+          created_at?: string
+          created_by?: string
+          difficulty?: string | null
+          id?: never
+          skill_code?: string | null
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          target_score?: number | null
+          task_type?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_content_skill_code_fkey"
+            columns: ["skill_code"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
+      study_content_subskills: {
+        Row: {
+          study_content_id: number
+          subskill_code: string
+        }
+        Insert: {
+          study_content_id: number
+          subskill_code: string
+        }
+        Update: {
+          study_content_id?: number
+          subskill_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_content_subskills_study_content_id_fkey"
+            columns: ["study_content_id"]
+            isOneToOne: false
+            referencedRelation: "study_content"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_content_subskills_subskill_code_fkey"
+            columns: ["subskill_code"]
+            isOneToOne: false
+            referencedRelation: "subskills"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       subskills: {
         Row: {
           code: string
