@@ -1,0 +1,173 @@
+protocol_version: 3
+
+task_id: TASK-0005
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0005/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "4d184822633f919b51d8f1dec20f24130e73e6b0"
+  final_execution_head: "8a79dadadfe9566f15a1117a086ce1ee7717b780"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase project observation, SQL authoring, Data API read, and advisors
+    - bounded filesystem and local Git mutation on the exact main checkout
+    - repository-native Node.js and pnpm qualification commands
+    - bounded task-owned production HTTP server lifecycle
+    - ordinary non-force publication capability
+  available:
+    - connected GitHub repository read capability
+    - connected Supabase project-scoped tooling
+    - Agent Runtime bounded filesystem, terminal, local Git, remote-ref observation, commit, and publication capabilities
+    - local Node.js v26.5.0 and pnpm v11.22.0
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+      - "20261004203857_create_study_content_foundation"
+    pre_mutation_public_tables:
+      - skills
+      - subskills
+      - skill_subskills
+      - study_content
+      - study_content_subskills
+    pre_mutation_study_content_rows: 0
+    pre_mutation_study_content_subskills_rows: 0
+    pre_mutation_security_findings: 0
+    pre_mutation_client_grants: "PASS; anon/authenticated have SELECT only on study_content and study_content_subskills."
+    remote_main_at_mutation: "4d184822633f919b51d8f1dec20f24130e73e6b0"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  dependencies:
+    react_markdown:
+      version: "10.1.0"
+      lifecycle: INSTALLED
+    remark_gfm:
+      version: "4.0.1"
+      lifecycle: INSTALLED
+    unauthorized_direct_dependency_added: false
+    rehype_raw_present: false
+    docs_stack_updated: true
+
+  study_content:
+    authoring_path: "Privileged connected Supabase SQL authoring; no schema/data migration."
+    persistent_rows: 10
+    active_rows: 10
+    distinct_slugs: 10
+    mapping_rows: 0
+    created_by: chatgpt_task_0005
+    updated_by: chatgpt_task_0005
+    metadata_match: "PASS; all ten slugs, types, skill/task metadata, target scores, titles, source types, and source refs match TASK-0005 revision 1 exactly."
+    body_sha256:
+      describe-image-template: "0e55bd98b8763d0185f5a7db9cd82739954d4b74fdf4e0213f527eb703035ec5"
+      pte-40-plus-priority-playbook: "25ae64ad178ffc96393279c6b0d5e429fe9c0d3625f780fd7ffd3dedd151525a"
+      pte-academic-format-2025-plus: "9e102ad6e22991a73b6271441daf9055b69898131ef133643f80e2a41a5c3258"
+      pte-seven-day-40-plus-plan: "0d9267cb8e2ab7920c3792f67b231b35827a237e0bc6b35d38e400e220b9d503"
+      reading-fill-in-blanks-dropdown-strategy: "6292da38faee2d30f2e03fb48d3177e164f5c3c4e29e6e250efc5c6efff0acdf"
+      repeat-sentence-strategy: "60e91a395df9f78b12a11d932208f796c5d8d0f3f06597f6ad20293617943181"
+      respond-to-a-situation-strategy: "fc7605cb6c67638a3d0f96dc5eaec61f748b6fd129d7c44062a769c0e470b7a5"
+      summarize-group-discussion-strategy: "a916fece5db437e1848ea763754a5a8e944c1e4e003868762eec181d6d6eb578"
+      summarize-written-text-strategy: "270da8fe5230ea88f3a68b4526e33d9e95b0c813cad862c10131922156409505"
+      write-from-dictation-strategy: "702cea5cef88603b764f96d69161cbf825f4a01bb1f7af99d12346ff50551aa0"
+
+  study_ui:
+    list_route: "/study"
+    detail_route: "/study/[slug]"
+    server_components_only: true
+    active_only_queries: true
+    filters: "PASS; deterministic skill/type query parameters; unsupported values are ignored safely."
+    detail_not_found: "PASS; missing/inactive slug uses Next.js notFound()."
+    markdown: "PASS; react-markdown 10.1.0 with remark-gfm 4.0.1; no rehype-raw, MDX, dangerouslySetInnerHTML, or custom unsafe urlTransform."
+    source_links: "PASS; local helper permits only http/https source_ref URLs."
+    landing_navigation: "PASS; root page exposes Open Study library CTA."
+
+  security:
+    public_data_api: "PASS; existing publishable key read returned exactly ten active rows with ten unique slugs."
+    publishable_key_disclosed: false
+    privileged_runtime_key_added: false
+    browser_write_authority: "PASS; anon/authenticated grants remain SELECT only on both Study tables."
+    markdown_raw_script: "PASS; in-memory raw <script> input produced no executable literal script element."
+    security_advisor: "PASS; zero findings after persistent authoring."
+    performance_advisor:
+      - "INFO: study_content_skill_code_fkey has no covering index."
+      - "INFO: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO: study_content_subskills_subskill_code_idx is currently unused."
+    performance_action: "No speculative index/schema mutation performed; TASK-0005 explicitly permits truthful INFO reporting."
+
+  verification:
+    candidate: "8a79dadadfe9566f15a1117a086ce1ee7717b780"
+    candidate_parent: "4d184822633f919b51d8f1dec20f24130e73e6b0"
+    frozen_install: "PASS; pnpm install --frozen-lockfile."
+    lint: "PASS; pnpm lint."
+    typecheck: "PASS; pnpm typecheck."
+    production_build: "PASS; pnpm build with Next.js 16.3.8; /study and /study/[slug] are server-rendered dynamic routes."
+    diff_check: "PASS; git diff --check."
+    production_http:
+      root: "PASS; HTTP 200 with Open Study library marker."
+      study: "PASS; HTTP 200 with starter library marker."
+      speaking_filter: "PASS; includes Repeat Sentence and excludes Write from Dictation."
+      detail: "PASS; /study/pte-seven-day-40-plus-plan HTTP 200 with Day 1 marker."
+      missing: "PASS; nonexistent Study slug HTTP 404."
+      cleanup: "PASS; task-owned server process terminated and task log removed."
+    candidate_worktree: "PASS; exact candidate clean after commit."
+    topology: "PASS; candidate is the direct child of the exact authorized base."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0005 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer contains exactly ten active Study rows, ten distinct authorized slugs, exact required metadata/provenance and chatgpt_task_0005 authorship, with zero study_content_subskills rows. Per-body SHA-256 values are recorded above; content is original project-authored prose and includes the current 9/5/8 format plus the two post-7-August-2025 speaking additions without guaranteed-score claims."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Server-first /study uses the existing typed Supabase server client and active-only public RLS-backed queries. Production HTTP proof confirms the full library and the speaking skill filter while excluding the listening Write from Dictation item; cards expose title/type/skill/task/target metadata where applicable."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Server-rendered /study/[slug] uses active-only lookup plus Next.js notFound, react-markdown 10.1.0 and remark-gfm 4.0.1. Production proof confirms the seven-day detail returns 200 and a missing slug returns 404; in-memory raw-script proof confirms no executable literal script element."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "package.json pins only react-markdown 10.1.0 and remark-gfm 4.0.1 as new production dependencies, pnpm-lock.yaml contains their normal transitive resolution, and docs/STACK.md changes only those two entries from AUTHORIZED_DEFERRED to exact INSTALLED versions."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Existing publishable-key Data API read returns exactly ten active rows; anon/authenticated remain SELECT-only and no privileged runtime secret path was added. Fresh Security Advisor has zero findings. Frozen install, lint, typecheck, production build, diff-check, Markdown security proof and bounded production HTTP proof all pass with clean server teardown."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 8a79dadadfe9566f15a1117a086ce1ee7717b780 is the fully qualified direct child of exact base 4d184822633f919b51d8f1dec20f24130e73e6b0; fresh origin/main remained the exact base and exposed only main before candidate commit. This report is authored as the required sole report-only child for one ordinary non-force single publication. Final remote closure is proven after this report commit."
+
+deviations:
+  - "One combined read-only Supabase catalog query was blocked by the platform safety layer before a trustworthy result. Narrower read-only project-scoped queries then proved the required grants/counts without mutation or retrying the blocked request."
+  - "Foundation templates/report.yaml was not present at the exact pinned Foundation revision. Report structure was resolved from the pinned Implementation Report contract and the accepted TASK-0004 report in this repository, which is bound to the same Foundation revision."
+  - "Performance Advisor reports INFO for one unindexed Study foreign key and two currently unused reverse indexes. No unauthorized schema/index change was made."
+
+result: NEEDS_REVIEW
