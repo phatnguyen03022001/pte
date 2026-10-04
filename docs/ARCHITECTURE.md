@@ -4,7 +4,7 @@
 
 PTE V1 is a **modular monolith**.
 
-Current application stack:
+Target V1 application stack:
 
 - Next.js App Router;
 - React;
