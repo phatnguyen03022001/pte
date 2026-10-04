@@ -1,0 +1,173 @@
+protocol_version: 3
+
+task_id: TASK-0004
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0004/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "c53db6b884824907ac5683dddfa2c79d7a5654b4"
+  final_execution_head: "587c560f85f3a588998b45b335778e51297bc443"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase project observation, migration, SQL inspection, rollback-scoped proof, advisors, publishable Data API read, and TypeScript generation
+    - bounded filesystem and local Git mutation on the exact main checkout
+    - repository-native Node.js and pnpm qualification commands
+    - ordinary non-force publication capability
+  available:
+    - connected GitHub repository read capability
+    - connected Supabase project-scoped tooling
+    - Agent Runtime bounded filesystem, terminal, local Git, remote-ref observation, commit, and publication capabilities
+    - local Node.js v26.5.0 and pnpm v11.22.0
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_public_tables:
+      - skills
+      - subskills
+      - skill_subskills
+    pre_mutation_skill_rows: "PASS; exactly listening/Listening/1, speaking/Speaking/2, reading/Reading/3, writing/Writing/4."
+    pre_mutation_subskills: 0
+    pre_mutation_skill_subskills: 0
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+    pre_mutation_security_findings: 0
+    remote_main_at_mutation: "c53db6b884824907ac5683dddfa2c79d7a5654b4"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004203857"
+    name: create_study_content_foundation
+    repository_path: supabase/migrations/20261004203857_create_study_content_foundation.sql
+    repository_sha256: "a82d3ed804b85d7bc084a1cf6f274914b4c404ae6835c31c6c6b9a1a71a9dc90"
+    repository_bytes: 3400
+    live_apply_result: PASS
+    study_tables:
+      - study_content
+      - study_content_subskills
+    persistent_study_content_rows: 0
+    persistent_study_content_subskills_rows: 0
+
+  live_schema:
+    taxonomy_preserved: PASS
+    study_content_columns: "PASS; exact authorized identity, slug/type/context/content/provenance/timestamps/active fields."
+    study_content_checks: "PASS; kebab slug, authorized type set, nullable snake_case task_type/difficulty, snake_case source_type, non-empty required text, and target_score 10..90."
+    primary_keys: "PASS; study_content.id identity PK and study_content_subskills composite PK."
+    foreign_keys: "PASS; study_content.skill_code -> skills(code) and both mapping FKs use ON UPDATE RESTRICT / ON DELETE RESTRICT."
+    reverse_subskill_index: "PASS; study_content_subskills_subskill_code_idx covers subskill_code."
+    rls_enabled_both: PASS
+    client_grants: "PASS; anon/authenticated receive SELECT only on both Study tables."
+    select_policies: "PASS; study_content exposes active=true only; mapping visibility requires referenced Study item active."
+    browser_write_policy: "PASS; no INSERT/UPDATE/DELETE grant or policy exists for anon/authenticated."
+
+  authoring_proof:
+    transaction_scope: ROLLBACK
+    create: "PASS; valid temporary Study strategy created and observed."
+    revise: "PASS; body_markdown changed, updated_by changed, and updated_at advanced from 2026-10-04T20:40:16.371978+00:00 to 2026-10-04T20:40:16.382036+00:00."
+    deactivate: "PASS; active changed true -> false and updated_at advanced again to 2026-10-04T20:40:16.382535+00:00."
+    rollback: "PASS; no authoring smoke row persisted."
+
+  rls_proof:
+    transaction_scope: ROLLBACK
+    role: anon
+    active_vs_inactive_visibility: "PASS; exactly one of two rollback-scoped rows was visible and it was task-0004-rls-active."
+    select_authorized: true
+    insert_authorized: false
+    update_authorized: false
+    delete_authorized: false
+    rollback: "PASS; no RLS smoke row persisted."
+
+  data_api:
+    publishable_key_disclosed: false
+    local_project_ref_match: PASS
+    study_content_get: "PASS; HTTP 200 with empty array after rollback."
+    study_content_subskills_get: "PASS; HTTP 200 with empty array after rollback."
+
+  generated_types:
+    path: src/types/database.ts
+    exact_live_generation_match: PASS
+    sha256: "b7337c2a3e7d40aaa4b282b28039ab8fb8906e1451e1f7e301c44fe7e2e2ee24"
+    browser_client_database_generic: PASS
+    server_client_database_generic: PASS
+    supabase_clients_changed: false
+    privileged_credential_reference_added_under_src: false
+
+  advisors:
+    security: "PASS; zero findings after migration and rollback/Data API proofs."
+    performance:
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is unused while the taxonomy mapping remains empty."
+      - "INFO expected: study_content_subskills_subskill_code_idx is unused while the new Study mapping remains empty; retained because the task explicitly requires reverse subskill lookup support."
+      - "INFO: study_content_skill_code_fkey has no covering index. No speculative index was added because the task authorizes the smallest Study foundation, the table is empty, and no measured/query requirement currently justifies an additional index."
+
+  verification:
+    candidate: "587c560f85f3a588998b45b335778e51297bc443"
+    candidate_parent: "c53db6b884824907ac5683dddfa2c79d7a5654b4"
+    dependency_bytes: "PASS; package.json, pnpm-lock.yaml and pnpm-workspace.yaml are byte-unchanged from the authorized base."
+    frozen_install: "PASS; pnpm install --frozen-lockfile."
+    lint: "PASS; pnpm lint."
+    typecheck: "PASS; pnpm typecheck."
+    production_build: "PASS; pnpm build with Next.js 16.3.8; static / and /_not-found generated."
+    diff_check: "PASS; git diff --check c53db6b884824907ac5683dddfa2c79d7a5654b4..587c560f85f3a588998b45b335778e51297bc443."
+    tracked_real_env: "PASS; no real env/operator credential file is tracked."
+    privileged_env_in_src: "PASS; no SUPABASE_SECRET_KEY, SUPABASE_ACCESS_TOKEN or SUPABASE_DB_PASSWORD reference exists under src."
+    candidate_worktree: "PASS; exact candidate is clean after qualification."
+    topology: "PASS; candidate is the direct child of the exact authorized base."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0004 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live migration 20261004203857/create_study_content_foundation and repository migration materialize only the authorized study_content owner plus study_content_subskills mapping. Catalog proof confirms required columns/checks/PK/FKs/index, existing taxonomy remains intact, and both Study tables contain zero persistent rows after rollback proofs."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Both Study tables have RLS enabled and anon/authenticated SELECT-only grants. study_content exposes active=true rows only; the mapping policy requires its referenced Study item to be active. Rollback-scoped SET ROLE anon proof saw only the active row and reported INSERT/UPDATE/DELETE privileges false. Real Data API GETs returned HTTP 200 and empty arrays after rollback."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Connected privileged tooling executed one rollback-scoped create -> revise body/updated_by/updated_at -> deactivate lifecycle and observed every state transition. The transaction rolled back and later catalog/Data API proof confirmed no persistent smoke content."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "src/types/database.ts byte-matches a fresh generation from exact project ayqcpsdebldtzohwdmer. Existing createBrowserClient<Database> and createServerClient<Database> factories are unchanged, with no new repository/data-access abstraction or auth/session behavior."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Post-proof Security Advisor has zero findings. Performance Advisor reports INFO only: the pre-existing taxonomy reverse index, the task-required empty Study reverse index, and an intentionally unindexed nullable study_content.skill_code FK in the minimal empty-table foundation. Exact candidate qualification passes frozen install, lint, typecheck, production build, diff-check, dependency byte identity, tracked-env hygiene, and privileged-secret source inspection."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 587c560f85f3a588998b45b335778e51297bc443 is the fully qualified direct child of exact base c53db6b884824907ac5683dddfa2c79d7a5654b4; fresh origin/main remains the exact base and exposes only main. This report is authored as the required sole report-only child for one ordinary non-force single publication. Final remote closure is proven after this report commit."
+
+deviations:
+  - "The first bundled migration dispatch was blocked by the platform safety layer before a trustworthy result was returned. Fresh live migration/schema/security reconciliation proved no effect occurred before one narrower project-scoped apply_migration call succeeded."
+  - "The local Supabase CLI was unavailable. It was not installed because TASK-0004 forbids dependency drift; the authorized connected Supabase migration surface was used instead, and the repository migration was written from the exact dispatched SQL under the live migration version."
+  - "Performance Advisor reports INFO for the unindexed nullable study_content.skill_code foreign key. The schema remains intentionally minimal; no second migration or out-of-band DDL was introduced merely to silence advisory INFO."
+
+result: NEEDS_REVIEW
