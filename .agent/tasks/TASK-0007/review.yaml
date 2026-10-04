@@ -1,0 +1,38 @@
+protocol_version: 3
+task_id: TASK-0007
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0007/report.yaml
+  commit: "cca3ca2ca43510c0d2781175fde47ac217b6074b"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0007 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate c8895abe320984a2ff2e5d6cb753a28abf007ef9 is the sole direct child of exact authorized base 5d20491e357e977002ca864e62d8da312734f400. Report cca3ca2ca43510c0d2781175fde47ac217b6074b is the candidate's sole direct child and changes only .agent/tasks/TASK-0007/report.yaml. Fresh remote main equals the reviewed report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY and has exactly migration 20261004221958_create_summarize_written_text_items as the TASK-0007 schema consequence. public.summarize_written_text_items contains exactly six active authorized rows with exact slug/title/difficulty/provenance metadata; independent live word counts are 170..177 and every row contains exactly three non-empty key points. Existing Study remains exactly 10 active rows / 0 mappings with accepted body SHA-256 values unchanged, and Reading FIB remains exactly 8 active rows."
+  - "AC-2 PASS: the SWT table has RLS enabled, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Independent public Data API replay with the existing publishable credential returned HTTP 200 and exactly six active rows from exact project ayqcpsdebldtzohwdmer. Production HTTP replay returned 200 for /practice, default SWT, selected artificial-light-and-wildlife, invalid-item fallback and the SWT Study bridge."
+  - "AC-3 PASS: independent Architect Chrome/CDP replay on the published tree proved initial empty textarea / Word count 0 / timer 10:00; a four-word response failed only the 5..75-word form criterion; a two-sentence response failed the exactly-one-final-full-stop criterion; a valid one-sentence response passed all three local form checks and displayed only 'This response meets the local form checks.' with no official-score claim. Reveal key ideas showed exactly three project-authored ideas and the non-official-answer-key disclaimer. Timer decremented from 10:00 to 9:58, Pause held the value, Reset cleared draft/results/key ideas and restored 10:00, and item navigation reset all local state."
+  - "AC-4 PASS: summarize-written-text-strategy links directly to /practice/summarize-written-text and Practice links directly back to /study/summarize-written-text-strategy. No generic recommendation/mapping abstraction was added."
+  - "AC-5 PASS: fresh generated TypeScript contract from exact project ayqcpsdebldtzohwdmer is byte-identical to committed src/types/database.ts. Fresh Security Advisor returns zero findings and no TASK-0007-attributable performance finding. package.json and pnpm-lock.yaml are byte-identical to the authorized base. Architect rerun reproduced pnpm install --frozen-lockfile, lint, typecheck, production build and git diff --check PASS. No privileged Supabase credential reference, localStorage/cookie persistence or tracked real env file exists. Review-owned Next.js/Chrome sessions were terminated; ports 3119/9335 were released and the bounded review browser profile was removed."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report cca3ca2ca43510c0d2781175fde47ac217b6074b; base -> candidate -> report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "Current Pearson PTE Academic Speaking & Writing guidance still states Summarize Written Text uses a passage up to 300 words, a 10-minute response window, one sentence and a 5..75-word form boundary. TASK-0007 local checks intentionally cover form only and do not claim to evaluate Pearson Content, Grammar or Vocabulary scoring."
+  - "TASK-0007 is accepted. Acceptance does not itself authorize Write Essay, speaking/listening practice, learner persistence/auth, runtime AI, media ingestion or deployment except through a separate approved task."
