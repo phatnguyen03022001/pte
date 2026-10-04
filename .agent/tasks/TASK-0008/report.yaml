@@ -1,0 +1,214 @@
+protocol_version: 3
+
+task_id: TASK-0008
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0008/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "409b499514a10fdd3da04744d997231ac24a5828"
+  final_execution_head: "fa64b60e1ae845a8a43d57222b9a1ee8eb061644"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase schema, data, RLS, advisor, Data API and type-generation capability
+    - bounded local repository mutation, verification and commit capability
+    - production HTTP process lifecycle capability
+    - real Chrome DevTools browser interaction capability without adding dependencies
+    - ordinary non-force canonical publication capability
+  available:
+    - Agent Runtime repository, filesystem, terminal and process-lifecycle capabilities
+    - connected Supabase project-scoped tooling
+    - local Node.js v26.5.0 and pnpm v11.22.0
+    - installed Google Chrome headless CDP surface using a task-owned profile and port
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+      - "20261004203857_create_study_content_foundation"
+      - "20261004212252_create_reading_fill_in_blanks_items"
+      - "20261004221958_create_summarize_written_text_items"
+    pre_mutation_public_table_count: 7
+    pre_mutation_study_active_rows: 10
+    pre_mutation_study_mapping_rows: 0
+    pre_mutation_reading_fib_active_rows: 8
+    pre_mutation_swt_active_rows: 6
+    pre_mutation_security_findings: 0
+    remote_main_before_mutation: "409b499514a10fdd3da04744d997231ac24a5828"
+    remote_main_before_report_authorship: "409b499514a10fdd3da04744d997231ac24a5828"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004224452"
+    name: create_write_essay_items
+    repository_path: supabase/migrations/20261004224452_create_write_essay_items.sql
+    repository_sha256: "cf15248871eb5d7bac6c5366ae31800e59ff1b204d8dc3225ee80eab33ba1ed3"
+    live_apply_result: PASS
+    table: public.write_essay_items
+    final_public_table_count: 8
+    generic_practice_tables_added: 0
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    simple_checks: "PASS; slug is lowercase kebab-case; required text is non-empty; difficulty/source_type are lowercase snake_case; planning_points is a JSON array of length 3..5."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated receive SELECT only."
+    select_policy: "PASS; write_essay_items_public_read_active permits SELECT to anon/authenticated only when active=true."
+    browser_write_authority: "PASS; no INSERT/UPDATE/DELETE grant or policy exists for anon/authenticated."
+    generated_types:
+      path: src/types/database.ts
+      sha256: "cb5bf7c0a5371d5a53eb2c9562ad7022ce615aa7825de31e9bafb81bd72aba9d"
+      exact_live_generation_match: PASS
+
+  write_essay_content:
+    authoring_path: "Privileged connected Supabase SQL authoring after schema migration; no prompt data is stored in the migration."
+    total_rows: 6
+    active_rows: 6
+    prompt_sentence_count: "PASS; every authorized prompt contains exactly two sentences."
+    planning_points_per_row: "PASS; every row contains exactly three ordered non-empty project-authored planning points."
+    metadata: "PASS; exact authorized slugs, titles and difficulties; created_by/updated_by=chatgpt_task_0008; source_type=project_authored; exact Pearson source_ref."
+    original_content: "PASS; prompts and planning points are project-authored and do not reproduce Pearson sample prompt/model-answer prose."
+
+  study_content:
+    new_slug: write-essay-strategy
+    new_title: "Write Essay: plan, develop, control"
+    type: strategy
+    skill_code: writing
+    task_type: write_essay
+    target_score: 40
+    body_sha256: "560dbef1ba4e1d448ac46af4d302a900920a7b78a120ca6f963420d6584fdcb3"
+    body_contract: "PASS; original Markdown covers current 200-300-word / 20-minute mechanics, plan-draft-check, common mistakes and one self-practice drill without guaranteed-score or official-answer claims."
+    active_rows_after: 11
+    mappings_after: 0
+
+  preservation:
+    original_ten_study_hashes_match_pre_mutation: PASS
+    reading_fib_active_rows: 8
+    reading_fib_hashes_match_pre_mutation: PASS
+    swt_active_rows: 6
+    swt_hashes_match_pre_mutation: PASS
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; HTTP 200 with exactly six active Write Essay rows in deterministic id order."
+    public_write: "PASS; PATCH with the existing publishable credential was denied with HTTP 401 and the target row remained unchanged."
+
+  application:
+    practice_landing: "PASS; /practice visibly exposes Reading Fill in the Blanks (Dropdown), Summarize Written Text and Write Essay."
+    practice_route: "PASS; /practice/write-essay performs a server-first typed active-only Supabase read; missing/invalid item deterministically falls back to the first valid row or renders a clear empty state."
+    parser: "PASS; one feature-local runtime parser requires planning_points to be an ordered array of 3..5 non-empty strings and fails closed on malformed rows."
+    client_state: "PASS; one Write Essay client component owns draft, timer, form-check and reveal state only; no auth, localStorage, cookies or database attempt persistence."
+    form_guidance: "PASS; whitespace word count and deterministic 200..300 local practice guidance only; no score, band or scoring-trait evaluation."
+    planning_ideas: "PASS; Reveal planning ideas displays the row's three project-authored planning points with a non-official Pearson answer/model-essay disclaimer."
+    timer: "PASS; ephemeral 20:00 Start/Pause/Reset countdown preserves the draft at zero and never auto-submits."
+    item_change: "PASS; keyed item navigation resets draft, check/reveal state and timer."
+    study_bridge: "PASS; write-essay-strategy links directly to /practice/write-essay and Practice links directly back to /study/write-essay-strategy."
+
+  production_http:
+    server_port: 3118
+    practice_landing: "PASS; HTTP 200 with all three authorized practice task types."
+    practice_default: "PASS; HTTP 200 with Flexible university attendance."
+    practice_selected: "PASS; ?item=environmental-responsibility HTTP 200 with Who should carry environmental responsibility?"
+    invalid_item: "PASS; unknown item HTTP 200 with deterministic fallback to Flexible university attendance."
+    study_practice_bridge: "PASS; /study/write-essay-strategy HTTP 200 with Practice Write Essay."
+    cleanup: "PASS; task-owned Next.js process terminated and TCP port 3118 released."
+
+  browser_interaction:
+    surface: "Installed Google Chrome headless through task-owned CDP port 9335, driven by Node.js native WebSocket/fetch; no browser-test dependency installed."
+    initial: "PASS; textarea empty, Word count: 0 and timer 20:00."
+    below_target: "PASS; a 199-word draft reported below target."
+    target_boundary: "PASS; a 200-word draft reported Pass."
+    above_target: "PASS; a 301-word draft reported above target."
+    scoring_claims: "PASS; no claim to evaluate Content, Development/Structure/Coherence, Grammar, General Linguistic Range, Vocabulary Range or Spelling appeared."
+    planning_ideas: "PASS; exactly three planning ideas and the non-official Pearson answer/model-essay disclaimer appeared."
+    timer: "PASS; Start decremented 20:00 to 19:58 and Pause held 19:58 across the observation interval."
+    reset: "PASS; Reset cleared draft/results/planning ideas and restored Word count: 0 and timer 20:00."
+    item_change: "PASS; after creating draft/reveal/timer state, navigating to Public funding for the arts reset draft/results and timer to 20:00."
+    cleanup: "PASS; task-owned Chrome process terminated, TCP port 9335 released, and the task-owned .git/task-0008-chrome profile was removed after realpath/containment/non-symlink proof."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings after migration, authoring and public Data API proof."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0008_attributable_performance_findings: 0
+
+  verification:
+    candidate: "fa64b60e1ae845a8a43d57222b9a1ee8eb061644"
+    candidate_parent: "409b499514a10fdd3da04744d997231ac24a5828"
+    candidate_tree: "356132efd5cdb59508d605aca81c1cf05ab4f643"
+    candidate_clean: PASS
+    dependency_bytes:
+      package_json_sha256: "9c070ed95642e448529129d18b4309f91b999ba5f908d4f30555bafd40f3a5de"
+      pnpm_lock_sha256: "d060aa54677bcbe34302cc254f0c89db436fe2e7d91c8bc42dd8b3f668569dbc"
+      base_identity: PASS
+    local_env: "PASS; .env.local remains ignored and untracked."
+    frozen_install: "PASS; pnpm install --frozen-lockfile on exact clean candidate."
+    lint: "PASS; pnpm lint on exact clean candidate."
+    typecheck: "PASS; pnpm typecheck on exact clean candidate."
+    production_build: "PASS; pnpm build on exact clean candidate with /practice/write-essay as a dynamic route."
+    diff_check: "PASS; git diff --check 409b499514a10fdd3da04744d997231ac24a5828..fa64b60e1ae845a8a43d57222b9a1ee8eb061644."
+    topology: "PASS; candidate is the sole implementation direct child of the exact authorized base."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Next.js and Chrome processes were terminated; ports 3118 and 9335 were released; the run-owned Chrome profile was removed only after exact path, realpath containment and non-symlink cleanup proof."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0008 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer has exactly one new migration/table, 20261004224452/create_write_essay_items, exactly six active original authorized prompts with two sentences and three non-empty planning points each, and exactly one new write-essay-strategy Study row. Study is exactly 11 active / 0 mappings; the original ten Study hashes and all accepted FIB/SWT row hashes remain unchanged."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "write_essay_items has RLS enabled, anon/authenticated SELECT-only grants and one active=true SELECT policy. Publishable-key Data API GET returned HTTP 200 with exactly six rows while PATCH was denied. Production HTTP proved default, selected and invalid-item fallback behavior."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome/CDP proof established initial empty state, 199 below-target, 200 Pass, 301 above-target, no scoring-trait claim, exactly three revealed planning ideas with disclaimer, timer decrement/pause, Reset, and item-change state reset. State is feature-local and ephemeral."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Source and production HTTP proof show direct bidirectional links between write-essay-strategy and /practice/write-essay with no generic mapping or recommendation layer."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Public writes are denied; fresh generated types byte-match exact project ayqcpsdebldtzohwdmer; fresh Security Advisor has zero findings and no TASK-0008-attributable Performance finding exists. package.json and pnpm-lock.yaml remain byte-identical to the base. Exact candidate passes frozen install, lint, typecheck, production build, diff-check, ignored-env proof and clean server/browser teardown."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate fa64b60e1ae845a8a43d57222b9a1ee8eb061644 is the fully qualified direct child of exact base 409b499514a10fdd3da04744d997231ac24a5828; candidate worktree is clean; fresh origin exposes only main still at the exact authorized base immediately before report authorship. This report is authored as the required sole report-only child. Final remote closure can only be proven after ordinary non-force publication."
+
+deviations:
+  - "The Supabase CLI executable was unavailable in the execution PATH when schema work began. No package, dependency or host tool was installed or updated. The connected project-scoped Supabase migration capability applied the authorized DDL, and the exact resulting live migration version 20261004224452 was re-resolved from canonical migration history before the byte-matching repository migration file was created."
+
+result: NEEDS_REVIEW
