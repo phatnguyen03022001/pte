@@ -1,0 +1,185 @@
+protocol_version: 3
+
+task_id: TASK-0006
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0006
+  gap_id: PTE-PRACTICE-READING-FIB-DROPDOWN-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Practice slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest feature-owned data/UI boundary"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; schema -> content -> interaction -> proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0005/review.yaml in the exact handoff snapshot"
+    role: "accepted Study read slice, installed Markdown stack and current live Supabase content baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "PTE-owned Practice/Study relationship, Supabase, framework and engineering truth"
+    precedence: 2
+  - source: "Pearson current Reading format: https://www.pearsonpte.com/pte-academic/test-format/reading/"
+    role: "current Fill in the Blanks (Dropdown) mechanics and partial-credit factual reference; never source question prose"
+    precedence: 3
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 4
+
+structure_authority:
+  status: RESOLVED
+  source: "PTE Product Practice ownership plus existing App Router structure"
+  rationale: "Authorize one feature-specific Practice owner for Reading Fill in the Blanks (Dropdown): one task-specific content table and one /practice route subtree. Do not introduce a generic question-bank/repository/scoring abstraction."
+
+objective: "Ship the first interactive Practice vertical slice for current PTE Academic Reading Fill in the Blanks (Dropdown): a small original Supabase-backed question set, public read-only access, deterministic in-browser blank scoring as practice accuracy, useful per-blank feedback, and a direct Study ↔ Practice navigation loop without auth, persistent attempts, media, paid APIs or speculative shared Practice architecture."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0006 revision 1, bound TASK-0005 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer before mutation. A clean correctly bound local main may be ordinary FF-only synchronized to the handoff base."
+    - "Immediately before live database mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly 20261004202511_create_shared_taxonomy and 20261004203857_create_study_content_foundation; public schema remains the accepted five tables; Study remains exactly 10 active rows / 0 Study mappings; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.reading_fill_in_blanks_items. Do not create a generic practice_items/questions/attempts/scoring table."
+    - "reading_fill_in_blanks_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; passage_template text not null; blanks jsonb not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple DB checks only: slug lowercase kebab-case; title/passage_template/difficulty/source_type/created_by/updated_by non-empty after trim; difficulty and source_type lowercase snake_case; blanks must be a JSON array with length 1..8. Do not add a database enum, function, trigger, generated validation framework or generic JSON metadata column."
+    - "The blanks JSON is a task-specific nested content contract, not a generic metadata bag. Exact V1 shape is an ordered array of objects { id: string, options: string[], answer: string, explanation: string }. IDs must be b1..bN in order; each blank has 3..5 unique non-empty options; answer exactly equals one option; explanation is non-empty. passage_template must contain each placeholder {{bN}} exactly once and no undeclared placeholder. Implement one small feature-local TypeScript parser/guard that fails closed on malformed rows; do not add Zod or another validation dependency."
+    - "Answers are intentionally readable in the public practice payload in V1. This content is self-practice material, not an assessment secrecy/security boundary. Do not activate SUPABASE_SECRET_KEY or invent privileged grading solely to hide answer keys."
+    - "Enable RLS on the new table. Revoke all anon/authenticated privileges, then grant SELECT only and add an active=true SELECT policy for anon/authenticated. No learner/browser INSERT/UPDATE/DELETE grant or policy is authorized."
+    - "Persist exactly eight active project-authored starter items through privileged connected Supabase authoring after the migration, not through a data migration. Use created_by=updated_by=chatgpt_task_0006, source_type=project_authored and source_ref=https://www.pearsonpte.com/pte-academic/test-format/reading/ for all eight."
+    - "Persist these exact slugs/titles/difficulties:
+        1) academic-research-collaboration — 'Academic research collaboration' — starter
+        2) renewable-energy-storage — 'Renewable energy storage' — starter
+        3) urban-green-spaces — 'Urban green spaces' — starter
+        4) language-learning-memory — 'Language learning and memory' — starter
+        5) public-health-communication — 'Public health communication' — developing
+        6) remote-work-productivity — 'Remote work and productivity' — developing
+        7) ocean-plastic-reduction — 'Reducing plastic in the ocean' — developing
+        8) scientific-peer-review — 'Scientific peer review' — developing."
+    - "Each passage must be original project-authored English prose, 60..180 words, with exactly four placeholders/blanks and exactly four options per blank. Do not copy Pearson sample passages/questions or arbitrary web text. The correct choice must be defensible from grammar/context/collocation, with a short original explanation for each blank."
+    - "Keep all eight passages below Pearson's current maximum prompt length of 300 words. Do not claim the app reproduces official Pearson item difficulty or scoring."
+    - "Implement /practice as a public server-first Practice landing route that currently exposes this one Reading task type and links to /practice/reading-fill-in-blanks."
+    - "Implement /practice/reading-fill-in-blanks as a server-first route that loads active items with the existing typed public Supabase server client. Support ?item=<slug>; missing/invalid/inactive item values fall back deterministically to the first active item or a clear empty state if no active content exists."
+    - "Implement one smallest Study-owned/Practice-owned navigation bridge: the existing Study item reading-fill-in-blanks-dropdown-strategy must expose a visible link to /practice/reading-fill-in-blanks, and the Practice route must link back to that Study strategy. Do not build a generalized recommendation engine."
+    - "Implement one feature-local client component only for the actual interactive exercise. It renders passage text around the {{bN}} placeholders with accessible select controls, records selections locally, and exposes Check answers and Reset actions. No global state, localStorage, cookies, database attempt persistence or auth state."
+    - "Check answers deterministically against the item's public blanks contract. Before all blanks are answered, Check answers must not present a final score. After checking, display practice accuracy as correct blanks / total blanks plus per-blank correct/incorrect feedback and the stored explanation. Label this explicitly as practice accuracy, never PTE score/points/band."
+    - "Changing item resets local selections/result. Provide next/previous or item-navigation links without creating an attempt/session system."
+    - "Update the home page with a clear Practice CTA while retaining Study navigation. Keep layout responsive and accessible using the existing CSS system. Do not activate shadcn/Tailwind in this task."
+    - "Do not modify current Study content bodies/metadata except the minimal UI navigation bridge in source code; do not create Study mappings/subskills."
+    - "Do not install any npm dependency. Preserve package.json and pnpm-lock.yaml byte-identical to the execution base."
+    - "After authoring, prove the live table has exactly eight active rows with the exact authorized slug/title/difficulty/provenance metadata; each row passes the feature-local blanks contract; no extra Practice table/schema exists; existing Study rows and mappings are unchanged."
+    - "Prove public Data API using the existing publishable key can read exactly eight active items and cannot write by current grants/policies. Never print or persist the key."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0006-attributable Security finding is required. Performance INFO may be reported truthfully; do not add speculative indexes without measured/current need."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the exact candidate."
+    - "Run bounded production HTTP proof using real ignored local public Supabase values: / returns 200 with Study and Practice markers; /practice returns 200; /practice/reading-fill-in-blanks returns 200 with the first authorized item; ?item=scientific-peer-review returns 200 with that item; an invalid item value fails safely. Cleanly stop the server and prove the port is released."
+    - "Run real browser interaction proof through an already-available browser/DevTools automation surface without adding browser-test dependencies: load one practice item, verify four accessible selects render, choose answers, prove Check answers is gated until all four selections exist, then complete all four selections and prove the displayed practice-accuracy count and per-blank feedback match the database answer contract; Reset clears selections/result; switch item and prove state resets. If no suitable browser automation capability is available at execution time, stop CURRENT_PHASE_CAPABILITY_UNAVAILABLE rather than substituting source inspection for interaction proof."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0006/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0007."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/page.tsx"
+    - "src/app/globals.css"
+    - "src/app/practice and feature-local Practice source files"
+    - "src/app/study/[slug]/page.tsx or the smallest existing Study detail surface solely for the Reading FIB Practice link"
+    - "existing src/lib/supabase clients for use only; credential/auth semantics must not change"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0006/report.yaml"
+    - "Supabase public.reading_fill_in_blanks_items exact eight authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Practice content is project-authored; no copied Pearson question/passage bytes."
+  - "Public answer keys are an intentional self-practice V1 tradeoff and do not authorize privileged runtime credentials."
+  - "Displayed result is practice accuracy only, not official PTE scoring."
+  - "No persistent learner attempt/progress/auth state is introduced."
+  - "No audio/media, AI, Cloudinary, YouTube, crawler or deployment consequence."
+  - "No new npm dependency or generic Practice abstraction."
+  - "Existing Study 10-row canonical content remains unchanged."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite canonical history."
+  - "Create generic practice_items/questions/attempts/results/scoring/repository/service owners."
+  - "Create learner auth/profile/progress, attempt persistence, Study subskills/mappings, media/storage, functions, views, SECURITY DEFINER, Realtime, Edge Functions, cron, queues or background workers."
+  - "Activate SUPABASE_SECRET_KEY or any privileged credential in app runtime."
+  - "Install/update/remove npm dependencies, including shadcn/Tailwind/testing libraries."
+  - "Copy Pearson sample questions, passages, paid preparation content or arbitrary web prose."
+  - "Call the local practice ratio an official PTE score, predict visa eligibility, or encode unsupported scoring weights."
+  - "Use localStorage/cookies for hidden attempt persistence."
+  - "Modify existing schema/RLS outside the single new feature table."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new feature-specific Reading FIB table and exactly eight valid original active items, with no generic Practice schema or changed Study truth."
+    evidence_required: "Exact migration/live schema identity; eight-row metadata/count proof; contract-validation proof for every passage/blanks payload; existing Study count/hashes/mapping count unchanged."
+  - id: AC-2
+    requirement: "Learners can browse the Practice landing and load current Reading Fill in the Blanks (Dropdown) items from public active-only RLS-backed Supabase data."
+    evidence_required: "RLS/grant/Data API proof plus production HTTP proof for /practice and default/selected item routes."
+  - id: AC-3
+    requirement: "The interactive exercise deterministically scores all four blanks as practice accuracy and gives accessible per-blank feedback without persistence or official-score claims."
+    evidence_required: "Real browser/DevTools interaction proof for select rendering, incomplete-answer gate, completed score/feedback correctness against DB answer contract, Reset, and item-change state reset."
+  - id: AC-4
+    requirement: "Study and Practice form one bounded bidirectional learning link without a recommendation engine."
+    evidence_required: "Reading FIB Study detail visibly links to Practice and Practice links back; no generalized mapping/recommendation abstraction."
+  - id: AC-5
+    requirement: "Application/database remain secure and mechanically healthy with zero dependency drift."
+    evidence_required: "Public SELECT-only/no-write proof, fresh advisors, package/lock base identity, frozen install/lint/typecheck/build/diff-check PASS, no privileged secrets/tracked env, clean server teardown."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
