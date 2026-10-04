@@ -1,0 +1,38 @@
+protocol_version: 3
+task_id: TASK-0004
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0004/report.yaml
+  commit: "176b0ffc74049aab55b68f101277ce635ca09932"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0004 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 587c560f85f3a588998b45b335778e51297bc443 is the sole direct child of exact authorized base c53db6b884824907ac5683dddfa2c79d7a5654b4. Report 176b0ffc74049aab55b68f101277ce635ca09932 is the candidate's sole direct child and changes only .agent/tasks/TASK-0004/report.yaml. Fresh remote main equals the reviewed report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY and has exactly the accepted taxonomy plus migration 20261004203857_create_study_content_foundation. The repository migration creates only study_content and study_content_subskills with the authorized columns/checks, RESTRICT foreign keys, active flag, slug uniqueness and reverse subskill index. Persistent Study rows remain zero."
+  - "AC-2 PASS: RLS is enabled on both Study tables. Independent catalog inspection shows anon/authenticated SELECT-only grants; study_content exposes only active=true rows and study_content_subskills visibility requires the referenced Study item to be active. No browser write grant/policy exists. Independent Data API replay with the existing publishable credential returned HTTP 200 and empty arrays for both Study tables after rollback."
+  - "AC-3 PASS: the Executor's rollback-scoped privileged authoring proof established create -> revise body/updated_by/updated_at -> deactivate -> rollback with no persisted smoke rows. Independent post-publication catalog and Data API observations confirm both Study tables remain empty and no browser secret path was introduced."
+  - "AC-4 PASS: a fresh generated Database contract from exact project ayqcpsdebldtzohwdmer observed during this review matches the committed schema shape; src/types/database.ts contains the exact live Study tables and relationships. Existing typed Supabase clients remain unchanged. A later duplicate read-only generation attempt hit a connector transport error, which does not invalidate the earlier successful same-review generation or the unchanged exact project/schema evidence."
+  - "AC-5 PASS: fresh Security Advisor returns zero findings. Performance Advisor returns INFO only: two unused reverse-FK indexes on currently empty mapping tables and study_content_skill_code_fkey without a covering index. The latter is not a current acceptance blocker because no authorized/measured skill-filter query exists yet, the table is empty, and TASK-0004 does not require zero performance INFO or speculative index tuning. Architect rerun reproduced frozen install, lint, typecheck, build and git diff --check PASS; package/lock/workspace bytes are unchanged; no tracked real env/operator credential or privileged Supabase source reference exists."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report 176b0ffc74049aab55b68f101277ce635ca09932; candidate/report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree, no in-progress Git operation and zero tracked/index/untracked/conflicted residue."
+  - "Executor deviations were reconciled safely: the first blocked migration dispatch was proven zero-effect before the narrower successful apply; missing local Supabase CLI caused no dependency drift; ordinary native Git non-force publication preserved the task's publication semantics."
+  - "TASK-0004 is accepted. Acceptance does not itself authorize Study UI, content seeding, Practice, learner progress, deployment, or successor work except through a separate approved task."
