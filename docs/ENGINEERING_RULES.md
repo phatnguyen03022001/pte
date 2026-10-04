@@ -62,6 +62,15 @@ Unselected ECC siblings do not apply implicitly.
 - Markdown or rich-text rendering must not create an XSS path. Prefer a renderer that escapes raw HTML by default; if raw HTML is ever allowed, sanitization and tests are required.
 - YouTube playback, when authorized, must use currently supported official embed/player mechanisms rather than copied audiovisual bytes.
 
+### Credential and runtime exposure
+
+`docs/STACK.md` owns the canonical env/provider classification.
+
+- `PUBLIC_BROWSER` values may be exposed intentionally, but browser visibility does not replace backend authorization/RLS.
+- `SERVER_SECRET` values must never enter `NEXT_PUBLIC_*`, browser bundles, client logs, or client-delivered configuration.
+- `OPERATOR_ONLY` credentials are for connected/headless/automation workflows and must not be consumed by learner application runtime code.
+- Documenting an authorized-deferred credential does not activate a provider, install a dependency, authorize deployment, or grant data-retention/media-copy authority.
+
 ### Supabase
 
 Supabase-specific implementation must be checked against current official Supabase documentation at the task where it matters.

@@ -4,14 +4,9 @@
 
 PTE V1 is a **modular monolith**.
 
-Target V1 application stack:
+Target V1 application stack is a Next.js App Router + React + TypeScript modular monolith, with Supabase for Auth/Postgres/RLS-backed structured data, Vercel as the initial deployment target, and browser-local capabilities for microphone capture and speech-to-text where speaking features require them.
 
-- Next.js App Router;
-- React;
-- TypeScript;
-- Supabase for Auth/Postgres/RLS-backed structured data;
-- Vercel as the initial web deployment target;
-- browser capabilities for microphone capture and local speech-to-text where speaking features require them.
+`docs/STACK.md` is the canonical complete matrix for exact installed versions, authorized-deferred packages/providers, browser-native capabilities, deployment status, credential names/classes, and official acquisition/documentation locators. This document owns architecture; it intentionally does not duplicate that matrix.
 
 Do not add a separate backend service merely to mirror logic already safely expressible through Next.js/Supabase boundaries.
 

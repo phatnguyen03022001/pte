@@ -51,15 +51,15 @@ Real environment values belong in ignored local files such as `.env.local`; they
 - Prefer delete → merge → simplify → adapt/reuse → small new abstraction.
 - No Redis, queues, microservices, event buses, generic repository layers, or speculative scale machinery without a current requirement and Architect authority.
 
-See `docs/PRODUCT.md`, `docs/STUDY.md`, and `docs/ARCHITECTURE.md` for durable target truth.
+See `docs/PRODUCT.md`, `docs/STUDY.md`, `docs/ARCHITECTURE.md`, and `docs/STACK.md` for durable target truth. Resolve framework/provider/dependency/credential choices through `docs/STACK.md` before inventing a package, provider, or environment variable.
 
 ## Environment contract
 
-- `.env.example` is committed and contains placeholders/documentation only.
-- Real local values go in ignored `.env.local`.
-- Current browser-visible Supabase contract is limited to `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-- Never place secret/service-role/private credentials in `NEXT_PUBLIC_*` variables.
-- Do not invent new environment variables or secret requirements outside task/product authority.
+- `docs/STACK.md` is the canonical owner for stack/provider lifecycle and credential classification; `.env.example` is its complete blank variable inventory.
+- Real local application values go in ignored `.env.local`; operator-only values belong in operator/automation context and are not learner runtime dependencies.
+- The only application values required now are `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- `PUBLIC_BROWSER` values may be intentionally exposed. `SERVER_SECRET` values never use `NEXT_PUBLIC_*`. `OPERATOR_ONLY` credentials must not be consumed by application runtime code.
+- Deferred entries normally remain blank until their owning feature/workflow is authorized. Do not invent new environment variables or secret requirements outside task/product authority.
 
 ## Implementation boundary
 
