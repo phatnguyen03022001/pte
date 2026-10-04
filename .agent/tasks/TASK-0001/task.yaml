@@ -1,7 +1,7 @@
 protocol_version: 3
 
 task_id: TASK-0001
-task_revision: 3
+task_revision: 4
 state: APPROVED
 
 origin:
@@ -69,8 +69,9 @@ objective: "Bootstrap a minimal production-ready PTE web application scaffold on
 
 scope:
   required_changes:
-    - "Fresh-resolve the exact revision-3 task and handoff snapshot on phatnguyen03022001/pte main. Revision 3 supersedes unexecuted revision 2. Require live remote main and the execution checkout to match the authorized base before mutation. Do not create any branch, worktree branch, tag, release or alternate integration ref."
-    - "Before mutation, require exact repository/origin identity, branch main, exact authorized base, a clean tracked worktree/index, no unrelated untracked files, and no in-progress Git operation. Pre-existing dirt is BLOCKED: do not reset, clean, stash, rebase, adopt, overwrite or delete it to proceed. During execution, only task-authorized paths may be dirty; require a clean worktree/index again before candidate qualification and terminal publication closure."
+    - "Fresh-resolve the exact revision-4 task and handoff snapshot on phatnguyen03022001/pte main. Revision 4 supersedes blocked revision 3. Require live remote main and the execution checkout to match the authorized base before mutation. Do not create any branch, worktree branch, tag, release or alternate integration ref."
+    - "Local-mirror bootstrap is explicitly authorized only for the designated path /Users/tienphat/Developer/pte when that path is still not a Git repository and contains no entry other than the pre-existing root .DS_Store observed by the Architect. Preserve that .DS_Store byte-for-byte; do not delete, move, overwrite, adopt or stage it. Materialize the canonical repository in place using ordinary Git initialization/fetch/checkout mechanics that bind origin exactly to phatnguyen03022001/pte and materialize only the existing canonical main branch at the exact authorized base. Do not create any alternate local or remote branch, worktree branch, tag, temporary repository, sibling checkout or staging ref. If any additional local entry appears, the .DS_Store is absent/replaced unexpectedly, remote identity differs, or canonical main drifts, stop BLOCKED."
+    - "After the one-time authorized local-mirror bootstrap, require exact repository/origin identity, branch main, exact authorized base, a clean tracked worktree/index, no unrelated untracked files, and no in-progress Git operation before product mutation. The preserved root .DS_Store must be ignored by the canonical .gitignore and therefore must not appear as dirty/untracked state. Pre-existing dirt outside the exact bootstrap exception is BLOCKED: do not reset, clean, stash, rebase, adopt, overwrite or delete it to proceed. During execution, only task-authorized paths may be dirty; require a clean worktree/index again before candidate qualification and terminal publication closure."
     - "Initialize the application at repository root with the current stable Next.js App Router + React + TypeScript package set compatible with the current official Next.js/Vercel guidance at execution time. Use pnpm and commit one exact lockfile. Preserve all existing planning/authority documents including docs/STUDY.md, plus the committed .gitignore and .env.example contracts."
     - "Use a source layout that keeps Next.js routing under src/app and leaves feature/domain ownership available for later task-specific implementation. Do not create placeholder Study, Practice or skill-feature directories/files solely to predeclare a tree."
     - "Enable strict TypeScript and repo-native lint/typecheck/build commands. Keep the toolchain minimal; do not add a test framework merely to satisfy generic ECC coverage/TDD guidance because TASK-0001 adds no product behavior."
@@ -92,7 +93,9 @@ scope:
 
 invariants:
   - "MAIN_ONLY remains exact: only main is used; create_branch=false is non-waivable for this task."
-  - "Execution starts from a clean correctly bound checkout; unrelated dirty/untracked state or in-progress Git operation blocks mutation and must never be hidden or destroyed to continue."
+  - "The designated local mirror may be created exactly once under the bounded bootstrap authority above; bootstrap itself grants no product mutation and no alternate branch/ref authority."
+  - "After bootstrap, execution starts from a clean correctly bound checkout; unrelated dirty/untracked state or in-progress Git operation blocks mutation and must never be hidden or destroyed to continue."
+  - "The pre-existing root .DS_Store is the sole bootstrap-local exception; it must be preserved unchanged and ignored, never staged or committed."
   - "Real environment values remain local and ignored; .env.example stays placeholder-only and commit-safe."
   - "Existing PTE product/architecture/rule/Study documents remain authoritative and are not weakened or reinterpreted by implementation convenience."
   - "Study is a first-class future product domain and Study ↔ subskill ↔ Practice is a durable product relationship, but TASK-0001 implements none of those feature semantics."
@@ -106,6 +109,8 @@ forbidden_changes:
   - "Create or publish any branch other than main, including temporary/recovery/feature/staging branches."
   - "Force push, rewrite canonical history, create tags/releases, or change repository topology."
   - "Use git stash/reset/clean/rebase or destructive checkout/recovery actions to hide, discard or adopt pre-existing dirty state."
+  - "Delete, move, overwrite, stage or commit the pre-existing root .DS_Store during local bootstrap."
+  - "Bootstrap into another directory, create a sibling/temporary checkout, or create any alternate local/remote branch or worktree branch."
   - "Stage or commit .env.local, real .env values, Supabase secret/service-role keys, passwords, tokens or other private credentials."
   - "Implement Study/Coach UI/content/schema/recommendations, auth/product tables/RLS/domain schema, practice flows, PTE question types, scoring, audio/STT, progress, mock-test, admin/CMS, analytics, crawler/ingestion, YouTube/media persistence or paid external integrations."
   - "Add speculative infrastructure or architecture layers not required by this scaffold."
@@ -124,7 +129,7 @@ gap_policy:
 acceptance_criteria:
   - id: AC-1
     requirement: "The repository has one minimal locked Next.js App Router + React + TypeScript + pnpm scaffold that preserves all current planning/product/spec authority, environment/ignore contracts, clean-worktree discipline and MAIN_ONLY topology."
-    evidence_required: "Exact dependency/lockfile inventory; strict TypeScript/tooling config; fresh branch/ref proof showing main only; README/AGENTS/docs including docs/STUDY.md plus .gitignore/.env.example preserved; preflight and candidate/closure clean-worktree proof; no branch creation."
+    evidence_required: "If bootstrap was needed, prove the designated path initially contained only the preserved root .DS_Store, then prove exact origin/main/base identity after in-place mirror creation with that file ignored and unchanged. Also provide exact dependency/lockfile inventory; strict TypeScript/tooling config; fresh branch/ref proof showing canonical main only; README/AGENTS/docs including docs/STUDY.md plus .gitignore/.env.example preserved; preflight and candidate/closure clean-worktree proof; no alternate branch/worktree creation."
   - id: AC-2
     requirement: "The scaffold has a narrow current-supported Supabase Next.js integration seam without creating product data/schema or exposing privileged credentials."
     evidence_required: "Inspect browser/server integration and .env.example; prove the exact two public variable names and official Supabase locators; prove .env.local/real env files are ignored; dependency provenance; proof that no service-role/secret credential is present or required client-side; no migrations/domain/Study/media tables/RLS/storage changes."
