@@ -1,0 +1,150 @@
+protocol_version: 3
+
+task_id: TASK-0003
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0003/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "4fe31bb44b71603b1b5e0081c54f8f6277225279"
+  final_execution_head: "b309bbb1785c9a40199596592e86dc7280420d5b"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase project observation, migration, SQL inspection, advisors, and TypeScript generation
+    - bounded filesystem and local Git mutation on the exact main checkout
+    - repository-native Node.js and pnpm qualification commands
+    - ordinary non-force publication capability
+  available:
+    - connected GitHub repository read capability
+    - connected Supabase project-scoped tooling
+    - Agent Runtime bounded filesystem, terminal, local Git, remote-ref observation, commit, and publication capabilities
+    - local Node.js v26.5.0 and pnpm v11.22.0
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    local_project_url_ref_match: PASS
+    pre_mutation_public_tables: 0
+    pre_mutation_migrations: 0
+    pre_mutation_security_findings: 0
+    pre_mutation_performance_findings: 0
+    remote_main_at_mutation: "4fe31bb44b71603b1b5e0081c54f8f6277225279"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004202511"
+    name: create_shared_taxonomy
+    repository_path: supabase/migrations/20261004202511_create_shared_taxonomy.sql
+    live_apply_result: PASS
+    public_tables:
+      - skills
+      - subskills
+      - skill_subskills
+    seeded_skills:
+      - listening
+      - speaking
+      - reading
+      - writing
+    seeded_subskills: 0
+    seeded_skill_subskills: 0
+
+  live_schema:
+    tables_exact: PASS
+    rls_enabled_all_three: PASS
+    client_grants: "PASS; anon/authenticated receive SELECT only on all three tables."
+    select_policies: "PASS; one SELECT policy per table for anon/authenticated."
+    primary_keys: "PASS; text code PK on skills/subskills and composite PK on skill_subskills."
+    foreign_keys: "PASS; both mapping FKs use ON UPDATE RESTRICT / ON DELETE RESTRICT."
+    code_checks: "PASS; skills.code and subskills.code enforce lowercase snake_case."
+    skill_rows: "PASS; exact ordered rows Listening, Speaking, Reading, Writing with sort_order 1..4."
+    empty_rows: "PASS; subskills=0 and skill_subskills=0."
+
+  data_api:
+    publishable_key_disclosed: false
+    skills_get: "PASS; HTTP 200 with exactly four ordered seeded rows."
+    subskills_get: "PASS; HTTP 200 with empty array."
+    anonymous_write: "PASS; rejected with HTTP 401 and PostgreSQL code 42501."
+    unchanged_after_write_attempt: PASS
+
+  generated_types:
+    path: src/types/database.ts
+    exact_live_generation_match: PASS
+    browser_client_database_generic: PASS
+    server_client_database_generic: PASS
+    privileged_credential_reference_added: false
+    auth_or_session_behavior_changed: false
+
+  advisors:
+    security: "PASS; zero findings after migration."
+    performance: "INFO; unused_index reports skill_subskills_subskill_code_idx as never used immediately after creation. The index is retained because the composite primary key only leads on skill_code and this index supports the subskill_code foreign-key direction; no schema weakening or artificial usage was performed."
+
+  verification:
+    candidate: "b309bbb1785c9a40199596592e86dc7280420d5b"
+    dependency_bytes: "PASS; package.json, pnpm-lock.yaml and pnpm-workspace.yaml are byte-unchanged from the authorized base."
+    frozen_install: "PASS; pnpm install --frozen-lockfile."
+    lint: "PASS; pnpm lint."
+    typecheck: "PASS; pnpm typecheck."
+    production_build: "PASS; pnpm build with Next.js 16.3.8."
+    diff_check: "PASS; git diff --check on base..candidate."
+    tracked_real_env: "PASS; no real .env/operator credential file is tracked."
+    privileged_env_in_src: "PASS; no SUPABASE_SECRET_KEY, SUPABASE_ACCESS_TOKEN or SUPABASE_DB_PASSWORD reference exists under src."
+    candidate_worktree: "PASS; exact candidate is clean."
+    topology: "PASS; candidate is the direct child of the exact authorized base."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0003 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live migration 20261004202511/create_shared_taxonomy and its repository migration create exactly skills, subskills and skill_subskills. Live catalog proves the authorized columns, PK/FK/check constraints, exactly four seeded top-level skills, zero subskills, zero mappings, and no other public application tables."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "All three tables have RLS enabled; anon/authenticated have SELECT only and one SELECT policy per table. Real Data API proof using the existing local publishable key returned HTTP 200 for skills/subskills, rejected an anonymous write with HTTP 401 / code 42501, and a subsequent read proved data unchanged."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "src/types/database.ts is byte-equal to a fresh generated type contract from project ayqcpsdebldtzohwdmer. Existing browser/server Supabase factories now use createBrowserClient<Database> and createServerClient<Database> only; no auth/session behavior or privileged credential path was introduced."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Fresh post-migration security advisor output has zero findings. Performance advisor has one informational unused-index notice for the newly created subskill_code FK-supporting index; it is retained intentionally because removing it would leave the reverse FK lookup unindexed. No actionable security issue remains."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "On exact candidate b309bbb1785c9a40199596592e86dc7280420d5b: dependency/toolchain files are unchanged; pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check all PASS; no real env/operator credential file is tracked."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate b309bbb1785c9a40199596592e86dc7280420d5b is the direct child of the exact authorized base, fully qualified and locally clean; fresh origin/main remains the authorized base and exposes only main. This report is authored as the required sole report-only child for one ordinary non-force single publication. Final remote closure is proven after this report commit."
+
+deviations:
+  - "The first bundled migration-dispatch attempt was blocked by the platform safety layer before any result was returned. Execution reconciled fresh Supabase migration/schema/advisor state, proved no effect occurred, and then used one narrower project-scoped apply_migration call successfully."
+  - "The first local qualification bundle stopped before pnpm install because of an invalid Git pathspec in the credential-hygiene check. The check was corrected and the complete required qualification later passed on the exact candidate."
+  - "A later attempt to repeat the already-proven Data API check was blocked by the platform safety layer before execution. No retry loop was performed; the earlier successful Data API evidence remains the recorded proof."
+
+result: NEEDS_REVIEW
