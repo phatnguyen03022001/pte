@@ -1,0 +1,118 @@
+protocol_version: 3
+
+task_id: TASK-0001
+task_revision: 4
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0001/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "8ce3271101fed20c272cbdc33e53be750e37c043"
+  final_execution_head: "d6a11c05a7a12c6f9782ef746388fc6b9ec76437"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - bounded in-place local mirror bootstrap preserving the pre-existing root .DS_Store
+    - local filesystem, process, package-manager, Git commit, and ordinary non-force publication capability
+  available:
+    - connected GitHub repository read capability
+    - Agent Runtime bounded filesystem, terminal, local Git, and remote-ref observation capabilities
+    - local Git, Node.js v26.5.0, and pnpm v11.22.0
+  missing: []
+  passed: true
+
+qualification:
+  bootstrap:
+    initial_path: /Users/tienphat/Developer/pte
+    initial_git_repository: false
+    initial_entries:
+      - .DS_Store
+    ds_store_sha256_before: "d65165279105ca6773180500688df4bdc69a2c7b771752f0a46ef120b7fd8ec3"
+    ds_store_sha256_after_bootstrap: "d65165279105ca6773180500688df4bdc69a2c7b771752f0a46ef120b7fd8ec3"
+    origin: https://github.com/phatnguyen03022001/pte.git
+    branch: main
+    head: "8ce3271101fed20c272cbdc33e53be750e37c043"
+    remote_main_before_bootstrap: "8ce3271101fed20c272cbdc33e53be750e37c043"
+    remote_branches_after_bootstrap:
+      - main
+    worktrees_after_bootstrap: 1
+    ds_store_ignored: true
+    env_local_ignored: true
+    post_bootstrap_worktree_clean: true
+
+  candidate:
+    commit: "d6a11c05a7a12c6f9782ef746388fc6b9ec76437"
+    parent: "8ce3271101fed20c272cbdc33e53be750e37c043"
+    stack:
+      next: 16.3.8
+      react: 19.2.8
+      react_dom: 19.2.8
+      typescript: 5.9.3
+      pnpm: 11.22.0
+      supabase_ssr: 0.12.7
+      supabase_js: 2.117.2
+    package_lock: pnpm-lock.yaml
+    source_root: src/app
+    supabase_seam:
+      browser: src/lib/supabase/client.ts
+      server: src/lib/supabase/server.ts
+    environment_contract:
+      - NEXT_PUBLIC_SUPABASE_URL
+      - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    authority_files_modified: false
+    forbidden_feature_or_infrastructure_scope_added: false
+
+  verification:
+    candidate: "d6a11c05a7a12c6f9782ef746388fc6b9ec76437"
+    frozen_install: "PASS; pnpm install --frozen-lockfile"
+    lint: "PASS; pnpm lint"
+    typecheck: "PASS; pnpm typecheck"
+    production_build: "PASS; pnpm build; Next.js 16.3.8 produced static route /"
+    runtime_http: "PASS; bounded next start on 127.0.0.1:3217 returned HTTP 200 for / and rendered the expected landing-page marker; process was terminated and the port was free afterward."
+    post_qualification_worktree: "PASS; tracked worktree/index clean with no untracked residue."
+    ds_store_sha256_after_qualification: "d65165279105ca6773180500688df4bdc69a2c7b771752f0a46ef120b7fd8ec3"
+    remote_prepublication: "PASS; fresh canonical origin/main remains 8ce3271101fed20c272cbdc33e53be750e37c043."
+    topology: "PASS; candidate is the sole direct implementation child of the exact authorized base; one local worktree and one canonical remote branch main."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0001 revision 4 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "The one-time in-place bootstrap started from exactly the preserved root .DS_Store and no Git repository, preserved its SHA-256 d65165279105ca6773180500688df4bdc69a2c7b771752f0a46ef120b7fd8ec3, bound only main to the exact base, and produced one clean worktree. Candidate d6a11c05a7a12c6f9782ef746388fc6b9ec76437 contains the locked Next.js App Router, React, TypeScript and pnpm scaffold while README.md, AGENTS.md, docs, .gitignore and .env.example remain unchanged."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "The candidate adds only src/lib/supabase/client.ts and server.ts using @supabase/ssr 0.12.7 with @supabase/supabase-js 2.117.2. The committed .env.example remains unchanged with exactly NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, .env/.env.local remain ignored, and no service-role/secret/private credential, migration, schema, RLS policy or storage mutation is introduced."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "On exact candidate d6a11c05a7a12c6f9782ef746388fc6b9ec76437: pnpm install --frozen-lockfile PASS; pnpm lint PASS; pnpm typecheck PASS; pnpm build PASS; bounded production runtime proof returned HTTP 200 for / with the expected landing-page marker and cleaned up the server process."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Base-to-candidate staged diff is limited to the root application/tooling scaffold, src/app landing route, and narrow Supabase client/server seam. No Study/Coach, Practice, auth behavior, domain schema, scoring, audio/STT, progress, mock-test, admin/CMS, ingestion, OpenAI, Cloudinary, YouTube, Redis, queue/worker, vector/embedding, microservice or generic repository layer was added."
+
+  - criterion_id: AC-5
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate is the exact-base direct child, fully qualified and locally clean; fresh origin/main still equals the authorized base; this report is authored for the required sole report-only child and one ordinary non-force single publication. Report-commit publication and fresh remote-main closure are intentionally proven only after this report commit, outside this prepublication report."
+
+result: NEEDS_REVIEW
