@@ -1,0 +1,204 @@
+protocol_version: 3
+
+task_id: TASK-0010
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0010
+  gap_id: PTE-LOCAL-STT-REPEAT-SENTENCE-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one local-STT speaking slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest browser worker/mic/Supabase boundary"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; dependency -> schema/content -> local-STT -> interaction -> proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0009/review.yaml in the exact handoff snapshot"
+    role: "accepted five-task Practice/Supabase baseline and browser SpeechSynthesis precedent"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned ephemeral learner-audio, local-STT, client-boundary and stack truth"
+    precedence: 2
+  - source: "Pearson current Speaking & Writing format: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current Repeat Sentence mechanics: 3-9 second prompt, Listening+Speaking, 15-second response, one response, official Content/Pronunciation/Oral-Fluency traits"
+    precedence: 3
+  - source: "Hugging Face current Transformers.js WebGPU/ASR documentation: https://huggingface.co/docs/transformers.js/guides/webgpu ; https://huggingface.co/docs/transformers.js/api/pipelines"
+    role: "browser-local Whisper ASR HOW"
+    precedence: 4
+  - source: "npm registry resolved via pnpm on 2026-10-05: @huggingface/transformers latest=4.3.0"
+    role: "exact package version authority for this task"
+    precedence: 5
+  - source: "onnx-community/whisper-tiny.en HEAD resolved 2026-10-05: 2575352d61be1bf7225cf8f8b268a4678025fc58"
+    role: "exact public model revision"
+    precedence: 6
+  - source: "Current Supabase RLS/Data API documentation"
+    role: "explicit GRANT + RLS implementation/security HOW"
+    precedence: 7
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 8
+
+structure_authority:
+  status: RESOLVED
+  source: "existing feature-specific Practice route/table precedent plus PRODUCT learner-audio invariant"
+  rationale: "Authorize one feature-specific Repeat Sentence content table, one /practice route subtree, one speaking-local-STT worker boundary, and one now-demonstrated shared word-sequence helper reused by WFD and Repeat Sentence. Do not create a generic scoring/attempt/speaking platform."
+
+objective: "Ship the first real speaking practice slice and activate the frozen browser-local STT path: original Repeat Sentence prompts, one-shot browser speech playback, one-shot ephemeral microphone recording up to 15 seconds, local Whisper transcription using pinned Transformers.js/model bytes with WebGPU preferred and WASM fallback, and truthful local content-sequence accuracy without storing learner audio or pretending to score Pearson pronunciation/oral fluency."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0010 revision 1, bound TASK-0009 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may be ordinary FF-only synchronized to the handoff base."
+    - "Immediately before live database mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly the accepted six migrations through 20261004230739_create_write_from_dictation_items; public schema is exactly nine accepted application tables; Study=11 active / 0 mappings, FIB=8, SWT=6, Essay=6, WFD=12; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Install exactly @huggingface/transformers@4.3.0 as a production dependency using pnpm. Update docs/STACK.md only enough to mark @huggingface/transformers 4.3.0 INSTALLED and record exact model onnx-community/whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58 as the V1 local-ASR model. HF_TOKEN remains NOT_REQUIRED/absent."
+    - "Do not install any other direct npm dependency. Transitive lockfile changes caused by @huggingface/transformers are allowed; unrelated package/version drift is forbidden."
+    - "Create exactly one new repository/live migration for public.repeat_sentence_items with: id bigint generated always as identity primary key; slug text unique not null; sentence text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple checks only: kebab-case slug; required text non-empty after trim; difficulty/source_type lowercase snake_case. Do not add audio URLs, learner tables, attempt/result tables, generic scoring tables, functions, triggers, views or media infrastructure."
+    - "Enable RLS on repeat_sentence_items. Revoke anon/authenticated privileges, explicitly GRANT SELECT only, and add exactly one active=true SELECT policy for anon/authenticated. No browser write grant/policy."
+    - "Persist exactly ten active original Repeat Sentence prompts through privileged Supabase authoring after migration, not inside migration bytes. Use source_type=project_authored, created_by=updated_by=chatgpt_task_0010, and source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/."
+    - "Use these exact slugs: campus-library-extends-hours; students-discuss-results-after-class; research-methods-require-careful-planning; lecture-covers-economic-change; laboratory-closes-during-maintenance; regular-reading-builds-academic-vocabulary; new-evidence-changed-researchers-conclusion; university-supports-independent-learning; clear-notes-improve-later-recall; public-policy-depends-on-reliable-data."
+    - "Each prompt sentence must be original project-authored natural English of 8..13 whitespace-delimited words, with no copied Pearson sentence/example and no proper noun. Browser TTS duration need not claim exact Pearson acoustic equivalence; UI must state that local browser speech is a practice approximation."
+    - "Reuse existing Study slug repeat-sentence-strategy and preserve its body/metadata/hash; do not add or revise Study content."
+    - "Implement /practice/repeat-sentence as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first active valid row or a clear empty state."
+    - "Update /practice to expose five implemented task types, adding Repeat Sentence under Listening + Speaking."
+    - "Prompt playback uses browser-native SpeechSynthesis/SpeechSynthesisUtterance only, exactly once per item/reset before recording. Reuse the established en-AU -> en-GB -> en-US -> any en-* -> browser-default preference and a rate in 0.85..1.0. The expected sentence is not visibly rendered before evaluation."
+    - "Add one explicit learner action to prepare local STT. Model loading/inference must run in a dedicated browser Web Worker rather than the React main thread. The worker loads automatic-speech-recognition with exact package @huggingface/transformers@4.3.0, exact model onnx-community/whisper-tiny.en and revision 2575352d61be1bf7225cf8f8b268a4678025fc58."
+    - "The worker must prefer device='webgpu' when WebGPU is available and working; if WebGPU initialization/inference fails, retry once with device='wasm'. Surface the selected backend to learner/debug UI as Local STT: WebGPU or Local STT: WASM. Do not call a remote inference API. Public Hugging Face model-file download/cache on first use is allowed and NO_KEY; model inference itself remains local."
+    - "Microphone capture must use navigator.mediaDevices.getUserMedia({audio:true}) plus browser-native recording/audio APIs. Recording becomes available only after prompt playback and local-STT readiness. Permit exactly one recording per item/reset, maximum 15 seconds; provide Stop response before the cap and auto-stop at the cap."
+    - "Keep learner audio ephemeral in memory only. Do not create/upload an audio URL, Supabase row, Cloudinary object, file, localStorage/sessionStorage/indexedDB record, cache API record or cookie containing learner audio. After transcription/result, stop all MediaStream tracks and drop Blob/ArrayBuffer/Float32Array references as soon as no longer required. No recording_url schema."
+    - "Convert captured audio to the format required by Whisper locally; the ASR input delivered to Transformers.js must be mono Float32 audio sampled/resampled to 16 kHz. No third-party audio-processing package is authorized."
+    - "After recording ends, transcribe locally and display the transcript. If model loading, mic permission, capture, decode/resample or inference fails, show an explicit recoverable local error; never silently send audio elsewhere."
+    - "Extract the demonstrated normalization/LCS sequence matcher currently owned by WFD into one smallest neutral shared TypeScript helper and make both WFD and Repeat Sentence use it without changing accepted WFD behavior. No generic scoring engine/class/interface."
+    - "Repeat Sentence result displays 'Practice content accuracy: M / N' using the shared normalized LCS matcher against the prompt sentence and local Whisper transcript. Explicitly state that this is a local transcript/content proxy, not Pearson Content, Pronunciation, Oral Fluency, score or points, and that STT errors can affect the result."
+    - "Do not attempt pronunciation, stress, intonation or oral-fluency scoring. Do not persist transcript/metrics in TASK-0010 because learner identity/progress storage is not yet authorized."
+    - "Reset must cancel speech playback if active, stop mic tracks if active, clear recording/transcript/result/errors, and re-enable one prompt playback plus one recording. Changing item performs the same bounded cleanup/reset. Worker/model may remain loaded for the page/session to avoid repeated model downloads."
+    - "Add direct bidirectional Study bridge: repeat-sentence-strategy links visibly to /practice/repeat-sentence and Practice links back. No generalized recommendation infrastructure."
+    - "After authoring, prove exactly ten active Repeat Sentence rows with exact slugs/provenance, sentence uniqueness and 8..13-word range. Prove all pre-existing Study/FIB/SWT/Essay/WFD counts and accepted content hashes unchanged."
+    - "Prove public Data API with the existing publishable key reads exactly ten active Repeat Sentence rows; browser writes remain absent by grants/policies."
+    - "Regenerate src/types/database.ts from exact project ayqcpsdebldtzohwdmer and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0010-attributable Security finding is required. Performance INFO may be reported truthfully; no speculative indexes."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the exact candidate."
+    - "Run bounded production HTTP proof: /practice exposes all five task types; /practice/repeat-sentence default/selected/invalid fallback return 200; pre-check visible page does not reveal expected sentence; /study/repeat-sentence-strategy links to Practice."
+    - "Run real Chrome/CDP end-to-end proof without adding browser-test dependencies. Use a task-owned fake microphone fixture under an ignored repository-local path only for verification; generate it from original task-owned text using local/native tooling, never commit it, and remove it during cleanup. Launch Chrome with fake-media permission/device flags so application getUserMedia/MediaRecorder executes normally."
+    - "Browser proof must establish: SpeechSynthesis available; prompt sentence initially hidden; one Play invocation carries exact DB prompt and disables replay; local-STT preparation loads exact model revision and reports either WebGPU or WASM backend with no remote inference endpoint; mic recording starts only after playback+STT readiness and stops by explicit Stop or <=15-second cap; captured fake-mic audio is transcribed locally into non-empty English text; independent normalized matcher recomputation equals displayed Practice content accuracy M/N; transcript/result disclaimers contain no official pronunciation/fluency/PTE-score claim; Reset stops/clears all local recording/result state; item-change resets one-play/one-record state; no learner audio/response is present in localStorage/sessionStorage/indexedDB/cookies/CacheStorage after completion."
+    - "Browser/model proof may take longer on first model download. Bound all waits with explicit finite deadlines; distinguish model-download failure, WebGPU failure with successful WASM fallback, and total local-STT failure. Do not weaken proof to source inspection if real local inference cannot be demonstrated."
+    - "Cleanly terminate task-owned Next.js/Chrome processes, release ports, remove the task-owned browser profile and fake-audio fixture after exact-path/containment/non-symlink proof."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0010/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0011."
+
+  allowed_existing_files_or_components:
+    - "package.json"
+    - "pnpm-lock.yaml"
+    - "docs/STACK.md"
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/practice/page.tsx"
+    - "src/app/practice/repeat-sentence and feature-local source files"
+    - "one smallest dedicated local-STT Web Worker/module boundary"
+    - "one smallest neutral shared word-normalization/LCS helper reused by WFD and Repeat Sentence"
+    - "src/app/practice/write-from-dictation/exercise.tsx only for behavior-preserving matcher extraction"
+    - "src/app/study/[slug]/page.tsx solely for Repeat Sentence Practice link"
+    - "src/app/globals.css for smallest responsive/status styling additions"
+    - "existing Supabase clients for use only"
+    - ".agent/tasks/TASK-0010/report.yaml"
+    - "Supabase public.repeat_sentence_items exact ten authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Learner audio is ephemeral and never persisted/uploaded."
+  - "Whisper inference is local in-browser; public model download is not remote inference."
+  - "Exact model id/revision is onnx-community/whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58."
+  - "@huggingface/transformers is pinned exactly to 4.3.0 and HF_TOKEN remains absent."
+  - "WebGPU is preferred, WASM is a real fallback."
+  - "Practice content accuracy is a local transcript/LCS proxy only; pronunciation/oral fluency are not scored."
+  - "No learner auth/progress/attempt persistence."
+  - "Existing accepted Study/FIB/SWT/Essay/WFD content remains unchanged."
+  - "No paid/runtime AI API or persistent learner media."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite canonical history."
+  - "Create generic speaking/practice/question/attempt/result/scoring platforms or persistent learner tables."
+  - "Create learner audio/media URLs, Storage buckets, Cloudinary objects, remote STT/TTS calls, OpenAI calls, SpeechRecognition/webkitSpeechRecognition usage, pronunciation APIs or speech-scoring services."
+  - "Persist learner audio/transcript/result in Supabase, filesystem, localStorage, sessionStorage, IndexedDB, CacheStorage or cookies."
+  - "Install any direct npm dependency other than exact @huggingface/transformers@4.3.0."
+  - "Use HF_TOKEN or a private/gated model."
+  - "Claim the local transcript/LCS result is official Pearson Content, Pronunciation, Oral Fluency, score or points."
+  - "Modify existing Study content or prior Practice data beyond the exact navigation and behavior-preserving matcher extraction."
+  - "Run model inference on a server or upload learner audio to Hugging Face."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new feature-specific Repeat Sentence table with exactly ten valid original active prompts, while all previously accepted content remains unchanged."
+    evidence_required: "Migration/schema identity; ten-row exact slug/provenance/word-count/uniqueness proof; prior Study/FIB/SWT/Essay/WFD counts and hashes unchanged."
+  - id: AC-2
+    requirement: "The selected V1 local-STT stack is truthfully activated and bounded."
+    evidence_required: "package/lock diff with exact @huggingface/transformers 4.3.0 only as new direct dependency; docs/STACK installed state; exact model revision in source; worker-bound pipeline; browser proof of WebGPU preference or documented WebGPU failure plus WASM fallback; no HF_TOKEN/remote inference."
+  - id: AC-3
+    requirement: "Learners can complete a real ephemeral Repeat Sentence flow: hear one prompt, record one <=15-second microphone response, receive a local Whisper transcript and truthful local content-sequence accuracy."
+    evidence_required: "Real Chrome fake-mic end-to-end proof through application getUserMedia/MediaRecorder + exact local model; prompt hidden/preplay gate; one-play/one-record behavior; non-empty transcript; independently recomputed M/N equality; no pronunciation/fluency/official-score claim."
+  - id: AC-4
+    requirement: "Learner audio and speaking state satisfy the product privacy invariant."
+    evidence_required: "Source/runtime proof that tracks stop; temporary audio buffers are discarded; no recording URL/upload/provider call; local/session/IndexedDB/CacheStorage/cookie scan after run contains no learner audio/transcript/result; task-owned fixture/profile cleanup PASS."
+  - id: AC-5
+    requirement: "Repeat Sentence and WFD share only the demonstrated word-sequence helper, Study bridge remains direct, and application/database stay mechanically/security healthy."
+    evidence_required: "Behavior-preserving WFD source/browser smoke; direct Repeat Sentence Study bridge; no generic scoring layer; fresh Data API/RLS/grant/type/advisor proof; frozen install/lint/typecheck/build/diff-check PASS; no privileged secrets."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
