@@ -1,0 +1,183 @@
+protocol_version: 3
+
+task_id: TASK-0007
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0007
+  gap_id: PTE-PRACTICE-SUMMARIZE-WRITTEN-TEXT-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Writing practice slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest feature-specific schema/UI boundary"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; schema -> content -> interaction -> proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0006/review.yaml in the exact handoff snapshot"
+    role: "accepted first Practice vertical slice and current live Supabase/application baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "PTE-owned Practice/Study relationship, Supabase, framework and engineering truth"
+    precedence: 2
+  - source: "Pearson current Speaking & Writing format: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current Summarize Written Text mechanics: one sentence, 5..75 words, 10 minutes, prompt up to 300 words; current scoring traits are external factual reference only"
+    precedence: 3
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 4
+
+structure_authority:
+  status: RESOLVED
+  source: "existing Practice App Router ownership plus task-specific content-table precedent from TASK-0006"
+  rationale: "Authorize one feature-specific Summarize Written Text content owner and one /practice route subtree. Do not generalize two Practice slices into a question-bank/scoring service before an actual shared requirement is proven."
+
+objective: "Ship a usable PTE Academic Summarize Written Text practice slice with original Supabase-backed passages, a 10-minute local practice timer, deterministic form-only checks for the official one-sentence/5..75-word boundary, and key-point self-review, while explicitly refusing to imitate Pearson Content/Grammar/Vocabulary scoring."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0007 revision 1, bound TASK-0006 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer before mutation. A clean correctly bound local main may be ordinary FF-only synchronized to the handoff base."
+    - "Immediately before live database mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly the accepted three migrations through 20261004212252_create_reading_fill_in_blanks_items; public schema is exactly the accepted six application tables; Study remains 10 active / 0 mappings; Reading FIB remains 8 active; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.summarize_written_text_items. Do not create or rename a generic practice_items/questions/attempts/results/scoring table."
+    - "summarize_written_text_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; passage text not null; key_points jsonb not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple DB checks only: slug lowercase kebab-case; title/passage/difficulty/source_type/created_by/updated_by non-empty after trim; difficulty/source_type lowercase snake_case; key_points must be a JSON array with length 2..5. Do not add enums, functions, triggers, generic JSON metadata, full-text search or scoring infrastructure."
+    - "The key_points JSON is a feature-local self-review contract: ordered array of 2..5 non-empty strings. Implement one small feature-local TypeScript parser/guard that fails closed on malformed rows. Do not add Zod or another validation dependency."
+    - "Enable RLS on the new table. Revoke all anon/authenticated privileges, then grant SELECT only and add one active=true SELECT policy for anon/authenticated. No learner/browser write policy or grant is authorized."
+    - "Persist exactly six active project-authored starter items through privileged connected Supabase authoring after migration, not through a data migration. Use created_by=updated_by=chatgpt_task_0007, source_type=project_authored and source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/ for all six."
+    - "Persist these exact slugs/titles/difficulties:
+        1) open-data-scientific-research — 'Open data in scientific research' — starter
+        2) public-transport-growing-cities — 'Public transport in growing cities' — starter
+        3) sleep-and-learning — 'Sleep and learning' — starter
+        4) biodiversity-and-agriculture — 'Biodiversity and agriculture' — developing
+        5) remote-healthcare-access — 'Remote healthcare access' — developing
+        6) artificial-light-and-wildlife — 'Artificial light and wildlife' — developing."
+    - "Each passage must be original project-authored academic-style prose of 140..240 words, below Pearson's current 300-word prompt maximum, with exactly three concise key_points capturing the central claim and essential supporting ideas. Do not copy Pearson sample passages, paid preparation content or arbitrary web prose."
+    - "Implement /practice/summarize-written-text as a server-first route backed by the existing typed public Supabase server client. Support ?item=<slug>; missing/invalid/inactive item values deterministically fall back to the first valid active item or a clear empty state."
+    - "Update /practice so it visibly exposes both existing Reading Fill in the Blanks (Dropdown) and Summarize Written Text. Do not build task discovery/search infrastructure."
+    - "Implement exactly one feature-local client component for the response interaction. It owns only local textarea/timer/check state. No global state, localStorage, cookies, auth state or database attempt persistence."
+    - "Display a live word count. Form-only practice checks are deterministic and explicitly labelled as practice form checks, not Pearson scoring: trimmed response must contain 5..75 whitespace-delimited words; begin with an uppercase Latin letter; contain exactly one full stop character and that full stop must be the final non-whitespace character. The app must not claim these checks evaluate Content, Grammar or Vocabulary."
+    - "A Check form action may run at any time but must show each structural criterion independently rather than produce a combined PTE score/band/points. If form passes, state only that the response meets the local form checks."
+    - "Provide a Reveal key ideas action that shows the three stored key points for learner self-review. It must not compute semantic similarity, keyword score or claim those key points are an official Pearson answer key."
+    - "Implement a local 10:00 countdown timer with Start/Pause/Reset behavior. Timer state is ephemeral; it does not auto-submit or persist. When it reaches zero, show Time is up but keep the draft available for self-review."
+    - "Changing item resets draft, form-check result, revealed key ideas and timer state. Provide bounded previous/next or item navigation links without sessions/attempts."
+    - "Add a bidirectional bounded Study bridge: existing Study item summarize-written-text-strategy visibly links to /practice/summarize-written-text, and the Practice route links back to /study/summarize-written-text-strategy. Do not create a generalized recommendation engine."
+    - "Do not modify existing Study content bodies/metadata, Reading FIB content or its table. Study hashes and existing Practice FIB rows must remain unchanged."
+    - "Do not install any npm dependency. Preserve package.json and pnpm-lock.yaml byte-identical to the execution base."
+    - "After authoring, prove live summarize_written_text_items has exactly six active rows with exact authorized slug/title/difficulty/provenance metadata; every passage is 140..240 words and every key_points payload is exactly three non-empty strings; no extra Practice table/schema exists; Study and Reading FIB counts/hashes remain unchanged."
+    - "Prove public Data API using the existing publishable key can read exactly six active rows and browser write authority remains absent by grants/policies. Never print or persist the key."
+    - "Regenerate src/types/database.ts from exact project ayqcpsdebldtzohwdmer and prove byte-match to the fresh live contract."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0007-attributable Security finding is required. Performance INFO may be reported truthfully; do not add speculative indexes."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the exact candidate."
+    - "Run bounded production HTTP proof using real ignored local public Supabase values: /practice returns 200 and exposes both task types; /practice/summarize-written-text returns 200 with the first authorized item; ?item=artificial-light-and-wildlife returns 200 with that item; invalid item deterministically falls back; Study detail bridge is visible. Cleanly stop server and prove port release."
+    - "Run real browser interaction proof through an already-available browser/DevTools surface without installing browser-test dependencies: verify textarea and initial word count 0; enter a four-word response and prove the 5..75 criterion fails; enter two short sentences and prove the one-full-stop-at-end criterion fails; enter one valid 5..75-word one-sentence response and prove all local form checks pass with no official-score claim; reveal exactly three key ideas; start the timer and prove it decrements; Pause preserves remaining time; Reset clears draft/results/key ideas and returns timer to 10:00; create draft/timer state then switch item and prove all local state resets. If browser automation capability is unavailable, stop CURRENT_PHASE_CAPABILITY_UNAVAILABLE."
+    - "Commit one coherent implementation candidate on main, create .agent/tasks/TASK-0007/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0008."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/practice/page.tsx"
+    - "src/app/practice/summarize-written-text and feature-local source files"
+    - "src/app/study/[slug]/page.tsx solely for the SWT Practice link"
+    - "src/app/globals.css for the smallest responsive styling additions"
+    - "existing src/lib/supabase clients for use only; auth/credential semantics must not change"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0007/report.yaml"
+    - "Supabase public.summarize_written_text_items exact six authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Practice content is original project-authored prose; no Pearson passage/sample-question copying."
+  - "Displayed checks are local practice-form checks only; Content/Grammar/Vocabulary and official PTE scoring are not simulated."
+  - "No persistent learner attempt/progress/auth state."
+  - "No runtime AI, semantic scorer, grammar API, embeddings, media or deployment consequence."
+  - "No npm dependency drift or generic Practice abstraction."
+  - "Existing Study 10-row truth and Reading FIB 8-row truth remain unchanged."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite canonical history."
+  - "Create generic practice/question/attempt/result/scoring owners or learner persistence."
+  - "Create auth/profile/progress, Study mappings/subskills, media/storage, functions, views, SECURITY DEFINER, Realtime, Edge Functions, cron, queues or background workers."
+  - "Install/update/remove npm dependencies."
+  - "Use runtime OpenAI/LLM, grammar-scoring SaaS or semantic similarity scoring."
+  - "Call local form checks an official score, Content score, Grammar score, Vocabulary score, band, points or visa evidence."
+  - "Copy Pearson sample passages/questions or arbitrary web prose."
+  - "Modify Reading FIB schema/content or existing Study body/metadata."
+  - "Use localStorage/cookies for hidden draft or attempt persistence."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new feature-specific SWT table and exactly six valid original active items, with existing Study/Reading-FIB truth unchanged."
+    evidence_required: "Exact migration/schema identity; six-row metadata/count/word-count/key-point-contract proof; unchanged Study hashes/count/mappings and Reading FIB rows."
+  - id: AC-2
+    requirement: "Learners can browse and load SWT practice from public active-only RLS-backed Supabase data."
+    evidence_required: "RLS/grant/Data API proof plus production HTTP proof for Practice landing, default/selected/invalid SWT routes."
+  - id: AC-3
+    requirement: "The client interaction provides truthful form-only checks, key-point self-review and an ephemeral 10-minute timer without official-score claims or persistence."
+    evidence_required: "Real browser/DevTools proof for 4-word failure, two-sentence failure, valid-response PASS, exactly three revealed key ideas, timer decrement/pause/reset, and item-change state reset."
+  - id: AC-4
+    requirement: "Study and SWT Practice form one bounded bidirectional link without generalized recommendation infrastructure."
+    evidence_required: "SWT Study detail links visibly to Practice and Practice links back; no generic mapping/recommendation abstraction."
+  - id: AC-5
+    requirement: "Application/database remain secure and mechanically healthy with zero dependency drift."
+    evidence_required: "Public SELECT-only/no-write proof, fresh generated-type byte match, fresh advisors, package/lock base identity, frozen install/lint/typecheck/build/diff-check PASS, no privileged secrets/tracked env, clean server/browser teardown."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
