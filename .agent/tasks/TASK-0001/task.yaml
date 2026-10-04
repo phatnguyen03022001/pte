@@ -1,7 +1,7 @@
 protocol_version: 3
 
 task_id: TASK-0001
-task_revision: 2
+task_revision: 3
 state: APPROVED
 
 origin:
@@ -50,7 +50,7 @@ authority_sources:
   - source: "Current operator decision: phatnguyen03022001/pte is MAIN_ONLY; main is the only authorized branch and branch creation is forbidden."
     role: "repository topology and publication authority"
     precedence: 1
-  - source: "AGENTS.md, docs/PRODUCT.md, docs/ARCHITECTURE.md, docs/ENGINEERING_RULES.md and docs/STUDY.md in the exact handoff snapshot"
+  - source: "AGENTS.md, README.md, .gitignore, .env.example, docs/PRODUCT.md, docs/ARCHITECTURE.md, docs/ENGINEERING_RULES.md and docs/STUDY.md in the exact handoff snapshot"
     role: "PTE-owned product, Study/Coach, architecture, rule, provenance and execution-boundary truth"
     precedence: 2
   - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
@@ -69,11 +69,13 @@ objective: "Bootstrap a minimal production-ready PTE web application scaffold on
 
 scope:
   required_changes:
-    - "Fresh-resolve the exact revision-2 task and handoff snapshot on phatnguyen03022001/pte main. Revision 2 supersedes unexecuted revision 1. Require live remote main and the execution checkout to match the authorized base before mutation. Do not create any branch, worktree branch, tag, release or alternate integration ref."
-    - "Initialize the application at repository root with the current stable Next.js App Router + React + TypeScript package set compatible with the current official Next.js/Vercel guidance at execution time. Use pnpm and commit one exact lockfile. Preserve all existing planning/authority documents including docs/STUDY.md."
+    - "Fresh-resolve the exact revision-3 task and handoff snapshot on phatnguyen03022001/pte main. Revision 3 supersedes unexecuted revision 2. Require live remote main and the execution checkout to match the authorized base before mutation. Do not create any branch, worktree branch, tag, release or alternate integration ref."
+    - "Before mutation, require exact repository/origin identity, branch main, exact authorized base, a clean tracked worktree/index, no unrelated untracked files, and no in-progress Git operation. Pre-existing dirt is BLOCKED: do not reset, clean, stash, rebase, adopt, overwrite or delete it to proceed. During execution, only task-authorized paths may be dirty; require a clean worktree/index again before candidate qualification and terminal publication closure."
+    - "Initialize the application at repository root with the current stable Next.js App Router + React + TypeScript package set compatible with the current official Next.js/Vercel guidance at execution time. Use pnpm and commit one exact lockfile. Preserve all existing planning/authority documents including docs/STUDY.md, plus the committed .gitignore and .env.example contracts."
     - "Use a source layout that keeps Next.js routing under src/app and leaves feature/domain ownership available for later task-specific implementation. Do not create placeholder Study, Practice or skill-feature directories/files solely to predeclare a tree."
     - "Enable strict TypeScript and repo-native lint/typecheck/build commands. Keep the toolchain minimal; do not add a test framework merely to satisfy generic ECC coverage/TDD guidance because TASK-0001 adds no product behavior."
-    - "Add only the minimal Supabase application dependencies needed for supported Next.js browser/server clients, using current official Supabase guidance. Establish a small shared Supabase integration seam and an .env.example contract for public URL/publishable credentials. Never add, require or expose a service-role/secret key in browser code."
+    - "Add only the minimal Supabase application dependencies needed for supported Next.js browser/server clients, using current official Supabase guidance. Use the committed .env.example as the exact local setup contract: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY only, with official Supabase documentation/dashboard locators. Real values belong in ignored .env.local. Never add, require or expose a service-role/secret/private key in browser code or NEXT_PUBLIC_*."
+    - "Preserve .gitignore semantics that ignore real .env and .env.* files while explicitly allowing .env.example, and ignore normal Next.js/dependency/build/local metadata such that operator-provided .env.local values do not make the worktree dirty."
     - "Create a minimal landing route sufficient to prove the application boots and renders. It must not implement Study/Coach, auth, practice, question types, scoring, recording/STT, progress, mock tests, recommendations, ingestion or admin behavior."
     - "Do not create Supabase domain tables, Study tables/mappings, learner-progress tables, media tables, migrations, RLS policies, storage buckets or live project mutations in this task. Database/auth/Study product work is a separate feature boundary."
     - "Do not add Cloudinary, OpenAI/runtime AI, Markdown/CMS packages for future Study UI, YouTube/media integration, analytics, Redis, queues, background workers, crawlers, vector/embedding infrastructure, microservices, generic repository/data-access abstractions, state libraries or other speculative dependencies."
@@ -84,11 +86,14 @@ scope:
     - "src/app"
     - "narrow shared Supabase browser/server integration"
     - ".env.example"
+    - ".gitignore"
     - "existing README.md, AGENTS.md and docs/ planning/product/spec truth"
     - ".agent/tasks/TASK-0001/report.yaml"
 
 invariants:
   - "MAIN_ONLY remains exact: only main is used; create_branch=false is non-waivable for this task."
+  - "Execution starts from a clean correctly bound checkout; unrelated dirty/untracked state or in-progress Git operation blocks mutation and must never be hidden or destroyed to continue."
+  - "Real environment values remain local and ignored; .env.example stays placeholder-only and commit-safe."
   - "Existing PTE product/architecture/rule/Study documents remain authoritative and are not weakened or reinterpreted by implementation convenience."
   - "Study is a first-class future product domain and Study ↔ subskill ↔ Practice is a durable product relationship, but TASK-0001 implements none of those feature semantics."
   - "Core Study/Practice runtime remains zero-paid-API by product authority; no runtime OpenAI dependency is introduced."
@@ -100,6 +105,8 @@ invariants:
 forbidden_changes:
   - "Create or publish any branch other than main, including temporary/recovery/feature/staging branches."
   - "Force push, rewrite canonical history, create tags/releases, or change repository topology."
+  - "Use git stash/reset/clean/rebase or destructive checkout/recovery actions to hide, discard or adopt pre-existing dirty state."
+  - "Stage or commit .env.local, real .env values, Supabase secret/service-role keys, passwords, tokens or other private credentials."
   - "Implement Study/Coach UI/content/schema/recommendations, auth/product tables/RLS/domain schema, practice flows, PTE question types, scoring, audio/STT, progress, mock-test, admin/CMS, analytics, crawler/ingestion, YouTube/media persistence or paid external integrations."
   - "Add speculative infrastructure or architecture layers not required by this scaffold."
   - "Adopt generic ECC examples such as Repository Pattern, blanket 80% coverage, mandatory TDD, Zod, or rate-limiting as dependencies/acceptance merely because upstream mentions them."
@@ -116,11 +123,11 @@ gap_policy:
 
 acceptance_criteria:
   - id: AC-1
-    requirement: "The repository has one minimal locked Next.js App Router + React + TypeScript + pnpm scaffold that preserves all current planning/product/spec authority and MAIN_ONLY topology."
-    evidence_required: "Exact dependency/lockfile inventory; strict TypeScript/tooling config; fresh branch/ref proof showing main only; README/AGENTS/docs including docs/STUDY.md preserved; no branch creation."
+    requirement: "The repository has one minimal locked Next.js App Router + React + TypeScript + pnpm scaffold that preserves all current planning/product/spec authority, environment/ignore contracts, clean-worktree discipline and MAIN_ONLY topology."
+    evidence_required: "Exact dependency/lockfile inventory; strict TypeScript/tooling config; fresh branch/ref proof showing main only; README/AGENTS/docs including docs/STUDY.md plus .gitignore/.env.example preserved; preflight and candidate/closure clean-worktree proof; no branch creation."
   - id: AC-2
     requirement: "The scaffold has a narrow current-supported Supabase Next.js integration seam without creating product data/schema or exposing privileged credentials."
-    evidence_required: "Inspect browser/server integration and .env.example; dependency provenance; proof that no service-role/secret credential is present or required client-side; no migrations/domain/Study/media tables/RLS/storage changes."
+    evidence_required: "Inspect browser/server integration and .env.example; prove the exact two public variable names and official Supabase locators; prove .env.local/real env files are ignored; dependency provenance; proof that no service-role/secret credential is present or required client-side; no migrations/domain/Study/media tables/RLS/storage changes."
   - id: AC-3
     requirement: "The scaffold is mechanically healthy and the minimal app is runnable."
     evidence_required: "pnpm install --frozen-lockfile PASS, lint PASS, typecheck PASS, production build PASS, plus bounded local HTTP/runtime proof for the minimal route or an equivalent deterministic target-native runtime check."
