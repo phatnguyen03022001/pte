@@ -1,0 +1,13 @@
+export default function Home() {
+  return (
+    <main className="landing">
+      <section className="landing__content">
+        <p className="landing__eyebrow">PTE Academic</p>
+        <h1>Practice with a clear path forward.</h1>
+        <p className="landing__summary">
+          A free-first workspace for focused PTE learning and practice.
+        </p>
+      </section>
+    </main>
+  );
+}
