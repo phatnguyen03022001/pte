@@ -1,0 +1,38 @@
+protocol_version: 3
+task_id: TASK-0003
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0003/report.yaml
+  commit: "0ccb1e67b0f5f0d6354122f8e9e4854ba1b73f25"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0003 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate b309bbb1785c9a40199596592e86dc7280420d5b is the sole direct child of exact authorized base 4fe31bb44b71603b1b5e0081c54f8f6277225279. Report 0ccb1e67b0f5f0d6354122f8e9e4854ba1b73f25 is the candidate's sole direct child and changes only .agent/tasks/TASK-0003/report.yaml. Fresh remote main equals the report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY and has exactly one migration, 20261004202511_create_shared_taxonomy. Live public schema contains exactly skills, subskills and skill_subskills. skills contains exactly listening/Listening/1, speaking/Speaking/2, reading/Reading/3 and writing/Writing/4; subskills and skill_subskills contain zero rows. Column checks, primary keys and both RESTRICT foreign keys match the repository migration."
+  - "AC-2 PASS: RLS is enabled on all three tables. Independent catalog inspection shows anon and authenticated each have SELECT only, with exactly one SELECT policy per table and no browser write grant/policy. Independent read-only Data API replay using the existing local publishable credential returned HTTP 200 with exactly the four ordered skill rows and an empty subskills result. The Executor's earlier negative write proof is consistent with the independently verified grant/policy boundary and left data unchanged."
+  - "AC-3 PASS: a fresh generated TypeScript contract from exact project ayqcpsdebldtzohwdmer is byte-identical to committed src/types/database.ts. Existing browser/server Supabase factories use createBrowserClient<Database> and createServerClient<Database> with no auth/session semantic change and no privileged credential references under src."
+  - "AC-4 PASS: fresh Supabase Security Advisor returns zero findings. Performance Advisor returns one INFO unused_index for skill_subskills_subskill_code_idx. This is not a correctness/security regression: the composite primary-key index leads on skill_code and does not cover the reverse subskill_code lookup/FK direction, while the mapping table is currently empty so usage cannot yet be observed. Retaining the bounded FK-supporting index is consistent with the task and does not justify artificial traffic or schema weakening."
+  - "AC-5 PASS: independent diff proves package.json, pnpm-lock.yaml and pnpm-workspace.yaml are byte-unchanged from the authorized base. Architect rerun reproduced pnpm install --frozen-lockfile PASS, pnpm lint PASS, pnpm typecheck PASS, pnpm build PASS with Next.js 16.3.8/static route /, and git diff --check PASS. No real env/operator credential file is tracked and no privileged Supabase env reference exists under src."
+  - "AC-6 PASS at the independent review consequence boundary: fresh canonical main equals reviewed report 0ccb1e67b0f5f0d6354122f8e9e4854ba1b73f25; candidate/report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree, no in-progress Git operation and zero tracked/index/untracked/conflicted residue."
+  - "Executor deviations were reconciled without evidence of duplicate live mutation: the blocked first migration dispatch was followed by fresh migration/schema/advisor proof showing no effect before the successful narrower apply; later local/pathspec and repeated-Data-API issues did not change the qualified candidate or live schema."
+  - "TASK-0003 is accepted. Acceptance authorizes no Study content/UI, Practice schema, learner auth/profile state, Vercel deployment or successor implementation by itself."
