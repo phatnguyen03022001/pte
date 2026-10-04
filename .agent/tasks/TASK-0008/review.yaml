@@ -1,0 +1,39 @@
+protocol_version: 3
+task_id: TASK-0008
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0008/report.yaml
+  commit: "9a119eee1c55c633e77611d9a1f8c7a08f457d15"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0008 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate fa64b60e1ae845a8a43d57222b9a1ee8eb061644 is the sole direct child of exact authorized base 409b499514a10fdd3da04744d997231ac24a5828. Report 9a119eee1c55c633e77611d9a1f8c7a08f457d15 is the candidate's sole direct child and changes only .agent/tasks/TASK-0008/report.yaml. Fresh remote main equals the reviewed report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly migration 20261004224452_create_write_essay_items as the TASK-0008 schema consequence. public.write_essay_items contains exactly six active authorized prompts; every prompt independently resolves to exactly two sentences and every planning_points value contains exactly three non-empty strings. Study is exactly 11 active / 0 mappings with one exact write-essay-strategy row and the original ten Study SHA-256 values unchanged. Reading FIB remains 8 rows and SWT remains 6 rows with no schema/content drift attributable to TASK-0008."
+  - "AC-2 PASS: write_essay_items has RLS enabled, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Independent public Data API replay with the existing publishable credential returned HTTP 200 and exactly six active rows from exact project ayqcpsdebldtzohwdmer. Production HTTP replay returned 200 for Practice landing, default Write Essay, selected environmental-responsibility, invalid-item fallback and the Study bridge."
+  - "AC-3 PASS: independent Architect Chrome/CDP replay on the published tree proved initial empty textarea / Word count 0 / timer 20:00; an exact 199-word draft showed Below target, an exact 200-word draft showed Pass, and an exact 301-word draft showed Above target. The page contains the explicit local-practice/no-score disclaimer and no official PTE score/band/points or scoring-trait claim. Reveal planning ideas showed exactly three items plus the non-official-answer/model-essay disclaimer. Timer decremented from 20:00 to 19:58, Pause held 19:58, Reset cleared draft/results/ideas and restored 20:00, and item navigation reset all local state."
+  - "AC-4 PASS: write-essay-strategy links directly to /practice/write-essay and Practice links directly back to /study/write-essay-strategy. No generic recommendation/mapping abstraction was added."
+  - "AC-5 PASS: fresh generated TypeScript contract from exact project ayqcpsdebldtzohwdmer is byte-identical to committed src/types/database.ts. Fresh Security Advisor returns zero findings and no TASK-0008-attributable performance finding. package.json and pnpm-lock.yaml are byte-identical to the authorized base. Architect rerun reproduced pnpm install --frozen-lockfile, lint, typecheck, production build and git diff --check PASS. No privileged Supabase credential reference, localStorage/cookie persistence or tracked real env file exists. Review-owned Next.js/Chrome sessions were terminated; ports 3120/9336 were released and the bounded review browser profile was removed."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report 9a119eee1c55c633e77611d9a1f8c7a08f457d15; base -> candidate -> report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "Current Pearson PTE Academic guidance still states Write Essay uses a 2-3 sentence prompt, 20 minutes and a 200-300-word response target. TASK-0008 intentionally checks only the local word-count form boundary and does not simulate Pearson content, development/structure/coherence, grammar, linguistic-range, vocabulary or spelling scoring."
+  - "The Executor-reported first publication attempt failed pre-effect due to shell refspec interpolation; fresh reconciliation proved remote main remained at the exact authorized base before the later ordinary non-force push. No force push or history rewrite occurred."
+  - "TASK-0008 is accepted. Acceptance does not itself authorize additional task types, learner persistence/auth, runtime AI, media ingestion or deployment except through a separate approved task."
