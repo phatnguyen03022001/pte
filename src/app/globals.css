@@ -53,3 +53,234 @@ h1 {
   font-size: 1.125rem;
   line-height: 1.6;
 }
+
+a {
+  color: inherit;
+}
+
+.landing__cta,
+.study-filter-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  border: 1px solid #171717;
+  border-radius: 999px;
+  background: #171717;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.landing__cta {
+  margin-top: 1.75rem;
+  padding: 0.75rem 1.1rem;
+}
+
+.study-shell {
+  width: min(70rem, 100%);
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
+}
+
+.study-header {
+  max-width: 52rem;
+}
+
+.study-back {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.study-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.study-header h1,
+.study-detail h1 {
+  max-width: 58rem;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1;
+}
+
+.study-intro {
+  max-width: 44rem;
+  margin: 1.25rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4b4b47;
+}
+
+.study-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+  gap: 1rem;
+  align-items: end;
+  margin: 2.5rem 0;
+  padding: 1rem;
+  border: 1px solid #d9d9d4;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.study-filters label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.study-filters select {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid #c7c7c2;
+  border-radius: 0.65rem;
+  background: #fff;
+  padding: 0 0.75rem;
+  font: inherit;
+}
+
+.study-filter-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.study-filter-actions button {
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+}
+
+.study-filter-actions a {
+  font-weight: 700;
+}
+
+.study-notice,
+.study-empty {
+  color: #5f5f59;
+}
+
+.study-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.study-card {
+  border: 1px solid #d9d9d4;
+  border-radius: 1rem;
+  background: #fff;
+  padding: 1.25rem;
+}
+
+.study-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.study-card__meta span {
+  border-radius: 999px;
+  background: #ecece8;
+  padding: 0.35rem 0.55rem;
+}
+
+.study-card h2 {
+  margin: 1rem 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.study-card h2 a {
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.study-card__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.study-card__details div {
+  min-width: 0;
+}
+
+.study-card__details dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #70706a;
+}
+
+.study-card__details dd {
+  margin: 0.2rem 0 0;
+}
+
+.study-detail {
+  max-width: 52rem;
+}
+
+.study-detail__header {
+  margin-bottom: 2rem;
+}
+
+.study-markdown {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.study-markdown h2,
+.study-markdown h3 {
+  margin: 2rem 0 0.75rem;
+  line-height: 1.2;
+}
+
+.study-markdown p,
+.study-markdown ul,
+.study-markdown ol {
+  margin: 0.9rem 0;
+}
+
+.study-markdown li + li {
+  margin-top: 0.4rem;
+}
+
+.study-markdown code {
+  border-radius: 0.35rem;
+  background: #ecece8;
+  padding: 0.1rem 0.3rem;
+}
+
+.study-source {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #d9d9d4;
+  color: #5f5f59;
+}
+
+@media (max-width: 720px) {
+  .study-filters,
+  .study-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .study-filter-actions {
+    justify-content: space-between;
+  }
+
+  .study-card__details {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="landing">
@@ -7,6 +9,9 @@ export default function Home() {
         <p className="landing__summary">
           A free-first workspace for focused PTE learning and practice.
         </p>
+        <Link className="landing__cta" href="/study">
+          Open Study library
+        </Link>
       </section>
     </main>
   );
