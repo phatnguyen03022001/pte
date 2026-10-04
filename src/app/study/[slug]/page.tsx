@@ -70,6 +70,12 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           </p>
         ) : null}
 
+        {item.slug === "repeat-sentence-strategy" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/repeat-sentence">Practice Repeat Sentence →</Link>
+          </p>
+        ) : null}
+
         {sourceUrl ? (
           <p className="study-source">
             Reference:{" "}

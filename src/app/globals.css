@@ -646,7 +646,40 @@ a {
   line-height: 1.55;
 }
 
+.repeat-sentence-exercise {
+  display: grid;
+  gap: 1rem;
+}
+
+.repeat-sentence-setup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #d9d9d4;
+  padding-bottom: 1rem;
+}
+
+.repeat-sentence-setup > div {
+  flex: 1;
+}
+
+.repeat-sentence-setup strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.practice-status {
+  margin: 0;
+  font-weight: 800;
+}
+
 @media (max-width: 720px) {
+  .repeat-sentence-setup {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .swt-timer,
   .write-essay-timer {
     align-items: flex-start;

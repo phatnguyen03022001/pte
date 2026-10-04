@@ -64,6 +64,19 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/write-from-dictation">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Listening</span>
+            <span>Speaking</span>
+          </div>
+          <h2>Repeat Sentence</h2>
+          <p>
+            Hear one browser-speech practice prompt, record one response, and
+            transcribe it locally with Whisper for content-sequence feedback.
+          </p>
+          <Link href="/practice/repeat-sentence">Open practice →</Link>
+        </article>
       </section>
     </main>
   );
