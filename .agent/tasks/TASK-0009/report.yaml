@@ -1,0 +1,229 @@
+protocol_version: 3
+
+task_id: TASK-0009
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0009/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "a24161657001128e8ff98726012e43525d131c5e"
+  final_execution_head: "581d6f991a2c9864f529bb5a5a237ff6607c2a3e"
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - fresh canonical GitHub and designated local mirror identity proof
+    - connected Supabase schema, data, RLS, advisor, Data API and type-generation capability
+    - bounded local repository mutation, verification and commit capability
+    - production HTTP process lifecycle capability
+    - real Chrome DevTools browser interaction capability without adding dependencies
+    - ordinary non-force canonical publication capability
+  available:
+    - Agent Runtime repository, filesystem, terminal and process-lifecycle capabilities
+    - connected Supabase project-scoped tooling
+    - local Node.js v26.5.0 and pnpm v11.22.0
+    - installed Google Chrome 154.0.8037.93 headless CDP surface using a task-owned profile and port
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    pre_mutation_migrations:
+      - "20261004202511_create_shared_taxonomy"
+      - "20261004203857_create_study_content_foundation"
+      - "20261004212252_create_reading_fill_in_blanks_items"
+      - "20261004221958_create_summarize_written_text_items"
+      - "20261004224452_create_write_essay_items"
+    pre_mutation_public_table_count: 8
+    pre_mutation_study_active_rows: 11
+    pre_mutation_study_mapping_rows: 0
+    pre_mutation_reading_fib_active_rows: 8
+    pre_mutation_swt_active_rows: 6
+    pre_mutation_write_essay_active_rows: 6
+    pre_mutation_security_findings: 0
+    remote_main_before_mutation: "a24161657001128e8ff98726012e43525d131c5e"
+    remote_main_before_report_authorship: "a24161657001128e8ff98726012e43525d131c5e"
+    main_only_remote: true
+    pre_mutation_worktree_clean: true
+
+  migration:
+    version: "20261004230739"
+    name: create_write_from_dictation_items
+    repository_path: supabase/migrations/20261004230739_create_write_from_dictation_items.sql
+    repository_sha256: "060bbb2b30d695116efb449ab2de2110bd973b8cad959d92b105374bfaf238db"
+    live_apply_result: PASS
+    table: public.write_from_dictation_items
+    final_public_table_count: 9
+    generic_practice_tables_added: 0
+    seed_rows_in_migration: 0
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    simple_checks: "PASS; slug is lowercase kebab-case; sentence/difficulty/source_type/created_by/updated_by are non-empty after trim; difficulty/source_type are lowercase snake_case."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated receive SELECT only."
+    select_policy: "PASS; exactly one write_from_dictation_items_public_read_active policy permits SELECT to anon/authenticated only when active=true."
+    browser_write_authority: "PASS; anon/authenticated have no INSERT/UPDATE/DELETE privilege and no write policy exists."
+    generated_types:
+      path: src/types/database.ts
+      sha256: "87d21950e83b639da158b45b36abb097771b25aaa190688221f6aa4762a8004a"
+      exact_live_generation_match: PASS
+
+  write_from_dictation_content:
+    authoring_path: "Privileged connected Supabase SQL authoring after schema migration; no sentence data is stored in the migration."
+    total_rows: 12
+    active_rows: 12
+    distinct_slugs: 12
+    distinct_sentences: 12
+    starter_rows: 6
+    developing_rows: 6
+    whitespace_word_range: "9..10; every row is within the authorized 8..11 range."
+    exact_slug_order: "PASS; all twelve task-authorized slugs match in deterministic identity order."
+    provenance: "PASS; all twelve rows use created_by=updated_by=chatgpt_task_0009, source_type=project_authored and the exact Pearson Listening source_ref."
+    original_content: "PASS; all twelve sentences are project-authored academic/general-English prose and do not reproduce a Pearson sample sentence."
+
+  study_content:
+    reused_slug: write-from-dictation-strategy
+    body_sha256: "702cea5cef88603b764f96d69161cbf825f4a01bb1f7af99d12346ff50551aa0"
+    metadata_preserved: PASS
+    new_study_rows: 0
+    active_rows_after: 11
+    mappings_after: 0
+
+  preservation:
+    study_active_rows: 11
+    study_full_table_sha256: "c74bd36028018a7be20baadc984bb9dbde74bfece0e5e7dcc59d5c9467e6cba8"
+    study_hash_matches_pre_mutation: PASS
+    study_mappings_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    reading_fib_active_rows: 8
+    reading_fib_sha256: "6b86d3c791506cc67865f21694efdd7f96a175232eaee499e29d1ace70671fc0"
+    reading_fib_hash_matches_pre_mutation: PASS
+    swt_active_rows: 6
+    swt_sha256: "4f6ca8954014a4e2d30111a62e8657544e7716b9c84e3f0940ad11016cb2b757"
+    swt_hash_matches_pre_mutation: PASS
+    write_essay_active_rows: 6
+    write_essay_sha256: "3b28f97b084c81d85a215c5e8829b3c56305bdc5b9ee9445f6ab5c1a9084003b"
+    write_essay_hash_matches_pre_mutation: PASS
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; existing publishable credential read exactly twelve active rows with the exact authorized slug order."
+    public_write: "PASS by live grants/policies; anon/authenticated have no INSERT/UPDATE/DELETE privilege and no write policy."
+
+  application:
+    practice_landing: "PASS; /practice visibly exposes Reading Fill in the Blanks (Dropdown), Summarize Written Text, Write Essay and Write from Dictation."
+    practice_route: "PASS; /practice/write-from-dictation performs a server-first typed active-only Supabase read; missing/invalid/inactive item values deterministically fall back to the first valid active row or render a clear empty state."
+    client_state: "PASS; one feature-local client component owns playback-used, typed response, check/reveal and playback-error state only; no auth, database attempt persistence, localStorage or cookies."
+    playback: "PASS; native SpeechSynthesis/SpeechSynthesisUtterance only, rate 0.92, ordered voice preference en-AU -> en-GB -> en-US -> any en-* -> browser default, one playback per item before Reset."
+    unsupported_browser: "PASS by source contract; unsupported SpeechSynthesis shows an explicit message and disables playback/typed checking without revealing the sentence."
+    matcher: "PASS; feature-local Unicode lowercase/trim/whitespace tokenization strips surrounding ASCII punctuation and uses LCS relative-order matching without a dependency."
+    scoring_label: "PASS; UI reports exactly 'Practice word accuracy: M / N' as local practice accuracy and explicitly states it is not a Pearson score or points."
+    reveal: "PASS; expected sentence is not intentionally rendered before Check and is revealed only in the checked result."
+    reset_and_item_change: "PASS; Reset clears response/result/reveal and enables one new playback; keyed item navigation resets local state."
+    study_bridge: "PASS; write-from-dictation-strategy links directly to /practice/write-from-dictation and Practice links directly back."
+
+  production_http:
+    server_port: 3119
+    practice_landing: "PASS; HTTP 200 and visible markup contains all four implemented practice task types."
+    practice_default: "PASS; HTTP 200, WFD title/default item present, expected sentence absent from visible pre-check markup."
+    practice_selected: "PASS; ?item=regular-practice-improves-listening-memory returned HTTP 200 with the selected developing item state."
+    invalid_item: "PASS; unknown item returned HTTP 200 with deterministic first-item fallback."
+    study_practice_bridge: "PASS; /study/write-from-dictation-strategy returned HTTP 200 with Practice Write from Dictation."
+    cleanup: "PASS; task-owned Next.js process terminated and TCP port 3119 released."
+
+  browser_interaction:
+    surface: "Installed Google Chrome 154.0.8037.93 headless through task-owned CDP port 9337, driven by Node.js native WebSocket/fetch; no browser-test dependency installed."
+    capability: "PASS; real Chrome exposed SpeechSynthesis and SpeechSynthesisUtterance."
+    initial: "PASS; exact DB sentence was not visible, response was empty, first item was current, and Play sentence was enabled after hydration."
+    utterance: "PASS; page-local speechSynthesis.speak instrumentation observed the exact first DB sentence once at rate 0.9200000166893005."
+    voice: "PASS; en-AU was unavailable and the app selected en-GB ahead of available en-US, matching the required preference order."
+    one_play_gate: "PASS; after first invocation the control changed to disabled Played once and a second click produced no second speak call."
+    empty_response: "PASS; after playback, an empty response displayed Practice word accuracy: 0 / 10."
+    imperfect_response: "PASS; independently chosen 'Library, closes every winter term!' displayed Practice word accuracy: 5 / 10, matching the independently expected LCS subset."
+    reveal: "PASS; exact expected sentence was hidden initially and visible only after Check."
+    reset: "PASS; Reset cleared response/result/reveal and permitted exactly one new playback."
+    item_change: "PASS; clicking the actual item-2 UI link selected students-submit-assignments-online and reset response/result/reveal/playback state."
+    score_claims: "PASS; learner-visible copy explicitly says local practice accuracy and not a Pearson score or points; no official Pearson score claim appeared."
+    persistence: "PASS; localStorage, sessionStorage and document.cookie remained empty across interaction and item change."
+    cleanup: "PASS; task-owned Chrome process terminated, TCP port 9337 released, and .git/task-0009-chrome was removed after exact-path, realpath-containment and non-symlink proof."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings after migration and authoring."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0009_attributable_performance_findings: 0
+
+  verification:
+    candidate: "581d6f991a2c9864f529bb5a5a237ff6607c2a3e"
+    candidate_parent: "a24161657001128e8ff98726012e43525d131c5e"
+    candidate_tree: "9ee570ce6df5e0b33aa46bffc6157518e5d3b54e"
+    candidate_clean: PASS
+    dependency_bytes:
+      package_json_sha256: "9c070ed95642e448529129d18b4309f91b999ba5f908d4f30555bafd40f3a5de"
+      pnpm_lock_sha256: "d060aa54677bcbe34302cc254f0c89db436fe2e7d91c8bc42dd8b3f668569dbc"
+      base_identity: PASS
+    local_env: "PASS; .env.local is ignored and not tracked."
+    frozen_install: "PASS; pnpm install --frozen-lockfile on exact clean candidate."
+    lint: "PASS; pnpm lint on exact clean candidate."
+    typecheck: "PASS; pnpm typecheck on exact clean candidate."
+    production_build: "PASS; pnpm build on exact clean candidate with /practice/write-from-dictation as a dynamic route."
+    diff_check: "PASS; git diff --check a24161657001128e8ff98726012e43525d131c5e..581d6f991a2c9864f529bb5a5a237ff6607c2a3e."
+    forbidden_surface_scan: "PASS; feature subtree contains no localStorage/sessionStorage/cookie access, microphone/STT/audio element, external fetch or media API."
+    topology: "PASS; candidate is the sole implementation direct child of the exact authorized base."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Next.js and Chrome processes were terminated; ports 3119 and 9337 were released; the run-owned Chrome profile was removed only after exact path, realpath containment and non-symlink cleanup proof."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0009 revision 1 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer has exactly one new feature-specific migration/table, 20261004230739/create_write_from_dictation_items, exactly twelve active unique authorized rows, 6 starter + 6 developing, every sentence 9..10 whitespace words, exact slugs/provenance, and no new Study row. Study/FIB/SWT/Essay counts and full-table hashes remain unchanged; write-from-dictation-strategy body hash remains 702cea5cef88603b764f96d69161cbf825f4a01bb1f7af99d12346ff50551aa0."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "write_from_dictation_items has RLS enabled, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Existing publishable-key Data API access returned exactly twelve active authorized slugs. Production HTTP and real Chrome proved active WFD loading plus exactly one browser-native practice playback per reset/item."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome/CDP proved initial sentence-hidden state, exact SpeechSynthesis utterance, one-play gating, empty 0/10, independent imperfect-response LCS 5/10, post-Check sentence reveal, Reset and actual UI item-change state reset with no persistent browser storage."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Source and production HTTP proof show direct bidirectional links between write-from-dictation-strategy and /practice/write-from-dictation; the existing Study row body/metadata remain unchanged and no generalized recommendation layer was added."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Public writes are absent by live grants/policies; generated database types byte-match exact project ayqcpsdebldtzohwdmer; fresh Security Advisor has zero findings and no TASK-0009-attributable Performance finding exists. package.json and pnpm-lock.yaml remain byte-identical to the base. Exact clean candidate passes frozen install, lint, typecheck, production build, commit-range diff-check, env-ignore proof, forbidden-surface scan and clean server/browser teardown."
+
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 581d6f991a2c9864f529bb5a5a237ff6607c2a3e is the fully qualified direct child of exact base a24161657001128e8ff98726012e43525d131c5e; candidate worktree is clean; fresh origin exposes only main still at the exact authorized base immediately before report authorship. This report is authored as the required sole report-only child. Final remote closure can only be proven after ordinary non-force publication."
+
+deviations: []
+
+result: NEEDS_REVIEW
