@@ -1,0 +1,171 @@
+protocol_version: 3
+
+task_id: TASK-0002
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: user_request
+  task_id: TASK-0002
+  gap_id: PTE-V1-STACK-CREDENTIAL-SSOT
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize complete inventory and observable proof only"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; dependency ownership and simplest stack choice only"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; bounded documentation/update sequence only"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: "Current operator decision: freeze the complete V1 framework/third-party/credential inventory now so keys can be provisioned once; update target-owned docs and .env.example comprehensively."
+    role: "current product/operations intent"
+    precedence: 1
+  - source: ".agent/tasks/TASK-0001/review.yaml at the exact handoff snapshot"
+    role: "accepted scaffold lineage and exact installed stack baseline"
+    precedence: 2
+  - source: "AGENTS.md, README.md, package.json, pnpm-lock.yaml, .env.example, .gitignore, docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/ENGINEERING_RULES.md"
+    role: "current PTE-owned product, architecture, stack, dependency and environment truth"
+    precedence: 3
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance and Architect/Executor boundaries"
+    precedence: 4
+  - source: "Official provider/framework documentation URLs enumerated by this task"
+    role: "current external factual evidence for key names, acquisition locations and capability constraints; never target authority by itself"
+    precedence: 5
+
+structure_authority:
+  status: RESOLVED
+  source: "existing docs/ owners plus new docs/STACK.md"
+  rationale: "One small target-owned STACK owner is the simplest way to make framework/provider/status/credential truth reconstructible without scattering duplicated matrices across Product, Study, Architecture and README."
+
+objective: "Create one complete target-owned V1 Stack & Credential SSOT and make .env.example a comprehensive blank credential inventory so every selected framework, library, browser capability, deployment platform and third-party provider is explicitly classified as installed, authorized-deferred, native/no-package, or excluded; every credential-bearing integration has exact canonical env names, public/server/operator classification and official acquisition locators; and integrations requiring no key are explicitly marked NO_KEY."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0002 revision 1 and the bound TASK-0001 r4 ACCEPTED review. Fresh-resolve canonical remote main. The designated local checkout may be safely FF-only synchronized from the accepted TASK-0001 review commit to the TASK-0002 handoff base when it is otherwise clean and correctly bound; preserve the ignored root .DS_Store and any ignored real env files. Do not reset/rebase/stash/clean/adopt/delete unrelated state."
+    - "Create docs/STACK.md as the canonical V1 framework/third-party/credential inventory. For every item record: canonical name, role, exact current installed version when already installed, future/deferred package or external capability choice when frozen here, lifecycle status, whether a key/credential is required, canonical env name(s) when applicable, exposure class (PUBLIC_BROWSER / SERVER_SECRET / OPERATOR_ONLY / IDENTIFIER / NO_KEY), actual-value destination, exact official acquisition/documentation locator, and material notes/constraints."
+    - "Inventory the currently materialized baseline exactly from package.json and pnpm-lock.yaml: Next.js 16.3.8, React 19.2.8, React DOM 19.2.8, TypeScript 5.9.3, pnpm 11.22.0, ESLint 9.x locked by the current lockfile, eslint-config-next 16.3.8, @supabase/ssr 0.12.7 and @supabase/supabase-js 2.117.2. Record Node.js requirements truthfully: Next.js requires Node >=20.9; Vercel currently supports 20.x/22.x/24.x and defaults new projects to 24.x. Do not change package.json or runtime version in this task."
+    - "Freeze the V1 UI choice as official shadcn/ui for Next.js, source-owned generated components, using the official CLI only when a UI implementation task requires components. Record Tailwind CSS / component-support dependencies as implementation-time shadcn requirements rather than pre-installing unused packages. No credential is required."
+    - "Freeze Study Markdown rendering to react-markdown plus remark-gfm, with raw HTML disabled by default and no rehype-raw authorization. Record both as AUTHORIZED_DEFERRED and NO_KEY. Do not install them in this task."
+    - "Freeze local speaking STT to @huggingface/transformers using public onnx-community/whisper-tiny.en, WebGPU preferred with WASM fallback when needed. Record Hugging Face public model access as NO_KEY for V1; HF_TOKEN is not a V1 credential and must not be added unless a later task selects a gated/private model. Do not install/download the model in this task."
+    - "Freeze reusable media storage to Cloudinary's Node/server API path only when a feature authorizes persistable media. Use one canonical server credential variable CLOUDINARY_URL, whose value encapsulates cloud name, API key and API secret per official Cloudinary SDK guidance. Classify it SERVER_SECRET. Do not add a browser Cloudinary secret, create a Cloudinary account/resource, install the SDK, upload media, or enable the feature in this task."
+    - "Freeze YouTube integration as: IFrame Player/embed for playback/reference = NO_KEY; YouTube Data API v3 for bounded public metadata/search ingestion = YOUTUBE_API_KEY, SERVER_SECRET/QUOTA_CREDENTIAL, only when a feature authorizes Data API use. OAuth client ID/secret is NOT_REQUIRED for current V1 because private-user YouTube data/mutations are outside scope. Do not install a Google SDK or enable/call the API in this task."
+    - "Freeze Vercel as deployment target with Git auto-deploy remaining unactivated unless separately authorized. Interactive/connected-plugin/manual authenticated deployment needs no repo runtime key. Inventory optional headless/operator automation credentials VERCEL_TOKEN (OPERATOR_ONLY secret), VERCEL_ORG_ID (IDENTIFIER) and VERCEL_PROJECT_ID (IDENTIFIER). They must never be consumed by learner runtime code."
+    - "Inventory Supabase comprehensively: NEXT_PUBLIC_SUPABASE_URL (PUBLIC_BROWSER identifier) and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (PUBLIC_BROWSER key) are REQUIRED_NOW; SUPABASE_SECRET_KEY is SERVER_SECRET and AUTHORIZED_DEFERRED only for a separately authorized privileged server use; SUPABASE_PROJECT_REF is OPERATOR identifier; SUPABASE_ACCESS_TOKEN is OPERATOR_ONLY secret for scoped PAT/headless CLI/MCP only; SUPABASE_DB_PASSWORD is OPERATOR_ONLY secret only for CLI/database workflows that actually require direct database authentication. Note that normal connected Supabase MCP/plugin OAuth does not require a PAT."
+    - "Make .env.example the complete blank inventory with sections for APP PUBLIC REQUIRED NOW, APP SERVER DEFERRED, and OPERATOR-ONLY / HEADLESS. Keep every value blank or a non-secret structural placeholder. It must enumerate exactly: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY, CLOUDINARY_URL, YOUTUBE_API_KEY, SUPABASE_PROJECT_REF, SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD, VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID. It must explicitly say which vars should normally remain blank until their feature/workflow is authorized."
+    - "Do not add OPENAI_API_KEY, HF_TOKEN, Google OAuth client credentials, Redis credentials, vector/embedding provider keys, analytics keys, or other excluded/non-required credentials. Explicitly document those as NOT_REQUIRED / EXCLUDED so absence is intentional rather than an omission."
+    - "Add exact official acquisition/documentation locators into docs/STACK.md and concise comments in .env.example: Supabase project API keys https://supabase.com/dashboard/project/<PROJECT_REF>/settings/api-keys ; Supabase access tokens https://supabase.com/dashboard/account/tokens ; Supabase API-key guidance https://supabase.com/docs/guides/getting-started/api-keys ; Cloudinary API Keys https://console.cloudinary.com/settings/api-keys ; Cloudinary credential guidance https://cloudinary.com/documentation/developer_onboarding_faq_find_credentials ; Google Cloud API credentials https://console.cloud.google.com/apis/credentials ; YouTube Data API overview https://developers.google.com/youtube/v3/getting-started ; YouTube IFrame API https://developers.google.com/youtube/iframe_api_reference ; Vercel access-token settings https://vercel.com/account/settings/tokens ; Vercel CLI auth/project docs https://vercel.com/docs/cli/global-options and https://vercel.com/docs/cli/project-linking ; shadcn Next.js install https://ui.shadcn.com/docs/installation/next ; Transformers.js WebGPU/Whisper https://huggingface.co/docs/transformers.js/guides/webgpu ; react-markdown source/docs https://github.com/remarkjs/react-markdown."
+    - "Update README.md so docs/STACK.md is a first-class canonical truth locator. Update AGENTS.md so stack/dependency/credential decisions resolve through docs/STACK.md before Executor invents packages or env names. Update docs/ARCHITECTURE.md so its Target V1 application stack is concise and delegates the complete matrix to docs/STACK.md. Update docs/ENGINEERING_RULES.md with the credential-class boundary: PUBLIC_BROWSER may be exposed intentionally; SERVER_SECRET never enters NEXT_PUBLIC_*; OPERATOR_ONLY credentials must not be consumed by application runtime code."
+    - "Preserve docs/PRODUCT.md and docs/STUDY.md product semantics. Cross-link docs/STACK.md only when needed for navigation; do not rewrite feature behavior merely to restate provider choices."
+    - "This task is documentation/environment-contract only. Do not install/remove/update npm packages, mutate pnpm-lock.yaml/package.json/source code, connect/deploy Vercel, create/modify Supabase/Cloudinary/Google resources, generate actual API keys, fetch secrets into the repository, or implement any feature/provider integration."
+    - "Verify inventory completeness mechanically: every process.env reference in tracked application source must have one matching .env.example entry and docs/STACK.md row; every .env.example variable must have exactly one docs/STACK.md owner/classification; every selected/deferred external capability must be represented once; every explicit V1 exclusion that is commonly mistaken as a key requirement must be represented as NO_KEY/NOT_REQUIRED/EXCLUDED as appropriate."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck and pnpm build on the exact candidate to prove documentation/env changes did not perturb the accepted scaffold. Prove package.json, pnpm-lock.yaml and src/ are byte-identical to the execution base."
+    - "Commit the coherent candidate on main, author .agent/tasks/TASK-0002/report.yaml as its sole report-only child, publish by ordinary non-force fast-forward to main, prove fresh remote closure, and stop at NEEDS_REVIEW. Do not self-review or create TASK-0003."
+  allowed_existing_files_or_components:
+    - "docs/STACK.md"
+    - ".env.example"
+    - "README.md"
+    - "AGENTS.md"
+    - "docs/ARCHITECTURE.md"
+    - "docs/ENGINEERING_RULES.md"
+    - "docs/PRODUCT.md only for a minimal locator if strictly necessary; product semantics must remain unchanged"
+    - "docs/STUDY.md only for a minimal locator if strictly necessary; Study semantics must remain unchanged"
+    - ".agent/tasks/TASK-0002/report.yaml"
+
+invariants:
+  - "MAIN_ONLY remains exact; no branch/worktree branch/tag/release creation."
+  - "TASK-0001 accepted implementation bytes remain untouched: package.json, pnpm-lock.yaml, pnpm-workspace.yaml, eslint.config.mjs, tsconfig.json, next-env.d.ts and src/ are immutable in TASK-0002."
+  - "Completeness means every V1-selected/deferred/excluded framework/provider has an explicit status and every credential-bearing integration has an explicit canonical variable/acquisition contract; it does not mean installing every deferred dependency or storing every possible vendor credential."
+  - "No real credential value is committed. .env.example is an inventory/template only."
+  - "NEXT_PUBLIC_* is reserved only for intentionally browser-exposed values. SERVER_SECRET and OPERATOR_ONLY credentials never receive NEXT_PUBLIC_* names."
+  - "Operator-only credentials are not application runtime dependencies. Their listing in .env.example/docs is inventory, not authorization for app code to read them."
+  - "Core Study/Practice runtime remains zero-paid-API; OpenAI runtime/API keys remain excluded."
+  - "Cloudinary and YouTube Data API remain feature-gated/deferred; documenting credentials does not activate those services or authorize media copying."
+  - "Vercel Git auto-deploy remains unactivated; documenting Vercel operator credentials does not authorize deployment."
+  - "Hugging Face public Whisper model access is NO_KEY for V1 and must not introduce HF_TOKEN."
+  - "ChatGPT/Supabase connected operational tooling may authenticate with OAuth/plugin connection and is not forced to use a repo-stored PAT."
+
+forbidden_changes:
+  - "Create any branch, worktree branch, tag, release, PR-only topology or alternate integration ref."
+  - "Modify package.json, pnpm-lock.yaml, pnpm-workspace.yaml, eslint.config.mjs, tsconfig.json, next-env.d.ts or anything under src/."
+  - "Install, update, remove or execute initialization for shadcn/ui, Tailwind, react-markdown, remark-gfm, @huggingface/transformers, Cloudinary SDK, Google/YouTube SDK, Vercel SDK/CLI, Supabase CLI or any other dependency as part of repository mutation."
+  - "Create/provider-link/deploy Vercel or enable Git auto-deploy."
+  - "Create or mutate Supabase, Cloudinary or Google Cloud resources; generate/rotate/revoke/fetch actual keys or secrets."
+  - "Commit any actual secret/token/password/key value, .env.local, .env.operator.local, Vercel .vercel metadata, provider credential JSON, or downloaded OAuth client secret."
+  - "Add OPENAI_API_KEY, HF_TOKEN, Google OAuth client secret, analytics credentials, Redis credentials, vector/embedding credentials, or unrelated future-service env vars."
+  - "Change product/Study semantics, data model, auth behavior, RLS, deployment/release behavior or feature implementation."
+  - "Turn a deferred provider into an active runtime dependency merely because its credential is documented."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "docs/STACK.md is a complete non-duplicative V1 stack/provider SSOT covering all installed, authorized-deferred, native/no-package and explicitly excluded capabilities relevant to current product truth."
+    evidence_required: "Deterministic inventory table plus comparison against package.json/pnpm-lock, Product/Study/Architecture/Engineering Rules and current task decisions; no material framework/provider remains implicit."
+  - id: AC-2
+    requirement: "Every credential-bearing V1 integration has one canonical env contract with correct exposure class and exact official acquisition/documentation locator; every no-key integration is explicitly marked NO_KEY."
+    evidence_required: "docs/STACK.md credential matrix proving Supabase, Cloudinary, YouTube Data/IFrame, Vercel, shadcn, Markdown, local Whisper/Hugging Face, browser APIs and explicit exclusions; current official-source cross-check."
+  - id: AC-3
+    requirement: ".env.example is a comprehensive safe blank inventory and contains exactly the authorized variable set without a real credential or misleading client exposure."
+    evidence_required: "Exact variable-name set proof; all values blank/structural placeholders; classification comments; secret scan; NEXT_PUBLIC proof; .gitignore still excludes real env files."
+  - id: AC-4
+    requirement: "Repository navigation and execution rules deterministically point to the new stack/credential owner without duplicating or changing product semantics."
+    evidence_required: "README/AGENTS/ARCHITECTURE/ENGINEERING_RULES diff inspection and Product/Study semantic byte/diff proof except any strictly minimal approved locator."
+  - id: AC-5
+    requirement: "TASK-0002 changes no implementation/dependency bytes and leaves the accepted scaffold mechanically healthy."
+    evidence_required: "Base-to-candidate byte identity for package.json, pnpm-lock.yaml, pnpm-workspace.yaml, eslint.config.mjs, tsconfig.json, next-env.d.ts and src/; pnpm install --frozen-lockfile, lint, typecheck and build all PASS."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main for independent Architect review."
+    evidence_required: "Candidate descends directly from exact handoff base; report is sole report-only child; ordinary non-force fast-forward publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
