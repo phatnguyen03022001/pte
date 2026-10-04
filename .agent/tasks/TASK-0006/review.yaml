@@ -1,0 +1,38 @@
+protocol_version: 3
+task_id: TASK-0006
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0006/report.yaml
+  commit: "d4b28950d57c3832743abbef30b94c475d5f7637"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0006 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 9c0138040b874c4b6fefd5a7d791e44d8013c861 is the sole direct child of exact authorized base 06111d0107b7e0d5eb9fc881bca8808fc0071fdc. Report d4b28950d57c3832743abbef30b94c475d5f7637 is the candidate's sole direct child and changes only .agent/tasks/TASK-0006/report.yaml. Fresh remote main equals the reviewed report commit and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY and has exactly one TASK-0006 migration, 20261004212252_create_reading_fill_in_blanks_items, adding only public.reading_fill_in_blanks_items. The table has RLS enabled and exactly eight active authorized rows. Independent live inspection confirms exact slug/title/difficulty/provenance metadata and every row has exactly four ordered b1..b4 blanks, four options per blank, answer membership and non-empty explanations. Existing Study remains exactly ten active rows, zero Study mappings, and all ten Study body SHA-256 values match the accepted TASK-0005 evidence."
+  - "AC-2 PASS: anon/authenticated have SELECT only on reading_fill_in_blanks_items with one active=true SELECT policy; no browser write grant/policy exists. The accepted Executor Data API evidence shows public read of exactly eight rows and rejected PATCH with PostgreSQL 42501. Source and production behavior use the existing typed public Supabase client and deterministic first-item fallback."
+  - "AC-3 PASS: independent Architect Chrome/CDP replay on the published tree loaded exactly four selects labelled Blank 1..Blank 4, kept Check answers disabled after 3/4 selections, and with deliberate values avoid/explain/responsible/robust produced Practice accuracy: 3 / 4. Feedback independently matched the database answer contract: Blank 1 Incorrect, correct answer involve; Blanks 2..4 Correct. Reset cleared all selections/result and disabled Check answers; switching to Renewable energy storage reset state again. No attempt persistence, localStorage, cookie persistence or official-PTE-score claim is present."
+  - "AC-4 PASS: the Reading FIB Study detail links directly to /practice/reading-fill-in-blanks and Practice links directly back to /study/reading-fill-in-blanks-dropdown-strategy. No generalized recommendation/mapping abstraction was added."
+  - "AC-5 PASS: fresh Supabase Security Advisor returns zero findings and no TASK-0006-attributable performance finding. A fresh exact-project generated TypeScript contract is byte-identical to committed src/types/database.ts. package.json and pnpm-lock.yaml are byte-identical to the execution base. Architect rerun reproduced pnpm install --frozen-lockfile, lint, typecheck, production build and git diff --check PASS. No privileged Supabase credential reference or tracked real env file exists. Review-owned Next.js/Chrome sessions were terminated, ports 3118/9225 were released, and the bounded review Chrome profile was removed."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report d4b28950d57c3832743abbef30b94c475d5f7637; base -> candidate -> report lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "Pearson prompt-length evidence is currently inconsistent across fresh official-page retrieval surfaces: one recent indexed rendering of the canonical Reading page states text up to 200 words while another direct rendering of the same canonical page states text up to 300 words. This does not affect TASK-0006 acceptance because all eight project-authored passages are 106..125 words and therefore satisfy either published bound. Future tasks must fresh-resolve this fact rather than inheriting a hard 200/300 value."
+  - "TASK-0006 is accepted. Acceptance does not itself authorize additional Practice task types, learner persistence/auth, audio/media, runtime AI, scoring-equivalence claims or deployment except through a separate approved task."
