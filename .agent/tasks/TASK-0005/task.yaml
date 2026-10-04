@@ -1,0 +1,185 @@
+protocol_version: 3
+
+task_id: TASK-0005
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0005
+  gap_id: PTE-STUDY-READ-VERTICAL-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Study slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; smallest App Router/Supabase/Markdown implementation"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; bounded content -> UI -> proof sequencing"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0004/review.yaml in the exact handoff snapshot"
+    role: "accepted Study data foundation and live RLS/authoring baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md and docs/STUDY.md in the exact handoff snapshot"
+    role: "PTE-owned Study behavior, content IA, runtime-AI exclusion and provenance rules"
+    precedence: 2
+  - source: "docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Markdown dependency/security and framework rules"
+    precedence: 3
+  - source: "Pearson current PTE Academic official format pages: https://www.pearsonpte.com/pte-academic/test-format/ ; https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/ ; https://www.pearsonpte.com/pte-academic/test-format/reading/ ; https://www.pearsonpte.com/pte-academic/test-format/listening/ ; https://www.pearsonpte.com/pte-updates-2025/ ; https://www.pearsonpte.com/pte-academic/preparation/"
+    role: "current exam-format factual reference; do not copy Pearson prose"
+    precedence: 4
+  - source: "react-markdown 10.1.0 and remark-gfm 4.0.1 current package documentation"
+    role: "selected Markdown implementation HOW"
+    precedence: 5
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "existing src/app App Router plus docs/STUDY.md Study ownership"
+  rationale: "Add a Study route subtree and only the smallest local Study read helpers/components required. No shared application service/repository layer is authorized."
+
+objective: "Ship the first genuinely usable learner-facing Study vertical slice: persist a small current PTE Academic starter library in Supabase, expose active content through responsive server-first /study and /study/[slug] routes, render Markdown safely with the already-selected dependencies, and prove filtering/detail/not-found/XSS boundaries without runtime AI or privileged browser credentials."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0005 revision 1, bound TASK-0004 ACCEPTED review, canonical main, clean local mirror, and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may be FF-only synchronized to the handoff base."
+    - "Before persistent content mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly the accepted TASK-0003/TASK-0004 migrations; public schema remains the accepted five tables; study_content and study_content_subskills are empty; Security Advisor has zero findings. Unexpected drift is BLOCKED."
+    - "Install exactly react-markdown@10.1.0 and remark-gfm@4.0.1 as production dependencies using pnpm with an updated canonical pnpm-lock.yaml. Do not install rehype-raw, rehype-sanitize, MDX, shadcn/ui, Tailwind or any other dependency in this task."
+    - "Update docs/STACK.md only enough to record react-markdown 10.1.0 and remark-gfm 4.0.1 as INSTALLED instead of AUTHORIZED_DEFERRED. Preserve all other stack/credential decisions."
+    - "Persist exactly ten active initial Study records through the privileged Supabase operational authoring path, not through a schema/data migration. Supabase remains the canonical content truth; do not create a duplicate content-file SSOT."
+    - "Use created_by and updated_by value chatgpt_task_0005 for all ten initial records. Content must be original project-authored prose, concise and practical, with no copied Pearson paragraphs, no guaranteed-score claims, no invented scoring weights, and no advice that conflicts with current Pearson task mechanics."
+    - "Persist these exact records/metadata:
+        1) slug pte-academic-format-2025-plus; type skill_guide; skill_code null; task_type null; target_score null; title 'PTE Academic format: 2025+ essentials'; source_type pearson_official; source_ref https://www.pearsonpte.com/pte-academic/test-format/
+        2) slug pte-40-plus-priority-playbook; type playbook; skill_code null; task_type null; target_score 40; title '40+ priority playbook'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/
+        3) slug pte-seven-day-40-plus-plan; type plan; skill_code null; task_type null; target_score 40; title '7-day 40+ study plan'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/preparation/
+        4) slug repeat-sentence-strategy; type strategy; skill_code speaking; task_type repeat_sentence; target_score 40; title 'Repeat Sentence: memory-first strategy'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/
+        5) slug write-from-dictation-strategy; type strategy; skill_code listening; task_type write_from_dictation; target_score 40; title 'Write from Dictation: capture every word'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/listening/
+        6) slug describe-image-template; type template; skill_code speaking; task_type describe_image; target_score 40; title 'Describe Image: flexible speaking frame'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/
+        7) slug summarize-written-text-strategy; type strategy; skill_code writing; task_type summarize_written_text; target_score 40; title 'Summarize Written Text: one-sentence control'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/
+        8) slug reading-fill-in-blanks-dropdown-strategy; type strategy; skill_code reading; task_type fill_in_blanks_dropdown; target_score 40; title 'Reading Fill in the Blanks: context and grammar'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/reading/
+        9) slug summarize-group-discussion-strategy; type strategy; skill_code speaking; task_type summarize_group_discussion; target_score 40; title 'Summarize Group Discussion: track speakers and ideas'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/
+       10) slug respond-to-a-situation-strategy; type strategy; skill_code speaking; task_type respond_to_a_situation; target_score 40; title 'Respond to a Situation: clear, natural response'; source_type project_authored; source_ref https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/."
+    - "Every body_markdown must be materially useful rather than placeholder text. Each task-specific strategy/template must contain at minimum: what the task requires, a short step-by-step method, common mistakes, and one short self-practice drill/checklist. The format guide must explicitly reflect the post-7-August-2025 addition of Summarize Group Discussion and Respond to a Situation and current section counts 9/5/8. The 40+ playbook and 7-day plan must prioritize consistency and high-frequency practice without claiming that a particular task guarantees a score."
+    - "Do not create or seed subskills/mappings in this task. study_content_subskills remains empty."
+    - "Implement a public server-first /study route backed by the existing typed Supabase server client. It must list active Study items with title, content type, applicable skill/task label and target score when present. Support deterministic query-parameter filters for skill and type without client-side state machinery. Invalid filter values must fail safely to the unfiltered or empty supported behavior rather than changing database authority."
+    - "Implement /study/[slug] as a server-rendered active-content detail route. Missing/inactive slugs return Next.js notFound/404. Render body_markdown with react-markdown and remark-gfm. Do not use rehype-raw, dangerouslySetInnerHTML, custom unsafe urlTransform, MDX or arbitrary HTML execution. External source_ref may be shown as a normal safe link."
+    - "Update the landing page with a clear link/CTA to /study. Keep the UI responsive and readable using the existing CSS system plus smallest local CSS changes. Do not activate shadcn/Tailwind in this slice; their V1 selection remains deferred until reusable UI components materially need them."
+    - "Use Server Components by default. Add no 'use client' component unless an actual browser interaction requirement emerges inside this task; filter navigation can be ordinary links/forms."
+    - "Do not add runtime OpenAI/AI calls, auth UI, learner progress/bookmark state, Practice, media, Cloudinary/YouTube API calls, crawler, admin UI or any new database schema/migration."
+    - "After authoring, prove live Study content has exactly these ten active slugs with exact metadata, no duplicate slug, no other Study rows, and zero study_content_subskills rows. Record a SHA-256 of each body_markdown in the report as review evidence; do not create a second canonical copy of the prose."
+    - "Prove public Data API visibility with the existing publishable key: exactly ten active rows are readable, no privileged key is used/disclosed, and browser write authority remains absent by catalog/grant proof."
+    - "Run a Markdown security proof using the installed renderer on an in-memory string containing raw <script> markup: rendered output must not contain an executable literal script element. No persistent malicious fixture is required."
+    - "Run pnpm install --frozen-lockfile, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the exact candidate."
+    - "Run a bounded production HTTP proof using the real ignored local public Supabase values: / returns 200 and contains a Study navigation marker; /study returns 200 and contains the starter library; /study?skill=speaking returns speaking content and excludes at least the Write from Dictation item; /study/pte-seven-day-40-plus-plan returns 200 with its content marker; one nonexistent slug returns 404. Clean up the server process/port."
+    - "Run fresh Supabase Security Advisor after persistent content authoring; zero findings remain required. Performance INFO may be reported truthfully; do not add speculative indexes unless a concrete TASK-0005 query/proof shows they are needed."
+    - "Commit one coherent candidate on main, create .agent/tasks/TASK-0005/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure, and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0006."
+
+  allowed_existing_files_or_components:
+    - "package.json"
+    - "pnpm-lock.yaml"
+    - "docs/STACK.md"
+    - "src/app/page.tsx"
+    - "src/app/globals.css"
+    - "src/app/study and local Study-owned source files"
+    - "existing src/lib/supabase server client only for usage; its auth/session contract should not change"
+    - ".agent/tasks/TASK-0005/report.yaml"
+    - "Supabase public.study_content persistent rows for the exact ten authorized records"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may receive content mutation."
+  - "Supabase is canonical Study content truth; repository does not duplicate the ten body_markdown values."
+  - "All learner-visible Study data comes through existing public active-only RLS; no privileged runtime credential."
+  - "Only the ten authorized persistent Study records are created; no subskill/mapping row is created."
+  - "Markdown raw HTML remains non-executable; no rehype-raw/dangerouslySetInnerHTML."
+  - "Current PTE Academic format facts must match Pearson current official pages, including the two speaking additions effective after 7 August 2025."
+  - "No guaranteed-score or visa-eligibility claim is embedded in Study content."
+  - "No runtime AI, auth, learner state, Practice or deployment consequence."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases or rewrite history."
+  - "Create database migrations/schema changes, subskills/mappings, learner data, Practice data, media data or provider resources."
+  - "Install any dependency except exact react-markdown@10.1.0 and remark-gfm@4.0.1."
+  - "Activate shadcn/Tailwind, add rehype-raw, MDX, rehype-sanitize or another Markdown/rendering dependency."
+  - "Copy Pearson proprietary prose, sample questions, audio/video, transcripts or paid guide content into the database."
+  - "Use privileged Supabase credentials in app runtime/client/browser code."
+  - "Add client-side global state, generic repository/service layers, search infrastructure, analytics, AI or speculative abstractions."
+  - "Persist smoke/XSS test rows or any Study content outside the exact ten authorized records."
+  - "Modify existing schema/RLS/policies/grants merely to make the UI implementation easier."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Supabase contains exactly the ten authorized active starter Study records with useful original content, exact metadata/provenance and no Study-subskill mappings or extra rows."
+    evidence_required: "Live exact-slug/metadata/count proof, per-body SHA-256 evidence, Data API read proof, zero mapping rows, no copied source prose or unsupported scoring claims."
+  - id: AC-2
+    requirement: "Learners can browse and filter the active Study library at /study using server-first public RLS-backed data."
+    evidence_required: "Source inspection plus production HTTP proof for unfiltered and skill-filtered Study pages; visible title/type/skill/task/target metadata where applicable."
+  - id: AC-3
+    requirement: "Learners can open a Study item by slug and read safe Markdown while missing/inactive content fails closed."
+    evidence_required: "Production HTTP 200 detail proof, 404 missing-slug proof, react-markdown+remark-gfm source inspection, in-memory raw-script rendering proof with no executable script element."
+  - id: AC-4
+    requirement: "Dependency/stack truth is exact and bounded."
+    evidence_required: "package/lock diff shows only exact react-markdown 10.1.0 and remark-gfm 4.0.1 additions and transitive lock resolution; docs/STACK lifecycle/version update; no other new dependency."
+  - id: AC-5
+    requirement: "The application/database remain secure and mechanically healthy."
+    evidence_required: "Public publishable-key read proof, no browser write authority/privileged runtime secret, fresh Security Advisor zero findings, frozen install/lint/typecheck/build/diff-check PASS, clean production-server teardown."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh remote main equals report commit; main-only topology and clean local closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
