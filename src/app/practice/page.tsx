@@ -39,6 +39,18 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/summarize-written-text">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Writing</span>
+          </div>
+          <h2>Write Essay</h2>
+          <p>
+            Draft an original essay under a 20-minute timer, check the local word
+            target, and reveal planning ideas for self-review.
+          </p>
+          <Link href="/practice/write-essay">Open practice →</Link>
+        </article>
       </section>
     </main>
   );
