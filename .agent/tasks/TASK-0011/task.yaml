@@ -1,0 +1,197 @@
+protocol_version: 3
+
+task_id: TASK-0011
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0011
+  gap_id: PTE-READ-ALOUD-SHARED-LOCAL-STT-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one learner-visible Read Aloud slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; extract only the now-demonstrated shared local-STT substrate"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; provider -> shared substrate -> content/UI -> browser proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0010/review.yaml in the exact handoff snapshot"
+    role: "accepted Repeat Sentence local-Whisper implementation and privacy/security baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Study/Practice/local-STT/audio/privacy/framework truth"
+    precedence: 2
+  - source: "Pearson current PTE Academic Speaking & Writing Read Aloud guidance: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current Read Aloud mechanics: visible text up to 60 words, 30-40 seconds preparation, one recording, official Content/Pronunciation/Oral-Fluency scoring boundary"
+    precedence: 3
+  - source: "Pinned local-STT truth accepted by TASK-0010: @huggingface/transformers 4.3.0 + onnx-community/whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58"
+    role: "already-accepted browser-local ASR stack"
+    precedence: 4
+  - source: "Current Supabase RLS/Data API guidance"
+    role: "explicit GRANT + RLS security HOW"
+    precedence: 5
+  - source: "phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+    role: "Foundation protocol-v3 governance"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "accepted TASK-0010 local-STT implementation plus second real speaking consumer"
+  rationale: "Read Aloud is the second concrete consumer of local Whisper/mic conversion. Authorize extraction only of the worker/audio/client primitives that are byte-behavior reusable by Repeat Sentence and Read Aloud; keep each feature's UI/state/result semantics local. No generic speaking/scoring framework."
+
+objective: "Ship a current PTE Academic Read Aloud Study + Practice vertical slice using original visible passages, the accepted local Whisper stack, ephemeral one-record microphone capture and truthful local content-coverage feedback; extract the smallest shared local-STT substrate now justified by two real consumers while preserving Repeat Sentence and all prior behavior."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0011 revision 1, bound TASK-0010 r2 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly seven accepted migrations through create_repeat_sentence_items; public application tables=10; Study=11 active / mappings=0, FIB=8, SWT=6, Essay=6, WFD=12, Repeat Sentence=10; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.read_aloud_items. Do not create generic speaking_items/practice_items/questions/attempts/results/scoring tables."
+    - "read_aloud_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; passage text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use simple DB checks only: kebab-case slug; title/passage/difficulty/source_type/created_by/updated_by non-empty after trim; difficulty/source_type lowercase snake_case. No audio URL, attempt/result table, generic metadata, functions, triggers, views or scoring infrastructure."
+    - "Enable RLS; revoke anon/authenticated; explicitly GRANT SELECT only; create exactly one active=true SELECT policy for anon/authenticated. No browser write authority."
+    - "Persist exactly eight active original project-authored Read Aloud items after migration, not in migration bytes. Use created_by=updated_by=chatgpt_task_0011, source_type=project_authored and source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/."
+    - "Use these exact slugs/titles: digital-libraries-and-access — 'Digital libraries and access'; urban-trees-and-temperature — 'Urban trees and temperature'; sleep-supports-memory — 'Sleep supports memory'; public-transport-planning — 'Public transport planning'; scientific-replication — 'Scientific replication'; food-waste-reduction — 'Reducing food waste'; renewable-power-grids — 'Renewable power and electricity grids'; multilingual-learning — 'Multilingual learning'."
+    - "Each passage must be original natural academic-style English of 35..55 whitespace-delimited words, at most 60 words, 2..4 sentences, and contain no copied Pearson example or arbitrary web prose. Split exactly four starter and four developing items."
+    - "Add exactly one Study item through privileged Study authoring: slug read-aloud-strategy; type strategy; skill_code speaking; task_type read_aloud; title 'Read Aloud: chunk, breathe, stay steady'; target_score 40; source_type project_authored; source_ref exact Pearson Speaking & Writing URL; created_by=updated_by=chatgpt_task_0011; active=true."
+    - "The new Study body must state current task facts conservatively: visible text up to 60 words, 30-40 seconds preparation, one recording; official scoring includes Content, Pronunciation and Oral Fluency. It must provide an original chunk-pause-breathe method, common mistakes and one short drill. It must explicitly say the app's local transcript metric cannot judge pronunciation/oral fluency."
+    - "Do not modify body/metadata/hash of the existing 11 Study rows; Study grows to exactly 12 active and mappings remain zero."
+    - "Extract the accepted TASK-0010 local-STT infrastructure into one smallest neutral shared owner under src/lib/local-stt (or one equivalent neutral owner) only because Read Aloud is now a second consumer. Shared owner may contain: exact pinned model/revision constants, worker creation/worker message contract, the dedicated ASR worker, and browser-native audio decode/downmix/resample-to-mono-Float32-16k helpers."
+    - "Both Repeat Sentence and Read Aloud must use the shared local-STT worker/audio primitives after extraction. Do not extract React feature state machines, timers, scoring/result components, route loaders or prompt-specific behavior. WFD remains outside local-STT sharing."
+    - "Preserve exact accepted STT semantics: @huggingface/transformers 4.3.0; onnx-community/whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58; worker-only inference; WebGPU preferred; one WASM fallback; no HF_TOKEN; no remote inference; mono Float32 16 kHz input."
+    - "Implement /practice/read-aloud as a server-first route using existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first valid active row or a clear empty state."
+    - "Update /practice to expose six implemented task types, adding Read Aloud."
+    - "Passage text is visibly displayed from initial render because Read Aloud is a reading prompt. Do not hide it."
+    - "Implement one feature-local client component for Read Aloud interaction. It may own only preparation timer, STT readiness, recording/processing/transcript/result/error state. No global state, auth or persistence."
+    - "Provide a local preparation aid reflecting current Pearson timing: a 30-second preparation countdown. Learner may start it once per item/reset; while it runs show remaining seconds. Provide an explicitly-labelled 'Skip preparation for practice' action so local practice is not forced to wait 30 seconds; explain Pearson gives 30-40 seconds."
+    - "Recording becomes available only after local STT readiness and either preparation countdown completion or explicit Skip preparation. Permit exactly one recording per item/reset. Use getUserMedia({audio:true}) + MediaRecorder/native audio APIs. Hard safety cap is 60 seconds and must be labelled a local practice cap because Pearson answer time varies by item length."
+    - "Provide explicit Stop reading; auto-stop at 60-second local cap. Keep learner audio ephemeral in memory only. Stop tracks and release buffers after transcription/result/reset/item change."
+    - "Transcribe locally through the shared exact Whisper worker. Display non-empty transcript when successful; explicit recoverable local error on model/mic/decode/inference failure; never silently send audio elsewhere."
+    - "Reuse the already accepted neutral word normalization/LCS helper for local content comparison. Display 'Practice content coverage: M / N' where N is normalized passage word count and M is LCS matched words from local transcript."
+    - "Explicitly state that content coverage is a local transcript proxy and is not Pearson Content, Pronunciation, Oral Fluency, score or points; local STT errors can affect M/N. Do not estimate pronunciation, stress, intonation, pace or oral fluency."
+    - "Reset cancels prep timer, stops tracks/recording, clears transcript/result/errors and restores one preparation/one recording. Item change performs equivalent cleanup. Shared worker/model may remain loaded for the page session."
+    - "Add direct bidirectional Study bridge between /study/read-aloud-strategy and /practice/read-aloud. No generalized recommendation layer."
+    - "Do not install/update/remove npm dependencies. package.json and pnpm-lock.yaml must remain byte-identical to the TASK-0011 execution base; ignored builds remain protobufjs + onnxruntime-node with no approve-builds/allowBuilds trust expansion."
+    - "After authoring, prove exactly eight active Read Aloud rows, exact slugs/titles/provenance, four starter/four developing, passage word count 35..55, <=60 words and 2..4 sentences. Prove prior Study/FIB/SWT/Essay/WFD/Repeat-Sentence counts and hashes unchanged except exact one new Study row."
+    - "Prove public Data API using existing publishable key reads exactly eight active Read Aloud rows; browser write authority absent by grants/policies. Never print/persist key."
+    - "Regenerate src/types/database.ts from exact project and prove byte-match."
+    - "Run fresh Security and Performance Advisors. Zero TASK-0011-attributable Security finding required; report INFO honestly."
+    - "Run pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check. Frozen install must PASS; ignored builds remain exactly protobufjs + onnxruntime-node."
+    - "Run bounded production HTTP proof: /practice exposes six task types; /practice/read-aloud default/selected/invalid paths return 200; visible passage is rendered; /study/read-aloud-strategy returns 200 and links to Practice."
+    - "Run real Chrome/CDP fake-microphone proof without browser-test dependencies. Generate one ignored task-owned fake audio fixture from the exact first Read Aloud passage using local/native tooling, launch Chrome fake-media path, use the application getUserMedia/MediaRecorder flow and exact shared local Whisper worker."
+    - "Browser proof must demonstrate: passage visible initially; local STT reaches WebGPU or documented WebGPU failure plus WASM fallback; preparation timer starts at 30 and decrements; Skip preparation enables recording without waiting full 30 seconds; recording cannot start before STT readiness and prep completion/skip; one recording stops explicitly in <60 seconds; non-empty local transcript; independent LCS recomputation equals displayed M/N; disclaimer rejects pronunciation/oral-fluency/official scoring; Reset clears timer/recording/result; item change resets feature state."
+    - "Runtime privacy proof must show no learner audio/transcript/result in localStorage/sessionStorage/IndexedDB/cookies/CacheStorage request URLs; no non-GET/remote inference request during local ASR proof; model CacheStorage contains exact pinned revision only as public model/runtime assets."
+    - "Run an independent Repeat Sentence browser regression after shared local-STT extraction: exact prompt one-play, local STT preparation, fake-mic recording/transcript and independently correct M/N must still PASS. This regression may use a short separate task-owned fake fixture but must be cleaned."
+    - "Cleanly terminate task-owned Next.js/Chrome processes, release ports and safely delete only task-owned browser profile/fake fixtures after containment/non-symlink proof."
+    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0011/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0012."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/lib/local-stt new neutral shared owner"
+    - "src/lib/word-sequence.ts for reuse only"
+    - "src/app/practice/repeat-sentence source only for behavior-preserving local-STT extraction"
+    - "src/app/practice/read-aloud and feature-local source"
+    - "src/app/practice/page.tsx"
+    - "src/app/study/[slug]/page.tsx only for Read Aloud bridge"
+    - "src/app/globals.css for minimal styling"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0011/report.yaml"
+    - "Supabase public.read_aloud_items exact eight rows"
+    - "Supabase study_content exact one new read-aloud-strategy row"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Read Aloud passage is visible; audio response remains ephemeral."
+  - "Shared local-STT extraction is limited to demonstrated reusable worker/audio primitives."
+  - "Exact accepted Whisper package/model/revision and WebGPU->WASM behavior remain unchanged."
+  - "No remote inference, HF_TOKEN, pronunciation/oral-fluency scoring or learner persistence."
+  - "No npm dependency drift or lifecycle-script trust expansion."
+  - "All prior accepted Study/Practice data remains unchanged except one exact new Study item."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases, force-push or rewrite history."
+  - "Create generic speaking/practice/question/attempt/result/scoring frameworks."
+  - "Extract shared React feature state, generic timer/scoring UI or recommendation systems."
+  - "Install/update/remove npm dependencies or run pnpm approve-builds/add allowBuilds."
+  - "Persist learner audio/transcript/result in database/files/browser storage/Cloudinary."
+  - "Use remote STT/TTS/OpenAI/LLM, SpeechRecognition/webkitSpeechRecognition or pronunciation/scoring APIs."
+  - "Call transcript LCS coverage an official Pearson score, Pronunciation or Oral Fluency result."
+  - "Copy Pearson sample passage/prose."
+  - "Modify prior accepted content beyond exact shared-STT extraction/navigation consequences."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new Read Aloud table with eight valid original active passages and exactly one new Read Aloud Study strategy; prior accepted content is preserved."
+    evidence_required: "Migration/schema identity, eight-row exact contract/word/sentence/provenance proof, prior hashes/counts, exact one Study addition, RLS/grants/Data API and fresh type proof."
+  - id: AC-2
+    requirement: "The second local-STT consumer reuses only a minimal shared worker/audio substrate while preserving exact accepted Whisper semantics."
+    evidence_required: "Source/diff proof of bounded shared owner; package/lock identity; exact model/revision/backend behavior; no generic feature state/scoring abstraction."
+  - id: AC-3
+    requirement: "Learners can complete a real Read Aloud practice flow with visible passage, preparation aid, one ephemeral mic recording, local transcript and independently correct content-coverage M/N."
+    evidence_required: "Real Chrome fake-mic proof through app getUserMedia/MediaRecorder/shared local Whisper plus independent LCS, prep timer/skip/one-record/reset/item-reset and truthful disclaimer."
+  - id: AC-4
+    requirement: "Learner audio/state remains ephemeral and no remote inference or persistent learner data is introduced."
+    evidence_required: "Runtime storage/network scan, track/buffer cleanup source/runtime evidence, exact model cache revision, no upload/persistence provider path and safe fixture/profile cleanup."
+  - id: AC-5
+    requirement: "Repeat Sentence remains behaviorally intact after shared-STT extraction and application/database stay mechanically/security healthy."
+    evidence_required: "Real Repeat Sentence browser regression, direct Study bridge, advisors, types, frozen install/ignored-builds/lint/typecheck/build/diff-check and clean closure hygiene."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh main-only clean closure."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
