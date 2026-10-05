@@ -1,0 +1,46 @@
+protocol_version: 3
+task_id: TASK-0013
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0013/report.yaml
+  commit: "42e2c14fb6e1553a42a7be3882dd3bbe56fca772"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0013 revision 1 and report revision 1 were independently re-resolved from canonical GitHub truth. Candidate 097782690d5f339dbfa411583b11b649f69c6acd is the sole direct child of exact base 5d469cab6d43fcae3fde1552349ce5424f4fbda2. Report 42e2c14fb6e1553a42a7be3882dd3bbe56fca772 is the sole direct child of the candidate and changes only .agent/tasks/TASK-0013/report.yaml. Fresh remote exposes only main and local equals origin/main clean."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with ten migrations. retell_lecture_items contains exactly eight active rows, four starter/four developing, exact authorized slugs/titles/provenance, 117..124 POSIX-whitespace words and exactly four review points per row. Study is exactly 13 active rows with zero mappings and one exact retell-lecture-strategy row whose body SHA-256 is ca24df4bf31ae8de82ec941f92da22c42be112d81d96681d8678d6b5c7a313ad."
+  - "RLS/access PASS: exactly one active=true SELECT policy exists for anon/authenticated and both roles have SELECT only. No browser write authority is present."
+  - "Fresh live-generated TypeScript is byte-identical to committed src/types/database.ts; SHA-256 7c24ebf400e440e3ec04eff3ac71e3058b28fb3cf190eefa7b42bed786b44f48. package.json and pnpm-lock.yaml are byte-identical to the TASK-0013 execution base."
+  - "AC-2 PASS: source inspection confirms the server page exposes metadata only; lecture_text/review_points are fetched only from a feature-local no-store prompt route after explicit Play. Native SpeechSynthesis is used with one-play gating, and no remote TTS/audio-file/media persistence path exists."
+  - "AC-3 PASS on reviewed browser evidence: exact DB lecture was spoken once through SpeechSynthesis at ~0.92, replay stayed blocked, 10-second preparation started only after playback and decremented, recording remained gated until playback+prep+STT readiness, local Whisper used WebGPU, one response stopped at 4263 ms, transcript was non-empty, exact lecture plus four review points appeared only after result, learner-selected coverage displayed exactly 3 / 4, and Reset/item-change passed."
+  - "AC-4 PASS: runtime evidence records localStorage/sessionStorage/IndexedDB/cookies all zero, zero learner upload, zero remote inference, no prompt-audio persistence and ended MediaStream tracks. Source inspection independently found no learner persistence writer, remote STT/TTS/scoring provider, SpeechRecognition/webkitSpeechRecognition, HF_TOKEN, OpenAI or Cloudinary path."
+  - "AC-5 PASS: real WFD native-SpeechSynthesis regression preserved exact one-play DB sentence behavior; real Describe Image fake-mic regression preserved shared local-STT with non-empty transcript and ended track. Fresh Security Advisor returns zero findings; Performance Advisor contains only the three pre-existing INFO findings."
+  - "Architect independently reran pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the immutable candidate. All PASS; ignored builds remain exactly protobufjs and onnxruntime-node."
+  - "The report's two deviations are proof-harness-only: an escaped word-count query was superseded by a correct POSIX-whitespace recount/live constraint proof, and a Node wrapper ReferenceError was corrected only in ignored task harness before a fresh WFD rerun. No product/schema bytes changed to resolve either issue."
+  - "AC-6 PASS: canonical main equals the report commit before review publication; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, one clean worktree and no active Git operation. Vercel remains disconnected; deployment count remains 27 and latest deployment still references old a4ed91d planning commit."
+  - "TASK-0013 is accepted. Acceptance grants no successor feature, persistence, remote inference/TTS, official Pearson scoring or Vercel deployment authority outside a separately approved task."
+
+final_candidate:
+  commit: "097782690d5f339dbfa411583b11b649f69c6acd"
+  report_commit: "42e2c14fb6e1553a42a7be3882dd3bbe56fca772"
+  result: ACCEPTED
