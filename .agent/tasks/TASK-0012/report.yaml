@@ -1,0 +1,279 @@
+protocol_version: 3
+
+task_id: TASK-0012
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0012/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "9d3dc17bbe24c251447d99f2464a05e89e2a10a2"
+  final_execution_head: "4f836765db2e31e535fb8be4edb7d64610884248"
+  final_execution_tree: "4a520e7baf17401cae84b331df08bb8f3a4ca425"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_read_write
+    - production_build_and_http_execution
+    - real_chrome_cdp_fake_microphone
+  available:
+    - Agent Runtime repository/filesystem/terminal surface
+    - GitHub canonical remote observation
+    - Supabase project/migration/query/advisor/type-generation surface
+    - local production Next.js and Google Chrome/CDP
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status_before_mutation: ACTIVE_HEALTHY
+    migration_count_before_mutation: 8
+    last_migration_before_mutation: "20261005065854/create_read_aloud_items"
+    public_application_tables_before_mutation: 11
+    study_active_rows_before_mutation: 12
+    study_mapping_rows_before_mutation: 0
+    fib_rows_before_mutation: 8
+    swt_rows_before_mutation: 6
+    essay_rows_before_mutation: 6
+    wfd_rows_before_mutation: 12
+    repeat_sentence_rows_before_mutation: 10
+    read_aloud_rows_before_mutation: 8
+    security_findings_before_mutation: 0
+    remote_main_before_mutation: "9d3dc17bbe24c251447d99f2464a05e89e2a10a2"
+    main_only_remote: true
+
+  migration:
+    version: "20261005091744"
+    name: create_describe_image_items
+    repository_path: supabase/migrations/20261005091744_create_describe_image_items.sql
+    repository_sha256: "5704ee73bd099199252a3d365ef226df9e19ca9e511c4acca5081d514a2a6370"
+    table: public.describe_image_items
+    migration_instances: 1
+    seed_rows_in_migration: 0
+    provider_apply_migration_used: true
+    raw_ddl_fallback_used: false
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    bounded_checks: "PASS; kebab slug, required non-empty scalar text, bar/line chart type, lowercase snake_case difficulty/source_type, 4..8 points, labels/values cardinality equality and exactly three review points."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one describe_image_items_public_read_active SELECT policy permits anon/authenticated only when active=true."
+    browser_write_authority: "PASS; no INSERT/UPDATE/DELETE grants or write policy exists."
+
+  authored_content:
+    active_rows: 8
+    starter_rows: 4
+    developing_rows: 4
+    exact_contract_query: PASS
+    exactly_three_review_points_each: PASS
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    created_by: chatgpt_task_0012
+    updated_by: chatgpt_task_0012
+    ordered_slugs:
+      - campus-library-visits
+      - solar-output-by-month
+      - study-hours-by-subject
+      - bus-passengers-morning
+      - recycling-by-material
+      - course-enrolment-trend
+      - water-use-by-department
+      - online-workshop-attendance
+
+  preservation:
+    public_application_tables_after_mutation: 12
+    study_active_rows: 12
+    study_mapping_rows: 0
+    fib_rows: 8
+    swt_rows: 6
+    essay_rows: 6
+    wfd_rows: 12
+    repeat_sentence_rows: 10
+    read_aloud_rows: 8
+    describe_image_template_body_sha256: "0e55bd98b8763d0185f5a7db9cd82739954d4b74fdf4e0213f527eb703035ec5"
+    describe_image_template_metadata_unchanged: PASS
+    all_12_study_body_hashes_match_canonical_values: PASS
+    prior_practice_full_row_fingerprints_match_task_0011: PASS
+    prior_practice_full_row_fingerprints_md5:
+      fib: "3ff3cb2f304a577c407687814cbe9458"
+      swt: "c3135490fdfdd5e4ebda8aff0b4f47e6"
+      essay: "14ce993d6d436430be2ac9af4ae7ea87"
+      wfd: "e533ee863d93dff82c6aba5314c189af"
+      repeat_sentence: "c7753d4ad73d1cff11e28590e65d291d"
+      read_aloud: "0a360b8207f23cf7985b429a71025723"
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, E'\\n' order by id), ''))"
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; existing publishable key returned HTTP 200 with exactly eight active Describe Image slugs in authorized order."
+    public_write_authority: "PASS; catalog grants and RLS expose read-only access."
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "def7d0654dc0dfca688f66c52078b209f225d26e306a11eae923d537a9b64d6c"
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; production/browser DOM exposes exactly seven implemented Practice task cards and adds Describe Image under Speaking."
+    describe_image_route: "PASS; server-first active-item load supports default, selected and invalid-item deterministic fallback."
+    renderer: "PASS; feature-local dependency-free React/SVG supports only bar and single-series line charts."
+    accessibility: "PASS; SVG has title/description and a visible structured data summary table with exact labels/values."
+    synthetic_disclosure: "PASS; learner UI states the dataset is synthetic/project-authored and not real-world facts."
+    study_bridge: "PASS; direct bidirectional links connect describe-image-template and /practice/describe-image without modifying Study content."
+    preparation: "PASS; one 25-second preparation starts at 25 and visibly decrements to 24; explicit practice skip does not bypass STT readiness."
+    recording: "PASS; one getUserMedia({audio:true}) + MediaRecorder response per reset/item, explicit stop, hard 40-second cap."
+    local_stt: "PASS; reuses unchanged src/lib/local-stt accepted primitives, @huggingface/transformers 4.3.0 and whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58; WebGPU selected in real Chrome, one inherited WASM fallback remains."
+    self_review: "PASS; review points are hidden before transcript, exactly three appear after result, exactly two selected boxes display Self-review key-point coverage: 2 / 3."
+    scoring_boundary: "PASS; UI rejects Pearson Content, Pronunciation, Oral Fluency, PTE score/points and automatic semantic/keyword/pronunciation/fluency/pace/template scoring."
+    reset_and_item_change: PASS
+
+  production_http:
+    task_owned_port: 31012
+    practice_landing: PASS
+    describe_image_default: PASS
+    describe_image_selected: PASS
+    describe_image_invalid_fallback: PASS
+    describe_image_study_bridge: PASS
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome headless with CDP port 9223, native Node.js WebSocket/fetch harness and no browser-test dependency."
+    fixture: "One original task-owned WAV describing the first synthetic chart under ignored coverage/TASK-0012; removed after proof."
+    describe_image:
+      initial_chart_and_table: PASS
+      practice_card_count: 7
+      backend: webgpu
+      preparation_started_at: 25
+      preparation_decremented_to: 24
+      skip_without_stt_bypass: PASS
+      explicit_stop_ms: 4257
+      recording_under_40_seconds: PASS
+      transcript_nonempty: PASS
+      review_hidden_before_result: PASS
+      review_points_after_result: 3
+      displayed_two_of_three: "Self-review key-point coverage: 2 / 3"
+      disclaimer: PASS
+      reset: PASS
+      next_item_title: "Solar output over six months"
+      next_item_exact_values: "January..June = 42,48,55,61,67,73"
+      item_change_reset: PASS
+    read_aloud_regression:
+      start_gate_before_stt: PASS
+      backend: webgpu
+      explicit_stop_ms: 4265
+      transcript_nonempty: PASS
+      media_track_final_state: ended
+      remote_inference_requests: 0
+      non_get_requests: 0
+
+  runtime_privacy:
+    local_storage_entries: 0
+    session_storage_entries: 0
+    indexed_db_databases: 0
+    cookie_entries: 0
+    learner_data_in_cache_request_urls: false
+    learner_uploads: 0
+    remote_inference_requests: 0
+    page_surface_non_get_requests: 0
+    media_track_final_state: ended
+    exact_model_revision_in_transformers_cache: PASS
+    cache_evidence: "Transformers CacheStorage contained only public Whisper/ONNX runtime GET assets and no learner-data URL needle; exact pinned revision model/config/weight URLs were present. The accepted Transformers bootstrap also retained its public resolve/main/config.json cache key."
+    learner_audio_transcript_self_review_persisted: false
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0012_attributable_performance_findings: 0
+
+  verification:
+    candidate: "4f836765db2e31e535fb8be4edb7d64610884248"
+    candidate_parent: "9d3dc17bbe24c251447d99f2464a05e89e2a10a2"
+    candidate_tree: "4a520e7baf17401cae84b331df08bb8f3a4ca425"
+    candidate_clean: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 build includes /practice/describe-image and all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    candidate_reverification: "PASS; frozen install, ignored-builds, lint, typecheck, production build, commit-range diff-check and package/lock identity were rerun on clean candidate 4f836765db2e31e535fb8be4edb7d64610884248."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Chrome and Next.js processes were terminated; ports 9223 and 31012 were released. coverage/TASK-0012 fixture/profile/harness root was removed only after exact realpath containment and non-symlink proof."
+
+vercel:
+  git_integration_reconnected: false
+  project_configuration_modified: false
+  deployment_invoked: false
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0012 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  report_requires_remote_candidate_visibility: false
+  remote_main_before_report_authorship: "9d3dc17bbe24c251447d99f2464a05e89e2a10a2"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_deploy_invoked: false
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly one new migration 20261005091744/create_describe_image_items, twelve total public application tables, exactly eight active authorized synthetic rows in exact contract/provenance order, four starter/four developing, SELECT-only/RLS public access, publishable-key read of eight rows and live-generated types byte-matching src/types/database.ts. All prior Practice counts plus deterministic full-row fingerprints match TASK-0011 canonical baselines, all twelve Study body hashes match canonical historical values, and describe-image-template retains exact body hash 0e55bd98b8763d0185f5a7db9cd82739954d4b74fdf4e0213f527eb703035ec5."
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Production HTTP and real Chrome render exact stored bar/line data through feature-local React/SVG only, expose SVG title/description plus structured table values, label the prompts as synthetic/non-real-world, support selected/default/invalid fallback, and add no chart/media dependency or external visual asset."
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome/CDP fake-mic proof observed 25 -> 24 preparation, skip with STT gate retained, WebGPU local Whisper readiness, one explicit-stop recording after 4257 ms, non-empty transcript, review hidden before result then exactly three review points, learner selection exactly 2 / 3, truthful scoring disclaimer, Reset cleanup and next-item exact-data/state reset."
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Runtime proof found localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, no learner-data cache URL, zero learner upload/non-GET request and zero remote inference. Media tracks ended. CacheStorage held accepted public model/runtime GET assets with exact pinned model revision evidence and no learner content; task-owned fixture/profile/processes were safely removed."
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Real Read Aloud regression preserved gate/local-STT/fake-mic capture with non-empty transcript and ended track. Study bridge/hash, Security Advisor=0, only three pre-existing Performance INFO findings, exact live type byte-match, frozen install, ignored-builds, lint, typecheck, production build, diff-check, package/lock identity and local hygiene all pass on the exact candidate."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 4f836765db2e31e535fb8be4edb7d64610884248 is the fully verified direct child of exact base 9d3dc17bbe24c251447d99f2464a05e89e2a10a2; origin/main still exposes only main at that exact base immediately before report authorship. This report is authored as the required sole report-only child. Final remote closure can only be proven after the subsequent ordinary non-force single publication."
+
+deviations:
+  - "The combined browser harness completed all Describe Image assertions but twice exceeded its bounded navigation deadline while transitioning the same CDP target to Read Aloud. Direct DOM inspection proved the Read Aloud page had loaded correctly; the required Read Aloud regression was then completed successfully in a separate bounded CDP target with the same task-owned Chrome/fake-microphone setup. No product source changed because of these harness-only timeouts."
+
+result: NEEDS_REVIEW
