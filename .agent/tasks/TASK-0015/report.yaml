@@ -1,0 +1,301 @@
+protocol_version: 3
+
+task_id: TASK-0015
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0015/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "97408417580b77fced769b34304cd8add9a221f5"
+  final_execution_head: "ee83ec301532a0755aa1c29adc23bcd444ea7cee"
+  final_execution_tree: "f10b7bcc7772c88f4dd3f7ec9c06216d951dbb86"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION_RECOVERY_QUALIFICATION_CONTINUATION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_read
+    - production_build_and_http_execution
+    - real_chrome_cdp_speechsynthesis_and_fake_microphone
+    - browser_wide_network_observation
+    - vercel_read_only_state_observation
+  available:
+    - Agent Runtime repository/filesystem/terminal surface
+    - Supabase project/migration/query/advisor/type-generation surface
+    - local production Next.js and Google Chrome/CDP
+    - connected Vercel read-only project/deployment context
+  missing: []
+  passed: true
+
+qualification:
+  recovery:
+    continuation_of_same_execution: true
+    original_base: "97408417580b77fced769b34304cd8add9a221f5"
+    remote_main_at_recovery: "97408417580b77fced769b34304cd8add9a221f5"
+    local_head_at_recovery: "ee83ec301532a0755aa1c29adc23bcd444ea7cee"
+    candidate_parent: "97408417580b77fced769b34304cd8add9a221f5"
+    candidate_message: "feat: add Summarize Group Discussion practice"
+    ahead_behind_at_recovery: "1/0"
+    worktrees_at_recovery: 1
+    remote_main_only: true
+    git_operation_active: false
+    candidate_clean: true
+    report_absent_at_recovery: true
+    live_provider_effects_replayed: false
+    candidate_rewritten: false
+
+  provider_binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    migration_count: 12
+    latest_migration: "20261005152043/create_summarize_group_discussion_items"
+    security_findings: 0
+
+  migration:
+    version: "20261005152043"
+    name: create_summarize_group_discussion_items
+    repository_path: supabase/migrations/20261005152043_create_summarize_group_discussion_items.sql
+    repository_sha256: "0425388c6a399fb78238e6c8275d1433943135baed7bc7bbb3fd4e655bb4aa97"
+    migration_instances: 1
+    recovery_apply_migration_calls: 0
+    recovery_raw_ddl_calls: 0
+
+  live_schema:
+    table: public.summarize_group_discussion_items
+    active_rows: 6
+    starter_rows: 3
+    developing_rows: 3
+    combined_six_turn_word_count_range: "150..158"
+    rows_with_exactly_five_review_points: 6
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    created_by: chatgpt_task_0015
+    updated_by: chatgpt_task_0015
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one summarize_group_discussion_items_public_read_active SELECT policy permits active=true reads."
+    browser_write_authority: "PASS; no client write grant or write policy was observed."
+
+  authored_content:
+    exact_semantic_contracts: PASS
+    ordered_slugs:
+      - campus-study-spaces
+      - group-project-deadlines
+      - online-and-campus-tutorials
+      - urban-cycling-policy
+      - reproducible-data-practice
+      - renewable-energy-storage
+    ordered_titles:
+      - "Campus study spaces"
+      - "Managing group project deadlines"
+      - "Online and campus tutorials"
+      - "Urban cycling policy"
+      - "Reproducible data practice"
+      - "Renewable energy storage"
+
+  study_content:
+    active_rows_after: 14
+    mappings_after: 0
+    strategy_slug: summarize-group-discussion-strategy
+    strategy_instances: 1
+    strategy_body_sha256: "a916fece5db437e1848ea763754a5a8e944c1e4e003868762eec181d6d6eb578"
+    task_0015_new_study_rows: 0
+    preservation: PASS
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "e29effd4b7c407d64d1b5437b4c4a1f58e67f3d11c95ec7350d07082b1a5267d"
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; production /practice exposes exactly ten implemented task routes including Summarize Group Discussion under Listening + Speaking."
+    summarize_group_discussion_route: "PASS; default, selected and invalid-item fallback routes return HTTP 200."
+    initial_prompt_privacy: "PASS; initial production HTML/DOM contains neither the six discussion turns nor review points."
+    prompt_endpoint: "PASS; feature-local no-store endpoint returns ordered turns for playback and reveals review points only after result."
+    playback: "PASS; real browser-native SpeechSynthesis emitted exactly six utterances with exact DB text in A-B-C-A-B-C order."
+    speaker_state: "PASS; visible A/B/C speaking state followed A-B-C-A-B-C with no turn transcript leakage."
+    replay_gate: "PASS; Play discussion is consumed exactly once until Reset."
+    preparation: "PASS; final speech onend starts exact preparation at 10 seconds and the next observed tick is 9."
+    recording_gate: "PASS; Start response remains disabled during playback and preparation, then enables only after playback complete + preparation complete + local STT ready."
+    recording: "PASS; one MediaRecorder response started after all gates and was explicitly stopped after 4209 ms, below the 120-second cap."
+    result_reveal: "PASS; non-empty local transcript appeared before result review; result exposes exactly six turns and five review points."
+    self_review: "PASS; selecting exactly four checkboxes displays Self-review coverage: 4 / 5."
+    scoring_boundary: "PASS; disclaimer explicitly rejects Pearson Content, Pronunciation, Fluency, score and points."
+    reset: "PASS; restores one playback and one response and clears result state."
+    item_change: "PASS; next item loads a different exact discussion with result/response state cleared."
+    study_bridge: "PASS; /study/summarize-group-discussion-strategy returns HTTP 200 and bidirectional navigation is present."
+
+  local_stt:
+    shared_substrate_changed: false
+    package: "@huggingface/transformers@4.3.0"
+    model: onnx-community/whisper-tiny.en
+    model_revision: "2575352d61be1bf7225cf8f8b268a4678025fc58"
+    webgpu_observed: true
+    wasm_fallback_preserved: true
+    remote_inference: absent
+    feature_local_revision_guard: "PASS; SGD worker rewrites only the exact whisper-tiny.en resolve/main prefix to the pinned revision before importing the unchanged shared worker."
+    fresh_isolated_network_proof: "PASS; a fresh-profile SGD-only Chrome run produced zero /resolve/main/ occurrences and exact-pinned revision requests."
+    shared_src_lib_local_stt_byte_identity: PASS
+
+  production_http:
+    practice_landing: PASS
+    summarize_group_discussion_default: PASS
+    summarize_group_discussion_selected: PASS
+    summarize_group_discussion_invalid_fallback: PASS
+    summarize_group_discussion_study_bridge: PASS
+    practice_task_route_count: 10
+    initial_discussion_and_review_text_hidden: PASS
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome 154 over CDP port 9515 and task-owned Next.js production server on port 4015; fake microphone fixture was original task-owned 16 kHz mono PCM and no browser-test dependency was added."
+    summarize_group_discussion:
+      item: campus-study-spaces
+      navigator_webgpu_available: true
+      backend: webgpu
+      speech_calls: 6
+      utterance_order:
+        - A
+        - B
+        - C
+        - A
+        - B
+        - C
+      utterance_exact_db_text: PASS
+      transcript_hidden_during_playback: PASS
+      speaker_state_order: PASS
+      replay_blocked: PASS
+      preparation_10_to_9: PASS
+      recording_blocked_during_playback_and_preparation: PASS
+      all_start_gates_satisfied: PASS
+      explicit_stop_ms: 4209
+      transcript: "you"
+      transcript_nonempty: PASS
+      revealed_turn_count: 6
+      revealed_review_point_count: 5
+      four_of_five_coverage: PASS
+      disclaimer: PASS
+      reset: PASS
+      item_change_reset: PASS
+    retell_lecture_regression:
+      native_speech_calls: 1
+      utterance_started: PASS
+      utterance_ended: PASS
+    existing_local_stt_speaking_regression:
+      feature: describe-image
+      backend: webgpu
+      transcript: "you"
+      transcript_nonempty: PASS
+      media_track_final_state: ended
+
+  runtime_privacy:
+    local_storage_entries: 0
+    session_storage_entries: 0
+    indexed_db_databases: 0
+    cookie_entries: 0
+    learner_data_in_cache_request_urls: false
+    learner_uploads: 0
+    remote_inference_requests: 0
+    external_non_read_requests: 0
+    media_track_final_state: ended
+    synthesized_discussion_audio_persisted: false
+    accepted_cache_scope: "Only public Whisper assets at exact pinned revision plus accepted ONNX runtime assets were observed."
+    isolated_sgd_resolve_main_requests: 0
+    source_scan: "PASS; no learner-storage writer, browser SpeechRecognition API, HF_TOKEN, remote inference provider, upload primitive or automatic semantic/pronunciation/fluency scoring surface was added."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0015_attributable_performance_findings: 0
+
+  verification:
+    candidate: "ee83ec301532a0755aa1c29adc23bcd444ea7cee"
+    candidate_parent: "97408417580b77fced769b34304cd8add9a221f5"
+    candidate_tree: "f10b7bcc7772c88f4dd3f7ec9c06216d951dbb86"
+    candidate_clean_before_report: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 production build includes SGD page/prompt and all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    immutable_candidate_reverification: "PASS; install, ignored-builds, lint, typecheck, build and base-to-candidate diff-check were rerun on immutable candidate ee83ec301532a0755aa1c29adc23bcd444ea7cee."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned speech was cancelled by the CDP harness. Task-owned Chrome and Next.js processes were terminated; ports 9515 and 4015 were proved released. The cleanup boundary /Users/tienphat/Developer/pte/.next/TASK-0015-proof was proved to be a real non-symlink directory. Chromium-created child symlinks were unlinked without following targets by removing only that exact task-owned ignored root, which was then proved absent. The final live-type fixture was also removed."
+
+vercel:
+  project_id: prj_FnnSeQyPhIQZ7DDn2cJe39N9EpvC
+  live: false
+  git_linked_in_current_context: false
+  git_context_evidence: "The connected Vercel Git context lists five linked team projects and does not include pte."
+  deployment_count_before_publication: 27
+  latest_deployment_id_before_publication: dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd
+  latest_deployment_commit_before_publication: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  latest_deployment_state_before_publication: ERROR
+  configuration_modified: false
+  deployment_invoked: false
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  report_requires_remote_candidate_visibility: false
+  remote_main_before_report_authorship: "97408417580b77fced769b34304cd8add9a221f5"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_git_linked: false
+  vercel_deploy_invoked: false
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly twelve migrations including one TASK-0015 migration, exactly six active SGD rows, three starter/three developing, 150..158 combined words, exactly five review points each, exact authorized slugs/titles/provenance, SELECT-only active-row access, Study still 14 active with mappings=0, exactly one unchanged summarize-group-discussion-strategy body at SHA-256 a916fece5db437e1848ea763754a5a8e944c1e4e003868762eec181d6d6eb578, and live-generated types byte-matching src/types/database.ts."
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Real Chrome/CDP proof used native SpeechSynthesis for exactly six DB-exact turns in A-B-C-A-B-C order, exposed speaker state without transcript leakage, blocked replay, persisted no synthesized discussion audio, and a real Retell Lecture native-SpeechSynthesis regression passed."
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Final speech onend started preparation at 10 then 9; recording stayed blocked until playback, full preparation and WebGPU local STT were all ready; one response stopped explicitly at 4209 ms; local transcript was non-empty; result revealed exactly six turns/five review points; four checks rendered Self-review coverage: 4 / 5; Reset and item change cleared state."
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Runtime proof found localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, learner upload=0, remote inference=0, no learner data in cache request URLs and ended MediaStream tracks. A fresh-profile isolated SGD run produced zero resolve/main requests and exact pinned Whisper-revision requests only; disclaimer rejects Pearson Content, Pronunciation, Fluency, score and points."
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Shared src/lib/local-stt bytes are unchanged; real Retell Lecture SpeechSynthesis and Describe Image local-STT regressions passed with non-empty local transcript. Fresh Security Advisor=0; only three pre-existing Performance INFO findings remain. Frozen install, ignored-builds, lint, typecheck, build, diff-check, package/lock identity, forbidden-surface scan and exact live-type byte-match all pass."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate ee83ec301532a0755aa1c29adc23bcd444ea7cee is the immutable qualified direct child of exact base 97408417580b77fced769b34304cd8add9a221f5; origin/main still exposes only main at that base immediately before report authorship. Vercel pte is not Git-linked and remains at 27 deployments with latest deployment dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd from old commit a4ed91d7eb3003e51a65bd13db361481e0347ce3. Final single-push publication and post-publication no-deployment closure can only be proven after this report-only child is committed."
+
+deviations:
+  - "Execution resumed from the already-qualified candidate after an interrupted Executor session. Recovery independently reproved canonical/local identity and reconciled live Supabase effects without reapplying the migration, reseeding six discussions, recreating or modifying the Study strategy, manipulating migration history, or rewriting the candidate."
+  - "A browser-wide netlog from a reused profile contained an actual shared-substrate resolve/main config request while running legacy regression surfaces. Because TASK-0015 is required to leave shared src/lib/local-stt unchanged and uses a feature-local exact-model guard, final exact-revision evidence was repeated with a fresh isolated Chrome profile running SGD only. That accepted run observed zero resolve/main occurrences and exact pinned-revision model requests."
+  - "Two task-owned harness iterations stopped on proof-fixture assumptions about the existing Describe Image button/status labels. Only ignored proof fixture code changed; the immutable product candidate was never modified."
+
+result: NEEDS_REVIEW
