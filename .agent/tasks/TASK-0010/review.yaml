@@ -1,14 +1,14 @@
 protocol_version: 3
 task_id: TASK-0010
-task_revision: 1
-review_revision: 1
-state: REVISION_REQUIRED
+task_revision: 2
+review_revision: 2
+state: ACCEPTED
 
 reviewed_report:
   repository: phatnguyen03022001/pte
   path: .agent/tasks/TASK-0010/report.yaml
-  commit: "fca683a90018a681e56b83b8cdd7bf89365342a5"
-  report_revision: 1
+  commit: "512746258447c29f3626fdc59ac7328975c5b1c1"
+  report_revision: 2
 
 independence:
   reviewer_role: ARCHITECT
@@ -23,38 +23,25 @@ contract_compliance:
   scope: PASS
   structure_policy: PASS
   git_authority: PASS
-  acceptance_criteria: NOT_PROVEN
-  verifier_evidence: NOT_PROVEN
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
 
 acceptance_basis:
-  - "Fresh canonical review proved remote main == exact reviewed report fca683a90018a681e56b83b8cdd7bf89365342a5, remote exposes only main, and the designated local checkout is clean on the same report commit with ahead/behind 0/0 and one worktree."
-  - "Partial implementation checkpoint 21786be56ad52a5b50978b4a569882897a4d3047 is the sole direct child of exact authorized base 64236b49f0a8ccb8c96ec4dbe21716443010b735. The reviewed report is its sole direct child and changes only .agent/tasks/TASK-0010/report.yaml."
-  - "Base-to-checkpoint scope is confined to the authorized dependency/stack, Repeat Sentence feature, shared word-sequence helper, WFD behavior-preserving extraction, Study bridge and styling surfaces. No qualified-candidate claim is made."
-  - "The execution capability blocker is independently reproduced as zero-effect at provider state: project ayqcpsdebldtzohwdmer remains ACTIVE_HEALTHY with exactly the six previously accepted migrations and exactly nine public application tables; repeat_sentence_items does not exist; existing Study/FIB/SWT/Essay/WFD counts remain unchanged; fresh Security Advisor returns zero findings."
-  - "Therefore no live TASK-0010 migration/data/RLS consequence exists to accept or roll back. The partial repository checkpoint is retained implementation input only."
-  - "The report correctly stops before generated live types, final frozen install/typecheck/build, live Data API/RLS proof and real Chrome local-Whisper end-to-end proof. AC-1 through AC-6 are consequently not proven."
-  - "Independent package-manager reconciliation on the published partial tree resolves the secondary pnpm concern without widening authority: pnpm install --frozen-lockfile currently exits 0. pnpm ignored-builds reports protobufjs and onnxruntime-node as automatically ignored. No onlyBuiltDependencies/ignoredBuiltDependencies configuration is present."
-  - "Revision 2 must not approve or execute transitive lifecycle scripts merely to silence pnpm. The selected learner path is browser-local Transformers.js; exact browser inference proof must establish that the current ignored-build posture is sufficient. If browser inference genuinely requires a new lifecycle-script trust decision, execution must stop for Architect revision rather than mutate allowBuilds/approve-builds."
-  - "The connected Supabase surface exposes an apply_migration capability in this Architect session, but action availability does not prove the Executor session will be permitted to dispatch it. Revision 2 must fresh-preflight the write action and fail closed if the platform blocks it again."
-
-gap_disposition:
-  - gap_id: "TASK-0010-SUPABASE-MIGRATION-ACTION-GATE"
-    decision: "REVISE_TASK"
-    rationale: "Continue the same TASK-0010 objective from the canonical blocked report. Preserve the partial checkpoint as inherited source state, retry only the exact authorized Repeat Sentence migration after fresh zero-effect/live-baseline proof, then complete all previously unproven qualification and real local-STT browser evidence. Do not bypass the connected migration action with raw migration-history manipulation or alternate credentials."
-  - gap_id: "TASK-0010-PNPM-IGNORED-TRANSITIVE-BUILDS"
-    decision: "REVISE_TASK"
-    rationale: "Freeze the current least-trust posture: protobufjs and onnxruntime-node lifecycle scripts remain ignored. Do not approve builds in revision 2. Acceptability is determined by frozen install plus real browser-local Whisper inference; any need to expand lifecycle-script trust requires another Architect revision."
+  - "Exact TASK-0010 revision 2 and report revision 2 were re-resolved from canonical GitHub truth. Qualified candidate da5b180dcf7752a82992e0a36db71eeac0355c35 is the sole direct child of exact revision-2 authorized base a5d015dcf9e4b2bc41d94cc36c7d8b248a4b28a5. Reviewed report 512746258447c29f3626fdc59ac7328975c5b1c1 is the candidate's sole direct child and changes only .agent/tasks/TASK-0010/report.yaml. Fresh remote main equals the reviewed report and only main is exposed."
+  - "Revision-2 candidate delta is narrowly scoped to four completion paths: the new repeat_sentence_items migration, exact live generated database types, and bounded Repeat Sentence exercise/worker corrections. Revision-1 retained checkpoint source remains the inherited implementation input rather than a separately accepted candidate."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly migration 20261005000828/create_repeat_sentence_items as the TASK-0010 schema consequence and exactly ten public application tables total. repeat_sentence_items has RLS enabled, exactly ten active unique authorized project-authored rows, ten distinct sentences, 8..13-word compliance, exact provenance, anon/authenticated SELECT-only grants and exactly one active=true SELECT policy. Study remains 11 / mappings 0, FIB=8, SWT=6, Essay=6 and WFD=12. Existing repeat-sentence Study content remains unchanged."
+  - "AC-1/5 type/API proof PASS: fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts (SHA-256 200c174eb0685420f3cb8efbc40e1df9f11e239c7913a70a4667f9536419a5c1). Independent public Data API replay using the existing publishable credential returned HTTP 200 and exactly ten active Repeat Sentence rows. Catalog proof independently confirms no browser write grant/policy."
+  - "AC-2 PASS: package delta from the pre-feature TASK-0010 r1 base adds exactly one direct dependency, @huggingface/transformers 4.3.0; no other direct dependency or devDependency changed. Fresh pnpm install --frozen-lockfile PASS while pnpm ignored-builds remains exactly protobufjs and onnxruntime-node; no lifecycle-script trust expansion exists. docs/STACK and source pin onnx-community/whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58."
+  - "AC-2/3 independent real-browser proof PASS: Architect launched the published production build with a task-owned fake microphone fixture and Chrome/CDP. Dedicated local-STT worker initialized the exact pinned Whisper model on WebGPU. Transformers CacheStorage independently contained model files at exact revision 2575352d61be1bf7225cf8f8b268a4678025fc58 plus public ONNX runtime assets. No transitive build approval was required."
+  - "AC-3 PASS: prompt was not visibly exposed before result; instrumented SpeechSynthesis received the exact first DB sentence once at rate 0.9200000166893005 with en-AU voice and then one-play gating held. Start response was disabled before playback/STT readiness. Application getUserMedia/MediaRecorder consumed the fake microphone, explicit Stop completed after approximately 3963 ms (<15 seconds), local Whisper returned non-empty transcript 'you', and displayed Practice content accuracy 0 / 11 exactly matched an independent normalization/LCS recomputation 0 / 11. Expected sentence became visible only at the result boundary and the local transcript/content-proxy disclaimer explicitly rejected Pearson Content, Pronunciation, Oral Fluency, score and points."
+  - "AC-4 PASS: after local inference localStorage=0, sessionStorage=0, IndexedDB database count=0 and cookies were empty. transformers-cache contained ten public model/runtime GET assets and no learner prompt/transcript needle in request URLs. CDP observed no non-GET request and no remote inference endpoint from the page-level request surface; exact model revision was independently established from CacheStorage, which is the worker-owned fetch evidence. Reset cleared transcript/result and restored playback/record gate; item navigation reset state. No source reference to HF_TOKEN, remote inference endpoints, SpeechRecognition/webkitSpeechRecognition, recording_url or browser persistence APIs was found."
+  - "AC-5 PASS: real-browser WFD regression after shared-helper extraction preserved one-play behavior and exact Practice word accuracy 10 / 10. Fresh Security Advisor returns zero findings; three Performance INFO findings are pre-existing and none is TASK-0010 attributable. Architect rerun reproduced pnpm install --frozen-lockfile, lint, typecheck, Next.js production build and git diff --check PASS. No tracked real env/operator credential is present."
+  - "AC-5 cleanup PASS: Architect terminated review-owned Chrome/Next.js sessions, safely removed only the contained non-symlink task-owned node_modules/.cache/task-0010-architect-review fixture/profile root, and independently verified ports 3122 and 9339 released."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals report 512746258447c29f3626fdc59ac7328975c5b1c1; base -> qualified candidate -> report-only lineage is exact; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "One Architect CDP harness attempt failed before application assertions because nested JavaScript template quoting broke the orchestration wrapper. The corrected harness then completed the full application flow. Its final process exit was 2 solely because page-target Network events do not expose worker-owned model GETs; direct transformers-cache inspection immediately proved the exact pinned model revision. All application assertions in that run were already PASS."
+  - "TASK-0010 revision 2 is accepted and supersedes the revision-1 REVISION_REQUIRED lifecycle. Acceptance authorizes no persistence of learner audio/transcripts/results, no pronunciation/oral-fluency scoring, no remote inference, no deployment and no successor implementation except through a separate approved task."
 
 final_candidate:
-  commit: null
-  partial_checkpoint: "21786be56ad52a5b50978b4a569882897a4d3047"
-  report_commit: "fca683a90018a681e56b83b8cdd7bf89365342a5"
-  live_repeat_sentence_table: ABSENT
-  live_repeat_sentence_rows: 0
-  security_advisor_findings: 0
-  result: REVISION_REQUIRED
-
-notes:
-  - "TASK-0010 revision 1 is terminally REVISION_REQUIRED for exact report fca683a90018a681e56b83b8cdd7bf89365342a5."
-  - "This review does not reject or accept the partial source implementation. It establishes only that its scope is retainable and that no provider-side TASK-0010 effect occurred."
-  - "Revision 2 must continue TASK-0010; do not create TASK-0011 until TASK-0010 reaches terminal ACCEPTED or a separately reviewed terminal disposition."
+  commit: "da5b180dcf7752a82992e0a36db71eeac0355c35"
+  report_commit: "512746258447c29f3626fdc59ac7328975c5b1c1"
+  result: ACCEPTED
