@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      answer_short_question_items: {
+        Row: {
+          accepted_answers: string[]
+          active: boolean
+          created_at: string
+          created_by: string
+          difficulty: string
+          id: number
+          question_text: string
+          slug: string
+          source_ref: string | null
+          source_type: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          accepted_answers: string[]
+          active?: boolean
+          created_at?: string
+          created_by: string
+          difficulty: string
+          id?: never
+          question_text: string
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          accepted_answers?: string[]
+          active?: boolean
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          id?: never
+          question_text?: string
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
       describe_image_items: {
         Row: {
           active: boolean

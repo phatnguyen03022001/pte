@@ -68,6 +68,18 @@ export default function PracticePage() {
         <article className="study-card">
           <div className="study-card__meta">
             <span>Listening</span>
+          </div>
+          <h2>Answer Short Question</h2>
+          <p>
+            Hear one short browser-speech question, answer once by microphone, and
+            check the local transcript against accepted short-answer aliases.
+          </p>
+          <Link href="/practice/answer-short-question">Open practice →</Link>
+        </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Listening</span>
             <span>Speaking</span>
           </div>
           <h2>Repeat Sentence</h2>
