@@ -1,0 +1,202 @@
+protocol_version: 3
+
+task_id: TASK-0012
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0012
+  gap_id: PTE-DESCRIBE-IMAGE-STRUCTURED-CHART-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one current Describe Image learner slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; keep chart rendering and speaking state feature-local"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; provider -> content -> chart render -> shared local-STT -> browser proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0011/review.yaml in the exact handoff snapshot"
+    role: "accepted shared local-STT substrate, Read Aloud and prior Practice baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Practice/Study, media rights, local-STT, cost and architecture truth"
+    precedence: 2
+  - source: "Pearson current PTE Academic Speaking & Writing Describe Image guidance: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current task mechanics: image prompt, Speaking, 25-second preparation, 40-second answer, one recording, official Content/Pronunciation/Oral-Fluency boundary"
+    precedence: 3
+  - source: "Pearson Describe Image guidance: https://www.pearsonpte.com/articles/the-dos-and-donts-of-describe-image-question-type-in-pte/"
+    role: "current practical constraint: focus on main information/trends, use relevant numbers, avoid memorized responses and unsupported opinions"
+    precedence: 4
+  - source: "Existing Study row describe-image-template in exact live project"
+    role: "already-authorized learner guidance to reuse unchanged"
+    precedence: 5
+  - source: "Current Supabase RLS/Data API guidance"
+    role: "explicit GRANT + RLS security HOW"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "accepted feature-specific Practice precedent + shared local-STT substrate + media-rights invariant"
+  rationale: "Describe Image needs visual prompts but does not justify a media provider or chart dependency. Use one feature-specific structured chart table and native SVG rendering from project-authored synthetic data. Reuse shared local-STT only for capture/transcription. Keep Describe Image interaction/self-review local."
+
+objective: "Ship a useful PTE Academic Describe Image practice slice using original synthetic structured chart data rendered as accessible native SVG, current 25-second preparation and 40-second one-record practice timing, shared browser-local Whisper transcription, and an explicit self-review checklist against three project-authored key points without pretending to score Pearson Content, Pronunciation or Oral Fluency."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0012 revision 1, bound TASK-0011 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly eight accepted migrations through create_read_aloud_items; public application tables=11; Study=12 active / mappings=0, FIB=8, SWT=6, Essay=6, WFD=12, Repeat Sentence=10, Read Aloud=8; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.describe_image_items. Do not create generic media, question, attempt, result or scoring tables."
+    - "describe_image_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; chart_type text not null; labels text[] not null; values numeric[] not null; unit text not null; review_points text[] not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use bounded DB checks only: kebab-case slug; non-empty required scalar text; chart_type in ('bar','line'); difficulty/source_type lowercase snake_case; cardinality(labels)=cardinality(values); 4..8 chart points; exactly 3 review_points. Do not add functions, triggers, views, generic JSON schema, media URLs or binary assets."
+    - "Enable RLS; revoke anon/authenticated privileges; explicitly GRANT SELECT only; create exactly one active=true SELECT policy for anon/authenticated. No browser write authority."
+    - "Persist exactly eight active original synthetic chart items through privileged Supabase authoring after migration, not in migration bytes. Use source_type=project_authored, created_by=updated_by=chatgpt_task_0012 and source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/ for all rows."
+    - "Every chart must be explicitly labelled in learner UI as a synthetic practice dataset so fictional values are not presented as real-world facts. All labels, values and review points are project-authored and must not copy Pearson sample data."
+    - "Persist these exact item contracts:
+      1) campus-library-visits — title 'Campus library visits by weekday' — bar — labels [Monday, Tuesday, Wednesday, Thursday, Friday] — values [120,145,138,172,160] — unit 'visits' — difficulty starter — review points: Thursday is highest at 172 visits; Monday is lowest at 120; visits generally rise across the week despite a Wednesday dip.
+      2) solar-output-by-month — title 'Solar output over six months' — line — labels [January, February, March, April, May, June] — values [42,48,55,61,67,73] — unit 'MWh' — difficulty starter — review points: output rises every month; January is lowest at 42 MWh; June is highest at 73 MWh.
+      3) study-hours-by-subject — title 'Weekly study hours by subject' — bar — labels [Biology, Chemistry, Mathematics, History, English] — values [6,8,10,5,7] — unit 'hours' — difficulty starter — review points: Mathematics is highest at 10 hours; History is lowest at 5 hours; Chemistry and English are in the middle at 8 and 7 hours.
+      4) bus-passengers-morning — title 'Morning bus passengers by hour' — line — labels [6am, 7am, 8am, 9am, 10am] — values [35,58,82,74,51] — unit 'passengers' — difficulty starter — review points: passengers peak at 82 at 8am; the count rises sharply from 6am to 8am; passenger numbers fall after 8am.
+      5) recycling-by-material — title 'Recycling rate by material' — bar — labels [Paper, Glass, Plastic, Metal, Organic] — values [64,52,38,47,71] — unit '%' — difficulty developing — review points: Organic is highest at 71 percent; Plastic is lowest at 38 percent; Paper is second highest at 64 percent.
+      6) course-enrolment-trend — title 'Course enrolment over five years' — line — labels [2021, 2022, 2023, 2024, 2025] — values [180,205,230,218,260] — unit 'students' — difficulty developing — review points: enrolment ends highest at 260 in 2025; it rises from 2021 through 2023; there is a temporary decline in 2024 before a strong rebound.
+      7) water-use-by-department — title 'Campus water use by area' — bar — labels [Labs, Cafeteria, Gardens, Dorms, Sports] — values [28,17,34,46,22] — unit 'thousand litres' — difficulty developing — review points: Dorms use the most water at 46 thousand litres; Cafeteria is lowest at 17; Gardens rank second at 34.
+      8) online-workshop-attendance — title 'Online workshop attendance by week' — line — labels [Week 1, Week 2, Week 3, Week 4, Week 5, Week 6] — values [45,62,59,78,84,96] — unit 'participants' — difficulty developing — review points: attendance finishes highest at 96 in Week 6; there is a small dip from Week 2 to Week 3; the overall trend is strongly upward."
+    - "Do not create or revise Study content. Reuse existing active Study slug describe-image-template exactly as-is and preserve body/metadata/hash 0e55bd98b8763d0185f5a7db9cd82739954d4b74fdf4e0213f527eb703035ec5."
+    - "Implement /practice/describe-image as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first active item or a clear empty state."
+    - "Update /practice to expose seven implemented task types, adding Describe Image under Speaking."
+    - "Render the chart from structured data with project-owned React/SVG only. Do not install a chart library and do not use canvas, external image URLs, Cloudinary, YouTube or arbitrary web assets."
+    - "The chart renderer must support exactly bar and single-series line charts required by these eight rows. Keep it feature-local; do not create a general visualization framework."
+    - "SVG must be responsive and accessible: expose the chart title and a textual data summary/table or equivalent accessible representation so chart meaning is available without visual inspection. Do not encode essential information by color alone."
+    - "Implement one feature-local client interaction component. It may own preparation timer, local-STT readiness, one recording, processing/transcript, revealed review points, self-review checkbox state and errors. No global state/auth/persistence."
+    - "Provide a 25-second preparation countdown matching current Pearson Describe Image preparation timing. Learner may start it once per item/reset; show remaining seconds. Provide explicit 'Skip preparation for practice' without bypassing local-STT readiness."
+    - "Recording becomes available only after local STT readiness plus preparation completion/skip. Permit exactly one recording per item/reset through getUserMedia({audio:true}) + MediaRecorder/native audio APIs. Hard local practice cap is 40 seconds, matching the current answer window; provide explicit Stop response and auto-stop at the cap."
+    - "Learner audio remains ephemeral. Reuse src/lib/local-stt exact accepted worker/audio primitives: @huggingface/transformers 4.3.0, onnx-community/whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58, WebGPU preferred and one WASM fallback, mono Float32 16 kHz inference, no HF_TOKEN and no remote inference."
+    - "After local transcription, display the transcript and reveal exactly the three project-authored review points. Provide three feature-local learner checkboxes and display 'Self-review key-point coverage: K / 3' from the learner's own checked boxes. This is self-assessment only and is not automatic content scoring."
+    - "Explicitly state that transcript and self-review coverage are practice aids, not Pearson Content, Pronunciation, Oral Fluency, score or points; local STT errors may affect the transcript."
+    - "Do not add automatic semantic scoring, keyword scoring, pronunciation scoring, fluency scoring, pace scoring or memorized-template evaluation."
+    - "Reset cancels prep timer, stops recording/tracks, clears transcript/review checkbox/result/error state and restores one preparation/one recording. Item change performs equivalent cleanup. Shared worker/model may remain loaded for the page session."
+    - "Add a direct bidirectional bridge between /study/describe-image-template and /practice/describe-image. Preserve Study body/metadata/hash."
+    - "Do not install/update/remove npm dependencies. package.json and pnpm-lock.yaml must remain byte-identical to the TASK-0012 execution base; ignored builds remain protobufjs + onnxruntime-node with no lifecycle trust expansion."
+    - "After authoring, prove exactly eight active Describe Image rows with exact contracts/provenance, four starter/four developing, exact labels/values/units and exactly three review points each. Prove all prior Study and Practice counts/content hashes unchanged."
+    - "Prove public Data API with the existing publishable key reads exactly eight active Describe Image rows; browser writes remain absent by grants/policies. Never print/persist the key."
+    - "Regenerate src/types/database.ts from exact project and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors. Zero TASK-0012-attributable Security finding required; report INFO honestly."
+    - "Run pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check. ignored-builds must remain exactly protobufjs + onnxruntime-node."
+    - "Run bounded production HTTP proof: /practice exposes seven task types; /practice/describe-image default/selected/invalid routes return 200; initial HTML contains the selected chart title, accessible structured data summary and synthetic-dataset label; /study/describe-image-template links to Practice."
+    - "Run real Chrome/CDP fake-microphone proof without adding browser-test dependencies. Generate one ignored task-owned fake audio fixture containing an original spoken description of the exact first chart, launch Chrome fake-media mode, and exercise the real application getUserMedia/MediaRecorder/shared local-Whisper path."
+    - "Browser proof must demonstrate: chart and accessible values visible initially; local STT reaches WebGPU or documented WebGPU failure + WASM fallback; preparation timer 25 -> 24; Skip preparation does not bypass STT readiness; one recording starts only after gates and stops explicitly in <40 seconds; local transcript is non-empty; three review points remain hidden before result and appear after transcription; checking exactly two boxes displays Self-review key-point coverage 2 / 3; disclaimer rejects official scoring; Reset clears prep/record/transcript/review state; item change resets state and renders the next chart's exact data."
+    - "Runtime privacy proof must show no learner audio/transcript/self-review result in localStorage/sessionStorage/IndexedDB/cookies/CacheStorage request URLs; zero learner upload and zero remote inference; MediaStream tracks end; Transformers cache contains only accepted public model/runtime GET assets at the pinned revision."
+    - "Run one bounded Repeat Sentence or Read Aloud regression using the shared local-STT substrate to prove TASK-0012 did not regress existing speaking capture. Source-only inspection is insufficient; use one real fake-mic interaction with non-empty local transcript."
+    - "Safely terminate task-owned Next.js/Chrome processes, release ports and remove task-owned profile/fake fixture after exact containment/non-symlink proof."
+    - "Vercel Git integration is currently disconnected. Do not reconnect it, modify Vercel project configuration or invoke any Vercel deployment during TASK-0012."
+    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0012/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve remote closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0013."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/lib/local-stt for reuse only; behavior changes require proof and must remain shared-substrate bounded"
+    - "src/app/practice/describe-image and feature-local renderer/interaction source"
+    - "src/app/practice/page.tsx"
+    - "src/app/study/[slug]/page.tsx solely for Describe Image Practice link"
+    - "src/app/globals.css for smallest responsive/accessibility styling additions"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0012/report.yaml"
+    - "Supabase public.describe_image_items exact eight authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "All Describe Image visual data is original synthetic structured project content."
+  - "No third-party image/media bytes are copied or persisted."
+  - "SVG renderer is feature-local and dependency-free."
+  - "Learner audio is ephemeral; local Whisper semantics remain exact."
+  - "Self-review coverage is learner-selected and never represented as official or automatic content scoring."
+  - "No pronunciation/oral-fluency/semantic scoring, learner persistence, remote inference or runtime AI."
+  - "No npm dependency drift or lifecycle-script trust expansion."
+  - "Existing describe-image-template Study body/metadata/hash and all prior accepted Practice content remain unchanged."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases, force-push or rewrite history."
+  - "Install a chart library or any npm dependency."
+  - "Create generic visualization/media/question/attempt/result/scoring infrastructure."
+  - "Use Cloudinary, YouTube, arbitrary web images, external chart APIs or copied Pearson images/data."
+  - "Persist learner audio/transcript/self-review result in database/files/browser storage."
+  - "Use remote STT/TTS/OpenAI/LLM, SpeechRecognition/webkitSpeechRecognition, pronunciation APIs or semantic scoring services."
+  - "Call self-review coverage or transcript an official Pearson Content/Pronunciation/Oral-Fluency score."
+  - "Modify existing Study content or prior Practice content beyond exact navigation and necessary non-regressing shared local-STT use."
+  - "Reconnect or deploy Vercel."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new Describe Image table with eight exact active project-authored synthetic chart records; existing Study/Practice truth is preserved."
+    evidence_required: "Migration/schema identity, exact eight-row chart contracts/provenance, RLS/grants/Data API, prior counts/hashes and fresh generated types."
+  - id: AC-2
+    requirement: "Learners receive an accessible dependency-free structured chart prompt matching the exact stored data."
+    evidence_required: "Server/HTTP/browser proof for bar+line rendering, chart title/data summary/synthetic label, selected/fallback behavior and no external media/chart dependency."
+  - id: AC-3
+    requirement: "Learners can complete the current-timing Describe Image practice flow with 25-second preparation, one <=40-second ephemeral recording, local transcript and explicit three-point self-review."
+    evidence_required: "Real Chrome fake-mic proof through shared local Whisper, prep/skip gates, one-record cap, non-empty transcript, hidden-then-revealed review points, exact 2/3 learner self-review behavior, Reset/item-reset and truthful disclaimers."
+  - id: AC-4
+    requirement: "Learner audio/state remains ephemeral and no remote inference/media persistence/official scoring is introduced."
+    evidence_required: "Runtime storage/network/media-track proof, model-cache revision, no upload/provider path and safe fixture/profile cleanup."
+  - id: AC-5
+    requirement: "Existing speaking/local-STT behavior remains healthy and repository/provider mechanics remain clean."
+    evidence_required: "Real Repeat Sentence or Read Aloud regression, Study bridge/hash preservation, advisors, types, frozen install/ignored-builds/lint/typecheck/build/diff-check, package/lock identity and secret hygiene."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main without triggering Vercel deployment."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh main-only/local-clean closure; Vercel remains disconnected/no deployment invoked."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
