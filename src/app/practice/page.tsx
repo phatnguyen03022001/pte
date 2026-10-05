@@ -127,6 +127,21 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/retell-lecture">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Listening</span>
+            <span>Speaking</span>
+          </div>
+          <h2>Summarize Group Discussion</h2>
+          <p>
+            Hear six ordered turns from three speakers, prepare for 10 seconds,
+            record one summary, and self-review the discussion coverage.
+          </p>
+          <Link href="/practice/summarize-group-discussion">
+            Open practice →
+          </Link>
+        </article>
       </section>
     </main>
   );
