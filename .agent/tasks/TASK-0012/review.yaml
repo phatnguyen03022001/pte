@@ -1,0 +1,46 @@
+protocol_version: 3
+task_id: TASK-0012
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0012/report.yaml
+  commit: "cef48216138fdef5a12e63a8d2edcb49770a89f3"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0012 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 4f836765db2e31e535fb8be4edb7d64610884248 is the sole direct child of exact authorized base 9d3dc17bbe24c251447d99f2464a05e89e2a10a2. Report cef48216138fdef5a12e63a8d2edcb49770a89f3 is the candidate's sole direct child and changes only .agent/tasks/TASK-0012/report.yaml. Fresh remote main equals the reviewed report and only main exists."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with nine migrations and twelve public application tables. describe_image_items has exactly eight active rows, four starter/four developing, exact authorized slugs/titles/chart types/labels/values/units/review points/provenance, zero malformed row shapes, RLS enabled, exactly one active=true SELECT policy and anon/authenticated SELECT-only grants. Existing Study and Practice counts remain unchanged."
+  - "Existing describe-image-template remains unchanged with exact body SHA-256 0e55bd98b8763d0185f5a7db9cd82739954d4b74fdf4e0213f527eb703035ec5 and original TASK-0005 provenance."
+  - "Fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts; committed SHA-256 is def7d0654dc0dfca688f66c52078b209f225d26e306a11eae923d537a9b64d6c."
+  - "AC-2 PASS: candidate source uses feature-local native React/SVG only, supports the authorized bar and single-series line shapes, exposes accessible SVG title/description plus a visible structured data table, and labels the datasets as synthetic/project-authored. No chart/media dependency or external image/media path was introduced."
+  - "AC-3 PASS on reviewed real-browser evidence: Describe Image real Chrome/CDP fake-microphone proof observed exact chart/table values, 25 -> 24 preparation, STT-readiness gate, WebGPU local Whisper, one explicit-stop recording after 4257 ms, non-empty transcript, review points hidden before result then exactly three visible, learner-selected Self-review key-point coverage 2 / 3, Reset cleanup and next-item exact-data/state reset. No contradictory source/runtime evidence was found."
+  - "AC-4 PASS: runtime evidence records localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, no learner-data cache URL, zero learner upload and zero remote inference. Media tracks ended. Source inspection independently found no learner persistence or remote STT/scoring API path in the Describe Image client."
+  - "AC-5 PASS: real Read Aloud fake-mic regression preserved shared local-STT behavior with non-empty transcript and ended track. Fresh Security Advisor returns zero findings; Performance Advisor contains only the three pre-existing INFO findings. Vercel remains disconnected from Git and deployment count remains 27 with latest deployment still the pre-disconnect a4ed91d planning deployment."
+  - "Architect independently reran pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check on the immutable reviewed code. All passed. ignored-builds remained exactly protobufjs and onnxruntime-node. package.json and pnpm-lock.yaml are byte-identical to the TASK-0012 execution base."
+  - "The report's browser harness navigation timeouts are test-harness-only deviations: Describe Image assertions had already completed and the required Read Aloud regression was rerun successfully in a separate bounded CDP target without product-source mutation. No acceptance predicate is weakened."
+  - "AC-6 PASS: fresh canonical main equals cef48216138fdef5a12e63a8d2edcb49770a89f3 before review publication; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, one clean worktree and no active Git operation. Vercel Git integration remains disconnected and no deployment was triggered."
+  - "TASK-0012 is accepted. Acceptance authorizes no automatic/official Pearson scoring, learner persistence, third-party media copying, Vercel reconnection/deployment or successor feature implementation except through separately approved authority."
+
+final_candidate:
+  commit: "4f836765db2e31e535fb8be4edb7d64610884248"
+  report_commit: "cef48216138fdef5a12e63a8d2edcb49770a89f3"
+  result: ACCEPTED
