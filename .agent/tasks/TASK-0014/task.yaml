@@ -1,0 +1,212 @@
+protocol_version: 3
+
+task_id: TASK-0014
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0014
+  gap_id: PTE-ANSWER-SHORT-QUESTION-PRACTICE-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one current Answer Short Question slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; reuse native TTS/shared local-STT without generic scoring framework"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; provider -> content -> one-play prompt -> immediate response -> deterministic local check -> browser proof"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0013/review.yaml in the exact handoff snapshot"
+    role: "accepted native SpeechSynthesis + shared local-STT speaking/listening baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Practice/Study/audio/privacy/cost/architecture truth"
+    precedence: 2
+  - source: "Pearson current PTE Academic Speaking & Writing Answer Short Question guidance: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current mechanics: 3-9 second audio question, one/few-word response, 10-second answer window, Listening score only, correct/incorrect scoring; image may optionally appear"
+    precedence: 3
+  - source: "Accepted native SpeechSynthesis precedent from Write From Dictation and Retell Lecture"
+    role: "zero-cost browser-local prompt playback"
+    precedence: 4
+  - source: "Accepted src/lib/local-stt substrate"
+    role: "zero-cost ephemeral learner response transcription"
+    precedence: 5
+  - source: "Current Supabase RLS/Data API guidance"
+    role: "explicit GRANT + RLS security HOW"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "accepted feature-specific Practice pattern plus browser-native prompt playback and shared local-STT"
+  rationale: "Answer Short Question is independently reviewable and has deterministic short-answer semantics. Use one feature-specific table with bounded accepted aliases, audio-only prompts for this slice because Pearson images are optional, native SpeechSynthesis one-play, shared local STT, and a feature-local normalized exact-alias practice check. Do not create generic scoring or semantic-answer infrastructure."
+
+objective: "Ship a current PTE Academic Answer Short Question Study + Practice slice using twelve original audio-only questions, one-play native browser speech, an immediate one-response <=10-second microphone window, local Whisper transcription, and a deterministic normalized accepted-alias practice check while clearly distinguishing the local check from official Pearson scoring."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0014 revision 1, bound TASK-0013 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly ten accepted migrations through create_retell_lecture_items; public application tables=13; Study=13 active / mappings=0; FIB=8, SWT=6, Essay=6, WFD=12, Repeat Sentence=10, Read Aloud=8, Describe Image=8, Retell Lecture=8; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.answer_short_question_items. Do not create generic question/answer/attempt/result/scoring tables."
+    - "answer_short_question_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; question_text text not null; accepted_answers text[] not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use bounded DB checks only: kebab-case slug; required scalar text non-empty; difficulty/source_type lowercase snake_case; question_text 6..18 whitespace-delimited words; accepted_answers cardinality 1..4 and every alias non-empty. No image/media URL, generic JSON metadata, function, trigger or view."
+    - "Enable RLS; revoke anon/authenticated privileges; explicitly GRANT SELECT only; create exactly one active=true SELECT policy for anon/authenticated. No browser write authority."
+    - "Persist exactly twelve active original project-authored audio-only Answer Short Question rows after migration, not in migration bytes. Use source_type=project_authored, created_by=updated_by=chatgpt_task_0014, source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/; exactly six starter and six developing."
+    - "Use these exact rows:
+      1) measuring-temperature — title 'Measuring temperature' — question 'What instrument is commonly used to measure temperature?' — accepted ['thermometer','thermometers'] — starter.
+      2) plant-water-uptake — title 'Plant water uptake' — question 'Which part of a plant usually absorbs water from the soil?' — accepted ['root','roots'] — starter.
+      3) viewing-tiny-objects — title 'Viewing tiny objects' — question 'What instrument lets scientists view objects too small to see clearly?' — accepted ['microscope','microscopes'] — starter.
+      4) pumping-blood — title 'Pumping blood' — question 'Which organ pumps blood around the human body?' — accepted ['heart','the heart'] — starter.
+      5) course-outline — title 'Course outline' — question 'What document usually describes the topics and requirements of a course?' — accepted ['syllabus','course syllabus'] — starter.
+      6) borrowing-books — title 'Borrowing books' — question 'What place allows people to borrow books for a period of time?' — accepted ['library','a library'] — starter.
+      7) studying-stars — title 'Studying stars and planets' — question 'What do we call a scientist who studies stars and planets?' — accepted ['astronomer','an astronomer'] — developing.
+      8) plants-making-food — title 'Plants making food' — question 'What process allows green plants to use light to make food?' — accepted ['photosynthesis'] — developing.
+      9) electrical-power-unit — title 'Electrical power unit' — question 'What unit is commonly used to measure electrical power?' — accepted ['watt','watts'] — developing.
+      10) comparing-categories — title 'Comparing categories' — question 'What type of graph uses rectangular bars to compare categories?' — accepted ['bar chart','bar graph'] — developing.
+      11) earth-structure-science — title 'Science of Earth structure' — question 'What science studies the Earth’s physical structure and substances?' — accepted ['geology'] — developing.
+      12) speech-sounds-field — title 'Study of speech sounds' — question 'What branch of linguistics studies the physical sounds of human speech?' — accepted ['phonetics'] — developing."
+    - "Do not copy Pearson example questions. The twelve questions above are project-authored and must remain exact."
+    - "Add exactly one Study strategy through privileged authoring: slug answer-short-question-strategy; type strategy; skill_code listening; task_type answer_short_question; title 'Answer Short Question: listen, answer only what is asked'; target_score 40; source_type project_authored; source_ref exact Pearson Speaking & Writing URL; created_by=updated_by=chatgpt_task_0014; active=true."
+    - "Study body must state current mechanics conservatively: question audio about 3-9 seconds, respond with one word or a few words, 10-second answer window, and this question type affects Listening rather than Speaking. State that official responses are judged correct/incorrect for appropriateness. Provide an original listen-for-target -> retrieve short noun/term -> answer immediately method, common mistakes and one short drill. Explain that the app's local STT/alias match is practice feedback only and may mishear a correct spoken answer."
+    - "Preserve all existing 13 Study rows byte/metadata-identical; Study grows to exactly 14 active and mappings remain zero."
+    - "Implement /practice/answer-short-question as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to the first active item or clear empty state."
+    - "Update /practice to expose nine implemented task types, adding Answer Short Question under Listening. Do not label it as Speaking-scored."
+    - "Initial HTML/DOM must not expose question_text or accepted_answers before the item is played/result is shown."
+    - "Use one feature-local no-store prompt route to fetch the active question only after the learner starts the item. The response may include question_text but must not expose accepted_answers before result."
+    - "Use native browser SpeechSynthesis only for prompt playback. Pearson auto-plays the prompt; browser practice may require one explicit 'Play question' action after local STT is ready because autoplay/user-gesture constraints differ."
+    - "Before prompt playback, require local STT ready. On Play question, request/hold one microphone MediaStream, then speak the exact question_text once with an available English voice at deterministic bounded rate near normal speech. Do not record during prompt playback."
+    - "When SpeechSynthesis onend fires, automatically start MediaRecorder using the already-authorized stream so the response window begins immediately after the prompt. Permit exactly one response per item/reset. Hard response cap is 10 seconds; provide explicit Stop answer and auto-stop at 10 seconds."
+    - "If microphone permission/capture cannot be established before playback, do not consume the one-play attempt; show a recoverable local error."
+    - "Learner audio remains ephemeral. Reuse src/lib/local-stt exact accepted primitives and exact @huggingface/transformers 4.3.0 + onnx-community/whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58, WebGPU preferred with one WASM fallback, mono Float32 16 kHz, no HF_TOKEN and no remote inference."
+    - "After transcription, reveal question_text and accepted_answers. Display the learner transcript."
+    - "Implement one feature-local deterministic normalization helper for Answer Short Question only: Unicode lowercase, trim, strip surrounding/basic punctuation, collapse internal whitespace. Compare the normalized transcript for exact equality against normalized accepted_answers. Do not perform stemming, edit-distance, fuzzy, keyword or semantic matching."
+    - "Display exactly one truthful practice result: 'Practice answer match: Yes' when an exact normalized accepted alias matches, otherwise 'Practice answer match: No'. Also show the accepted answer aliases after result."
+    - "Explicitly state that the practice match is not an official Pearson score/result and local STT may mishear a correct spoken answer. Do not claim Speaking score because Pearson assesses this question type under Listening."
+    - "Reset cancels speech, stops tracks/recording, clears prompt/transcript/result/error and restores one playback/one response. Item change performs equivalent cleanup. Shared Whisper worker/model may remain loaded for the page session."
+    - "Add direct bidirectional Study bridge between /study/answer-short-question-strategy and /practice/answer-short-question."
+    - "Do not install/update/remove npm dependencies. package.json and pnpm-lock.yaml must remain byte-identical to TASK-0014 execution base; ignored builds remain exactly protobufjs + onnxruntime-node with no lifecycle trust expansion."
+    - "After authoring, prove exactly twelve active Answer Short Question rows, six starter/six developing, exact question/alias/provenance contracts, every question 6..18 whitespace words and accepted_answers cardinality 1..4. Prove prior Study/Practice counts and deterministic fingerprints/hashes unchanged except exact one new Study row."
+    - "Prove public Data API reads exactly twelve active Answer Short Question rows and browser writes remain absent by grants/policies. Never print/persist the publishable key."
+    - "Regenerate src/types/database.ts from exact project and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors; zero TASK-0014-attributable Security finding required and report INFO honestly."
+    - "Run pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check. ignored-builds remains exactly protobufjs + onnxruntime-node."
+    - "Run bounded production HTTP proof: /practice exposes nine task types; /practice/answer-short-question default/selected/invalid routes return 200; initial HTML does not contain question_text/accepted_answers; /study/answer-short-question-strategy returns 200 and links to Practice."
+    - "Run real Chrome/CDP proof without adding browser-test dependencies. Use actual SpeechSynthesis and two ignored task-owned fake microphone fixtures: one that speaks an accepted alias for one item and one deliberately wrong short answer for another."
+    - "Browser proof must demonstrate: question/answers hidden initially; local STT reaches WebGPU or documented WebGPU failure + WASM fallback; Play question calls SpeechSynthesis exactly once with exact DB question; replay is blocked; MediaRecorder starts only after speech onend; accepted-answer fixture stops explicitly in <10 seconds, transcript is non-empty and local normalized check displays Practice answer match: Yes; wrong-answer fixture on another item displays Practice answer match: No; question + aliases appear only after result; disclaimer rejects official-score claim; Reset restores one play/one response; item change resets state."
+    - "Runtime privacy proof must show no learner audio/transcript/result in localStorage/sessionStorage/IndexedDB/cookies/CacheStorage request URLs; zero learner upload and zero remote inference; MediaStream tracks end; no generated prompt audio is persisted; Transformers cache contains only accepted public model/runtime GET assets at pinned revision."
+    - "Run one real bounded Retell Lecture or WFD SpeechSynthesis regression and one existing local-STT regression to prove both reused substrates remain healthy."
+    - "Safely terminate task-owned Next.js/Chrome processes, cancel speech, release task-owned ports and remove task-owned profile/fake fixtures after exact containment/non-symlink proof."
+    - "Vercel Git integration remains disconnected. Do not reconnect, configure or deploy Vercel."
+    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0014/report.yaml as its sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0015."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/lib/local-stt for reuse only"
+    - "existing native SpeechSynthesis pattern for behavior-compatible reuse"
+    - "src/app/practice/answer-short-question and feature-local prompt/normalization/interaction source"
+    - "src/app/practice/page.tsx"
+    - "src/app/study/[slug]/page.tsx solely for Answer Short Question bridge"
+    - "src/app/globals.css for minimal styling"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0014/report.yaml"
+    - "Supabase public.answer_short_question_items exact twelve authorized rows"
+    - "Supabase study_content exact one new answer-short-question-strategy row"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Question text and accepted aliases are original project-authored content."
+  - "Prompt audio is browser-native SpeechSynthesis only and is never persisted."
+  - "Learner audio/transcript/result is ephemeral."
+  - "Local answer matching is exact normalized alias equality only; no fuzzy/semantic scoring."
+  - "Answer Short Question is presented as Listening-scored, not Speaking-scored."
+  - "No remote inference/TTS, runtime AI, learner persistence or official-score claim."
+  - "No npm dependency drift or lifecycle-script trust expansion."
+  - "All prior accepted Study/Practice content remains unchanged except exact new Answer Short Question Study/content."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases, force-push or rewrite history."
+  - "Install/update/remove npm dependencies."
+  - "Create generic answer/scoring/question/attempt/result infrastructure."
+  - "Add image prompt/media support in this task; Pearson images are optional and this slice is audio-only."
+  - "Persist prompt audio or learner audio/transcript/result."
+  - "Use remote TTS/STT/OpenAI/LLM, SpeechRecognition/webkitSpeechRecognition or semantic/fuzzy scoring."
+  - "Call local alias matching an official Pearson score or a Speaking score."
+  - "Copy Pearson example questions."
+  - "Modify prior accepted content beyond exact navigation and non-regressing substrate reuse."
+  - "Reconnect/configure/deploy Vercel."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new Answer Short Question table with twelve exact active project-authored questions and exactly one new Study strategy; prior accepted content is preserved."
+    evidence_required: "Migration/schema identity, exact twelve-row question/alias/provenance/word-count proof, prior hashes/fingerprints/counts, one Study addition, RLS/grants/Data API and exact live types."
+  - id: AC-2
+    requirement: "Learners receive a realistic zero-cost one-play audio question and immediate <=10-second spoken response flow."
+    evidence_required: "Real browser exact-text SpeechSynthesis one-play, microphone acquired before playback, recording auto-start only after onend, <=10-second cap/reset behavior and no prompt-audio persistence."
+  - id: AC-3
+    requirement: "Local transcript produces a deterministic exact-alias practice answer check with both positive and negative cases."
+    evidence_required: "Real Chrome accepted-answer and wrong-answer fixtures, non-empty transcripts, exact normalized equality proof, Yes/No UI behavior, post-result question/alias reveal and no fuzzy/semantic matching."
+  - id: AC-4
+    requirement: "Learner state/audio remains ephemeral and the UI truthfully preserves the Listening-only/official-score boundary."
+    evidence_required: "Runtime storage/network/cache/media-track proof, source scan, explicit Listening labeling and not-official/STT-error disclaimer."
+  - id: AC-5
+    requirement: "Existing SpeechSynthesis and shared local-STT behavior remain healthy and repository/provider mechanics stay clean."
+    evidence_required: "Real prior-feature TTS regression plus real existing local-STT regression, Study bridge, advisors, types, frozen install/ignored-builds/lint/typecheck/build/diff-check and package/lock identity."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main without Vercel deployment."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh main-only/local-clean closure; Vercel remains disconnected."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
