@@ -1,0 +1,332 @@
+protocol_version: 3
+
+task_id: TASK-0011
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0011/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  original_authorized_base_head: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  recovered_execution_base_head: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  qualified_candidate_head: "83e475115550efc3c3ffc057ea7291992c027ec0"
+  qualified_candidate_tree: "9cef3fec3bcf18b88a6fe34b8db8863a5da717ac"
+  continuation_mode: "EXECUTION RECOVERY / CONTINUATION"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  loaded_execution_skills:
+    - executor
+    - verification
+
+recovery:
+  interrupted_session_effects_reconciled: true
+  canonical_remote_main_on_recovery: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  local_main_on_recovery: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  worktree_count: 1
+  git_operation_active: false
+  recovered_dirty_paths: 14
+  recovered_dirty_inventory_exact: PASS
+  preservation_action: "PASS; no reset, restore, checkout, stash, clean, discard, overwrite or worktree recreation was used."
+  inherited_provider_effects:
+    migration: "20261005065854/create_read_aloud_items already existed exactly once."
+    read_aloud_seed: "Exactly eight task-owned rows already existed."
+    study_authoring: "Exactly one read-aloud-strategy row already existed."
+  continuation_provider_mutation:
+    migration_reapply_attempts: 0
+    duplicate_read_aloud_seed_attempts: 0
+    duplicate_study_authoring_attempts: 0
+    raw_ddl_used: false
+    migration_history_manipulation_used: false
+  provider_log_recovery:
+    result: PASS
+    evidence: "Supabase postgres logs retain the interrupted apply_migration statement at 2026-10-05T06:58:54Z and the pre-mutation combined hash query failure at 2026-10-05T06:56:30Z; recovery therefore reconciled live state instead of retrying unknown effects."
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    migrations: 8
+    read_aloud_migration_instances: 1
+    public_application_tables: 11
+    study_active_rows: 12
+    study_mapping_rows: 0
+    fib_rows: 8
+    swt_rows: 6
+    essay_rows: 6
+    wfd_rows: 12
+    repeat_sentence_rows: 10
+    read_aloud_rows: 8
+    security_findings: 0
+    remote_main_before_report_authorship: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+    main_only_remote: true
+
+  migration:
+    version: "20261005065854"
+    name: create_read_aloud_items
+    repository_path: supabase/migrations/20261005065854_create_read_aloud_items.sql
+    repository_sha256: "fa5f868f96b4404b21a7b913bfb322d800c52995cda84567ae7e307e79c730c4"
+    live_effect_inherited_from_interrupted_session: true
+    apply_migration_attempts_this_continuation: 0
+    seed_rows_in_migration: 0
+    table: public.read_aloud_items
+    raw_ddl_fallback_used: false
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    checks: "PASS; kebab-case slug plus required non-empty and lowercase-snake-case checks only."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one read_aloud_items_public_read_active SELECT policy permits anon/authenticated only when active=true."
+    browser_write_authority: "PASS; grants expose no INSERT/UPDATE/DELETE and the interrupted session's publishable-key POST was denied with PostgreSQL 42501."
+    generated_types:
+      path: src/types/database.ts
+      sha256: "12cd3adbedd24d614197d3c25c1bb268558218ca09623d8ecac0266ea63014a0"
+      generated_bytes: 16347
+      exact_live_generation_match: PASS
+
+  read_aloud_content:
+    total_rows: 8
+    active_rows: 8
+    starter_rows: 4
+    developing_rows: 4
+    word_count_range: "43..48"
+    sentence_count_range: "3..3"
+    at_most_60_words: PASS
+    exact_slugs_titles: PASS
+    provenance: "PASS; every row uses source_type=project_authored, created_by=updated_by=chatgpt_task_0011 and the exact Pearson Speaking & Writing source_ref."
+    exact_slugs:
+      - digital-libraries-and-access
+      - urban-trees-and-temperature
+      - sleep-supports-memory
+      - public-transport-planning
+      - scientific-replication
+      - food-waste-reduction
+      - renewable-power-grids
+      - multilingual-learning
+    current_full_row_fingerprint_md5: "0a360b8207f23cf7985b429a71025723"
+
+  study_content:
+    total_active_rows: 12
+    prior_rows: 11
+    new_rows: 1
+    new_slug: read-aloud-strategy
+    new_title: "Read Aloud: chunk, breathe, stay steady"
+    new_row_body_sha256: "1d57c0b82b79ac5d0e9825191a8736e58b4b60ce688b9b84e3d12b2bab08ffb6"
+    prior_11_body_hashes_match_accepted_canonical_values: PASS
+    mappings: 0
+    study_bridge: "PASS; Study links directly to /practice/read-aloud and Practice links directly to /study/read-aloud-strategy."
+
+  preservation:
+    predicate: "All prior accepted Study and Practice content remains unchanged except the exact new Read Aloud Study row and Read Aloud table."
+    result: PASS
+    recovery_note: "The interrupted pre-mutation aggregate hash query failed before returning a baseline because it referenced nonexistent study_content_subskills.subskill_id. Recovery did not invent a missing baseline."
+    proof_method: "Strong row-version proof plus canonical historical Study body hashes and exact live counts. Every prior Practice row retains an xmin from its original accepted task transaction, strictly older than TASK-0011 transaction 1279; any UPDATE/replacement during TASK-0011 would create a newer MVCC row version."
+    mvcc:
+      fib: "count=8; xmin=1259; updated_max=2026-10-04T21:29:59.812416Z"
+      swt: "count=6; xmin=1262; updated_max=2026-10-04T22:20:36.653706Z"
+      essay: "count=6; xmin=1266; updated_max=2026-10-04T22:45:48.107062Z"
+      wfd: "count=12; xmin=1269; updated_max=2026-10-04T23:08:10.929956Z"
+      repeat_sentence: "count=10; xmin=1275; updated_max=2026-10-05T00:09:13.373640Z"
+      prior_11_study: "count=11; xmin range=1256..1266; updated_max=2026-10-04T22:45:48.107062Z"
+      task_0011_new_rows: "read_aloud_items and read-aloud-strategy both xmin=1279; created/updated at 2026-10-05T06:59:59.754182Z"
+    current_full_row_fingerprints_md5:
+      fib: "3ff3cb2f304a577c407687814cbe9458"
+      swt: "c3135490fdfdd5e4ebda8aff0b4f47e6"
+      essay: "14ce993d6d436430be2ac9af4ae7ea87"
+      wfd: "e533ee863d93dff82c6aba5314c189af"
+      repeat_sentence: "c7753d4ad73d1cff11e28590e65d291d"
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, E'\n' order by id), ''))"
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; existing publishable key returned exactly eight active Read Aloud slugs in exact authorized order."
+    public_write_authority: "PASS; catalog grants are SELECT-only and exactly one active-read RLS policy exists."
+
+  shared_local_stt:
+    shared_owner: src/lib/local-stt
+    consumers:
+      - src/app/practice/repeat-sentence/exercise.tsx
+      - src/app/practice/read-aloud/exercise.tsx
+    shared_primitives:
+      - worker creation
+      - worker message contract
+      - dedicated ASR worker
+      - audio decode/downmix/resample-to-mono-Float32-16k
+      - exact model/revision constants
+    feature_state_extracted: false
+    dependency: "@huggingface/transformers@4.3.0"
+    model: "onnx-community/whisper-tiny.en"
+    revision: "2575352d61be1bf7225cf8f8b268a4678025fc58"
+    worker_only_inference: true
+    webgpu_preferred: true
+    wasm_fallback: true
+    hf_token: false
+    remote_inference: false
+    package_lock_delta: "PASS; package.json and pnpm-lock.yaml are byte-identical to the TASK-0011 execution base."
+    lifecycle_trust_expansion: false
+
+  application:
+    practice_landing: "PASS; production HTTP exposes six implemented task types including Read Aloud."
+    read_aloud_route: "PASS; default, selected and invalid item routes return HTTP 200 with deterministic fallback."
+    visible_passage_initial_render: PASS
+    preparation_timer: "PASS; 30-second local preparation aid starts at 30 and decrements."
+    practice_skip: "PASS; explicit Skip preparation for practice bypasses the remaining countdown without bypassing STT readiness."
+    record_gate: "PASS; recording requires local STT readiness and preparation completion/skip."
+    one_recording_per_item_reset: PASS
+    local_recording_cap: "60 seconds, explicitly labelled local practice cap."
+    capture: "getUserMedia({audio:true}) + MediaRecorder; learner audio remains in-memory only."
+    transcript: "PASS; local worker produced a non-empty transcript in real Chrome."
+    coverage: "PASS; displayed Practice content coverage M / N uses the accepted normalization/LCS helper and matched independent recomputation."
+    claims: "PASS; UI explicitly rejects Pearson Content, Pronunciation, Oral Fluency, PTE score and points claims."
+    reset: PASS
+    item_change_cleanup: PASS
+
+  production_http:
+    server_port: 3211
+    practice_landing: PASS
+    read_aloud_default: PASS
+    read_aloud_selected: PASS
+    read_aloud_invalid_fallback: PASS
+    read_aloud_study_bridge: PASS
+
+  browser_interaction:
+    surface: "Google Chrome 154.0.8037.93 headless on task-owned CDP port 9231, driven through Node.js native WebSocket/fetch with no browser-test dependency."
+    fixture: "Task-owned WAV under ignored node_modules/.cache/task-0011-browser, generated before recovery from the exact first Read Aloud passage and deleted after proof."
+    read_aloud:
+      initial_passage_visible: PASS
+      backend: webgpu
+      preparation_started_at: 30
+      preparation_decremented_to: 29
+      skip_without_waiting_full_countdown: PASS
+      pre_record_gate: PASS
+      explicit_stop_ms: 4004
+      transcript_nonempty: PASS
+      displayed_coverage: "0 / 43"
+      independent_coverage: "0 / 43"
+      disclaimer: PASS
+      reset: PASS
+      item_change_reset: PASS
+      remote_inference_requests: 0
+      non_get_requests_during_local_inference: 0
+      media_streams: 1
+      media_tracks: 1
+      media_live_tracks_after_stop: 0
+      media_track_final_state: ended
+    repeat_sentence_regression:
+      exact_prompt_one_play: PASS
+      playback_rate: 0.9200000166893005
+      local_stt_ready: PASS
+      transcript_nonempty: PASS
+      expected_revealed_only_at_result: PASS
+      displayed_accuracy: "0 / 11"
+      independent_accuracy: "0 / 11"
+      reset: PASS
+      remote_inference_requests: 0
+      non_get_requests_during_local_inference: 0
+      media_streams: 1
+      media_tracks: 1
+      media_live_tracks_after_stop: 0
+      media_track_final_state: ended
+
+  runtime_privacy:
+    local_storage_entries: 0
+    session_storage_entries: 0
+    indexed_db_databases: 0
+    cookie_entries: 0
+    cache_storage_requests: 10
+    exact_model_revision_in_cache: PASS
+    cache_requests_get_only: PASS
+    learner_data_url_needle: false
+    source_cache_writer: "PASS; application source has no learner CacheStorage persistence path; model/runtime cache ownership remains inside the accepted Transformers runtime."
+    learner_uploads: 0
+    remote_inference_requests: 0
+    media_tracks_stopped: PASS
+    learner_audio_transcript_result_persisted: false
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0011_attributable_performance_findings: 0
+
+  verification:
+    candidate: "83e475115550efc3c3ffc057ea7291992c027ec0"
+    candidate_parent: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+    candidate_tree: "9cef3fec3bcf18b88a6fe34b8db8863a5da717ac"
+    candidate_clean: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 production build includes /practice/read-aloud and preserves /practice/repeat-sentence."
+    diff_check: PASS
+    package_lock_identity: PASS
+    forbidden_surface_scan: PASS
+    exact_live_type_byte_match: PASS
+    topology: "PASS; candidate is a direct child of the exact original execution base."
+    candidate_reverification: "PASS; frozen install, ignored-builds, lint, typecheck, production build, diff-check and package/lock identity were rerun on clean candidate 83e475115550efc3c3ffc057ea7291992c027ec0."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Chrome and Next.js processes were terminated. Ports 9231 and 3211 are released. The ignored node_modules/.cache/task-0011-browser fixture/profile/proof root was removed after exact parent containment and root non-symlink checks."
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0011 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+publication_gate:
+  canonical_task_default: "ordinary non-force publication followed by NEEDS_REVIEW"
+  operator_recovery_override: "DO NOT PUSH because GitHub main is linked to automatic Vercel production deployment and current deployment quota/build behavior must be addressed first."
+  git_push_performed: false
+  vercel_deploy_invoked: false
+  vercel_configuration_modified: false
+  lifecycle_script_approval_added: false
+  remote_main_at_report_authorship: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  terminal_condition: QUALIFIED_AWAITING_PUBLICATION
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly eight migrations, eleven public application tables, exactly eight active authorized Read Aloud rows, four starter/four developing, 43..48 words and three sentences each, exact provenance, one new read-aloud-strategy Study row, SELECT-only/RLS browser access, publishable-key read of eight rows, and live-generated types byte-matching src/types/database.ts. Prior content preservation is independently established by historical Study body SHA-256 values plus unchanged pre-TASK-0011 MVCC row versions/counts for FIB/SWT/Essay/WFD/Repeat Sentence and the prior eleven Study rows."
+
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Repeat Sentence and Read Aloud both consume src/lib/local-stt worker/audio primitives. Shared scope excludes React feature state. package.json/pnpm-lock.yaml are unchanged; exact @huggingface/transformers 4.3.0 and whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58 remain pinned; real Chrome used WebGPU and source retains one WASM fallback with no HF_TOKEN or remote inference."
+
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome/CDP through the application getUserMedia/MediaRecorder flow rendered the passage initially, observed 30 -> 29 preparation timing, used explicit practice skip without waiting 30 seconds, retained STT+prep gating, stopped one recording after 4004 ms, produced a non-empty local transcript, and displayed Practice content coverage 0 / 43 matching independent normalized LCS 0 / 43. Reset and actual item change cleared feature state and learner-visible claims explicitly reject official Pronunciation/Oral-Fluency/PTE scoring."
+
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Runtime proof found localStorage=0, sessionStorage=0, IndexedDB=0 and cookies=0. CacheStorage contained ten GET-only accepted model/runtime requests with the exact pinned model revision and no learner-data URL needle; browser network observed zero non-GET and zero remote-inference requests during local ASR. Both Read Aloud and Repeat Sentence ended all tracked MediaStream tracks, source clears audio buffers, and task-owned fixture/profile/processes were removed."
+
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Repeat Sentence real-browser regression preserved exact prompt one-play behavior, local STT, fake-mic transcript and independently matching 0 / 11. Direct Study bridge, fresh Security Advisor=0, only pre-existing Performance INFO findings, exact live type byte-match, frozen install, ignored-builds, lint, typecheck, production build, diff-check, package/lock identity, forbidden-surface scan and final local hygiene all pass."
+
+  - criterion_id: AC-6
+    status: DEFERRED_BY_OPERATOR_PUBLICATION_GATE
+    evidence: "Local publication predicates are proven: candidate 83e475115550efc3c3ffc057ea7291992c027ec0 is the qualified direct child of exact base a4ed91d7eb3003e51a65bd13db361481e0347ce3 and origin/main remains at that base. This report is authored as the sole report-only child. The operator explicitly forbids git push/Vercel publication in this continuation; remote closure is intentionally deferred and the terminal condition is QUALIFIED_AWAITING_PUBLICATION."
+
+deviations:
+  - "Original TASK-0011 publication/NEEDS_REVIEW terminal behavior is superseded for this continuation by the operator's explicit no-push Vercel quota gate."
+  - "The interrupted pre-mutation aggregate hash query did not return a baseline because of an invalid subskill_id reference. Recovery proves the same preservation predicate with stronger PostgreSQL MVCC row-version evidence plus canonical historical Study hashes, and records fresh deterministic full-row fingerprints without inventing a lost baseline."
+
+result: QUALIFIED_AWAITING_PUBLICATION
