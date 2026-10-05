@@ -1,0 +1,46 @@
+protocol_version: 3
+task_id: TASK-0011
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0011/report.yaml
+  commit: "ecdedac287a4b4d5fe32be347786f114f2b6f3c0"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Architect bootstrap was freshly reconstructed from canonical phatnguyen03022001/agent-foundation@65a7921aba25bcb23620d7fb3bd24ad243dfbc54 before judgment: bootstrap.json -> Case Router MATERIAL_JUDGMENT -> Architect capability -> Task Protocol / Architect Review / Foundation target-authority boundaries -> fresh PTE binding."
+  - "Exact TASK-0011 revision 1 and report revision 1 were re-resolved from canonical GitHub truth. Candidate 83e475115550efc3c3ffc057ea7291992c027ec0 is the sole direct child of exact authorized base a4ed91d7eb3003e51a65bd13db361481e0347ce3. Report ecdedac287a4b4d5fe32be347786f114f2b6f3c0 is the candidate's sole direct child and changes only .agent/tasks/TASK-0011/report.yaml. Fresh remote main equals the reviewed report and only main is exposed."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly eight migrations and eleven public application tables. read_aloud_items has exactly eight active rows, split four starter / four developing, exact task-owned content/provenance, RLS enabled, exactly one active=true SELECT policy, and anon/authenticated SELECT-only grants. Study is exactly 12 active rows with one read-aloud-strategy row and zero mappings; FIB=8, SWT=6, Essay=6, WFD=12 and Repeat Sentence=10. Fresh Security Advisor returns zero findings."
+  - "AC-1/5 type proof PASS: fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts; committed SHA-256 is 12cd3adbedd24d614197d3c25c1bb268558218ca09623d8ecac0266ea63014a0."
+  - "AC-2 PASS: candidate source contains one bounded shared owner under src/lib/local-stt. Shared ownership is limited to worker creation, worker message/model contract, exact pinned model constants, dedicated ASR worker, media-track stopping and audio decode/downmix/resample-to-16-kHz helpers. Both Repeat Sentence and Read Aloud consume that owner; feature-local React state/timers/result semantics remain separate. Worker preserves exact @huggingface/transformers 4.3.0 model onnx-community/whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58, WebGPU preference and one WASM fallback. No new dependency or lifecycle-script trust expansion is present."
+  - "AC-3 PASS on reviewed real-browser evidence: report records a fresh production Chrome/CDP fake-microphone run through application getUserMedia/MediaRecorder/shared local Whisper. Passage was visible initially; preparation timer 30 -> 29; explicit practice skip respected STT readiness; one recording stopped after approximately 4004 ms; local transcript was non-empty; displayed Practice content coverage 0 / 43 exactly matched independent normalized-LCS 0 / 43; Reset and actual item change cleared feature state; disclaimer rejects Pearson Pronunciation/Oral Fluency/score claims. No contradictory source/runtime evidence was found during Architect review."
+  - "AC-4 PASS on reviewed runtime evidence plus source inspection: report records localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, ten GET-only public Transformers/model cache requests with the exact pinned revision, zero learner upload, zero remote inference, and all tracked MediaStream tracks ended. Architect source inspection independently confirms no local/session/IndexedDB/CacheStorage/cookie persistence path in Read Aloud and worker audio buffers are zero-filled after transcription."
+  - "AC-5 PASS: report records real Repeat Sentence regression after shared local-STT extraction with exact one-play prompt, local STT, non-empty transcript and independent 0 / 11 match. Architect source inspection independently confirms Repeat Sentence now consumes the neutral local-STT owner and no obsolete feature-local worker remains. Fresh live advisors show only the three pre-existing INFO findings described in the report, with no TASK-0011-attributable performance finding."
+  - "Mechanical qualification remains valid for exact immutable candidate 83e475115550efc3c3ffc057ea7291992c027ec0: during recovery Architect independently reran frozen install, ignored-builds, lint, typecheck, production build and commit-range diff-check PASS; ignored builds remained exactly protobufjs and onnxruntime-node; package/lock remained base-identical."
+  - "AC-6 PASS at independent review consequence boundary: fresh canonical main equals ecdedac287a4b4d5fe32be347786f114f2b6f3c0; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, one worktree and zero tracked/index/untracked/conflicted residue."
+  - "The operator's temporary QUALIFIED_AWAITING_PUBLICATION gate is now closed. Vercel Git integration for project pte was disconnected before publication; subsequent Git pushes no longer trigger Vercel deployments. Deployment count remained 27 during the disconnect/publication sequence. This operational action is outside the TASK-0011 candidate bytes and does not alter acceptance."
+  - "TASK-0011 is accepted. Acceptance authorizes no additional task type, persistence of learner audio/transcripts/results, pronunciation/oral-fluency scoring, remote inference, Vercel reconnection/deployment or successor implementation except through separately approved authority."
+
+final_candidate:
+  commit: "83e475115550efc3c3ffc057ea7291992c027ec0"
+  report_commit: "ecdedac287a4b4d5fe32be347786f114f2b6f3c0"
+  result: ACCEPTED
