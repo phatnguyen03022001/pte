@@ -1,0 +1,308 @@
+protocol_version: 3
+
+task_id: TASK-0013
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0013/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "5d469cab6d43fcae3fde1552349ce5424f4fbda2"
+  final_execution_head: "097782690d5f339dbfa411583b11b649f69c6acd"
+  final_execution_tree: "a2285b7fa4c185f485efebecf22215126495e6c1"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_read_write
+    - production_build_and_http_execution
+    - real_chrome_cdp_speechsynthesis_and_fake_microphone
+    - vercel_read_only_state_observation
+  available:
+    - Agent Runtime repository/filesystem/terminal surface
+    - GitHub canonical remote observation
+    - Supabase project/migration/query/advisor/type-generation surface
+    - local production Next.js and Google Chrome/CDP
+    - connected Vercel read-only project/deployment context
+  missing: []
+  passed: true
+
+qualification:
+  binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status_before_mutation: ACTIVE_HEALTHY
+    migration_count_before_mutation: 9
+    last_migration_before_mutation: "20261005091744/create_describe_image_items"
+    public_application_tables_before_mutation: 12
+    study_active_rows_before_mutation: 12
+    study_mapping_rows_before_mutation: 0
+    fib_rows_before_mutation: 8
+    swt_rows_before_mutation: 6
+    essay_rows_before_mutation: 6
+    wfd_rows_before_mutation: 12
+    repeat_sentence_rows_before_mutation: 10
+    read_aloud_rows_before_mutation: 8
+    describe_image_rows_before_mutation: 8
+    security_findings_before_mutation: 0
+    remote_main_before_mutation: "5d469cab6d43fcae3fde1552349ce5424f4fbda2"
+    main_only_remote: true
+
+  migration:
+    version: "20261005100307"
+    name: create_retell_lecture_items
+    repository_path: supabase/migrations/20261005100307_create_retell_lecture_items.sql
+    repository_sha256: "86b52f0bcb0677f57bcc9846e398a7545697c78a6af66e6cf0f009627937cf02"
+    table: public.retell_lecture_items
+    migration_instances: 1
+    seed_rows_in_migration: 0
+    provider_apply_migration_used: true
+    raw_ddl_fallback_used: false
+
+  live_schema:
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    bounded_checks: "PASS; kebab-case slug, required non-empty scalar text, lowercase snake_case difficulty/source_type, 110..145 whitespace words and exactly four review points."
+    rls_enabled: true
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one retell_lecture_items_public_read_active SELECT policy permits anon/authenticated only when active=true."
+    browser_write_authority: "PASS; no INSERT/UPDATE/DELETE grant or write policy exists."
+
+  authored_content:
+    active_rows: 8
+    starter_rows: 4
+    developing_rows: 4
+    lecture_word_count_range: "117..124"
+    exactly_four_review_points_each: PASS
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    created_by: chatgpt_task_0013
+    updated_by: chatgpt_task_0013
+    ordered_slugs:
+      - urban-heat-islands
+      - memory-and-sleep
+      - pollinator-diversity
+      - public-transport-frequency
+      - reproducible-science
+      - coastal-wetlands
+      - language-learning-spacing
+      - electricity-demand-management
+
+  study_content:
+    active_rows_after: 13
+    mappings_after: 0
+    new_slug: retell-lecture-strategy
+    new_title: "Retell Lecture: notes to connected summary"
+    task_type: retell_lecture
+    skill_code: speaking
+    target_score: 40
+    body_sha256: "ca24df4bf31ae8de82ec941f92da22c42be112d81d96681d8678d6b5c7a313ad"
+    metadata_contract: PASS
+
+  preservation:
+    prior_12_study_fingerprint_before: "9a29f6748a863c8af24ac4b3a577e721"
+    prior_12_study_fingerprint_after: "9a29f6748a863c8af24ac4b3a577e721"
+    prior_practice_full_row_fingerprints_match_pre_mutation: PASS
+    prior_practice_full_row_fingerprints_md5:
+      reading_fill_in_blanks_items: "3ff3cb2f304a577c407687814cbe9458"
+      summarize_written_text_items: "c3135490fdfdd5e4ebda8aff0b4f47e6"
+      write_essay_items: "14ce993d6d436430be2ac9af4ae7ea87"
+      write_from_dictation_items: "e533ee863d93dff82c6aba5314c189af"
+      repeat_sentence_items: "c7753d4ad73d1cff11e28590e65d291d"
+      read_aloud_items: "0a360b8207f23cf7985b429a71025723"
+      describe_image_items: "1088db6ec78e09d8bfe8ef7456728b5c"
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, E'\\n' order by id), ''))"
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; existing publishable key returned HTTP 200 with exactly eight active Retell Lecture slugs in authorized order."
+    public_write_authority: "PASS; catalog grants and RLS expose read-only access."
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "7c24ebf400e440e3ec04eff3ac71e3058b28fb3cf190eefa7b42bed786b44f48"
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; production/browser surface exposes eight implemented Practice task types and adds Retell Lecture under Listening + Speaking."
+    retell_lecture_route: "PASS; server-first metadata load supports default, selected and invalid-item deterministic fallback."
+    initial_prompt_privacy: "PASS; production default/selected/invalid initial HTML contains title/instructions but not lecture_text or review points."
+    prompt_endpoint: "PASS; feature-local no-store GET exposes the active lecture/review contract only after explicit Play action."
+    playback: "PASS; browser-native SpeechSynthesis uses exact DB lecture text, English voice when available, rate 0.92 and one-play gating."
+    preparation: "PASS; exact 10-second preparation begins automatically after speech onend; no skip exists."
+    recording: "PASS; recording requires playback completion + full preparation + local STT readiness, allows one response per reset/item, explicit Stop response and hard 40-second cap."
+    local_stt: "PASS; reuses unchanged src/lib/local-stt primitives, @huggingface/transformers 4.3.0 and whisper-tiny.en revision 2575352d61be1bf7225cf8f8b268a4678025fc58; real Chrome selected WebGPU and source retains the accepted single WASM fallback."
+    result_reveal: "PASS; lecture text and exactly four review points remain hidden before result and are revealed with local transcript only after transcription."
+    self_review: "PASS; selecting exactly three learner checkboxes displays Self-review key-point coverage: 3 / 4."
+    scoring_boundary: "PASS; UI rejects Pearson Content, Pronunciation, Oral Fluency, PTE score/points and automatic keyword/semantic/content/pronunciation/fluency/pace/template scoring."
+    reset_and_item_change: PASS
+    study_bridge: "PASS; direct bidirectional Retell Lecture Study/Practice links exist."
+
+  production_http:
+    task_owned_port: 31013
+    practice_landing: PASS
+    retell_lecture_default: PASS
+    retell_lecture_selected: PASS
+    retell_lecture_invalid_fallback: PASS
+    retell_lecture_study_bridge: PASS
+    initial_lecture_text_hidden: PASS
+    initial_review_points_hidden: PASS
+    prompt_endpoint_cache_control: no-store
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome headless on CDP port 9224, native Node.js WebSocket/fetch harness and no browser-test dependency."
+    fake_microphone_fixture: "One original task-owned WAV under ignored coverage/TASK-0013, removed after proof."
+    retell_lecture:
+      initial_lecture_hidden: PASS
+      initial_review_points_hidden: PASS
+      play_button_count: 1
+      utterance_exact_db_text: PASS
+      utterance_rate: 0.9200000166893005
+      utterance_language: en-AU
+      utterance_voice: Karen
+      replay_blocked: PASS
+      speech_calls_after_replay_attempt: 1
+      backend: webgpu
+      preparation_started_at: 10
+      preparation_decremented_to: 9
+      recording_gate_during_playback_and_prep: PASS
+      explicit_stop_ms: 4263
+      recording_under_40_seconds: PASS
+      transcript_nonempty: PASS
+      result_lecture_exact: PASS
+      review_point_count_after_result: 4
+      displayed_three_of_four: "Self-review key-point coverage: 3 / 4"
+      disclaimer: PASS
+      reset: PASS
+      item_change_reset: PASS
+    wfd_playback_regression:
+      expected_sentence_hidden_initially: PASS
+      utterance_exact_db_text: PASS
+      utterance_rate: 0.9200000166893005
+      utterance_language: en-AU
+      replay_blocked: PASS
+      speech_calls: 1
+    describe_image_local_stt_regression:
+      pre_stt_record_gate: PASS
+      backend: webgpu
+      explicit_stop_ms: 4258
+      transcript_nonempty: PASS
+      media_track_final_state: ended
+      non_get_requests: 0
+      external_requests: 0
+      remote_inference_requests: 0
+
+  runtime_privacy:
+    local_storage_entries: 0
+    session_storage_entries: 0
+    indexed_db_databases: 0
+    cookie_entries: 0
+    learner_data_in_cache_request_urls: false
+    learner_uploads: 0
+    remote_inference_requests: 0
+    page_surface_non_get_requests: 0
+    media_track_final_state: ended
+    exact_model_revision_in_transformers_cache: PASS
+    generated_prompt_audio_persisted: false
+    learner_audio_transcript_self_review_persisted: false
+    source_scan: "PASS; Retell Lecture source contains no localStorage/sessionStorage/IndexedDB/CacheStorage writer, SpeechRecognition/webkitSpeechRecognition, HF_TOKEN, recording_url, OpenAI, Cloudinary or absolute remote fetch path."
+    cache_evidence: "Transformers CacheStorage contained only accepted public Whisper/ONNX runtime GET assets, exact pinned revision model URLs and no learner-data URL needle."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0013_attributable_performance_findings: 0
+
+  verification:
+    candidate: "097782690d5f339dbfa411583b11b649f69c6acd"
+    candidate_parent: "5d469cab6d43fcae3fde1552349ce5424f4fbda2"
+    candidate_tree: "a2285b7fa4c185f485efebecf22215126495e6c1"
+    candidate_clean: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 build includes /practice/retell-lecture, its no-store prompt route, and all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    candidate_reverification: "PASS; frozen install, ignored-builds, lint, typecheck, production build, commit-range diff-check and package/lock identity were rerun on clean candidate 097782690d5f339dbfa411583b11b649f69c6acd."
+
+local_hygiene:
+  result: PASS
+  evidence: "SpeechSynthesis was cancelled on four task-owned pages. Task-owned Chrome and Next.js processes were terminated; ports 9224 and 31013 were released. coverage/TASK-0013 fixture/profile/harness root was removed only after exact realpath containment and non-symlink proof."
+
+vercel:
+  project_id: prj_FnnSeQyPhIQZ7DDn2cJe39N9EpvC
+  git_linked_in_current_context: false
+  latest_deployment_id_before_publication: dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd
+  latest_deployment_commit_before_publication: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  configuration_modified: false
+  deployment_invoked: false
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0013 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  report_requires_remote_candidate_visibility: false
+  remote_main_before_report_authorship: "5d469cab6d43fcae3fde1552349ce5424f4fbda2"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_git_linked: false
+  vercel_deploy_invoked: false
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly one new migration 20261005100307/create_retell_lecture_items, thirteen total public application tables, exactly eight active original project-authored lectures in exact authorized order, four starter/four developing, 117..124 words and exactly four review points each, SELECT-only/RLS public access, publishable-key read of eight rows, exactly one new Retell Lecture Study row with body SHA-256 ca24df4bf31ae8de82ec941f92da22c42be112d81d96681d8678d6b5c7a313ad, and live-generated types byte-matching src/types/database.ts. Prior twelve Study rows and every prior Practice table retain their exact pre-mutation fingerprints/counts."
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Real Chrome/CDP called actual SpeechSynthesis once with the exact first DB lecture, en-AU Karen at rate 0.92; replay remained disabled and the speech call count stayed one. Initial HTTP/DOM and the entire playback/preparation phase kept lecture/review text hidden, Reset restored one play, no prompt audio provider/file path exists, and a real WFD regression preserved exact one-play SpeechSynthesis behavior."
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome fake-mic flow reached local Whisper WebGPU, played the lecture, observed automatic preparation 10 -> 9 -> complete with recording blocked until all gates, stopped one response after 4263 ms, produced a non-empty transcript, then revealed the exact original lecture and four review points. Exactly three learner-selected boxes displayed Self-review key-point coverage: 3 / 4; Reset and actual item change cleared prompt/result state and restored gates."
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "Runtime proof found localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, no learner-data cache URL, zero learner upload/non-GET request and zero remote inference; recorded media tracks ended. Source scan found no browser persistence writer, remote speech/inference/token/scoring path or prompt-audio persistence. Speech, fake fixture, browser profile and task-owned processes were safely cancelled/stopped/removed."
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Real WFD SpeechSynthesis regression preserved exact one-play behavior and real Describe Image fake-mic regression preserved shared local STT with non-empty transcript and ended track. Study bridge, fresh Security Advisor=0, only three pre-existing Performance INFO findings, exact live type byte-match, frozen install, ignored-builds, lint, typecheck, production build, diff-check, package/lock identity and clean candidate reverification all pass."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 097782690d5f339dbfa411583b11b649f69c6acd is the fully verified direct child of exact base 5d469cab6d43fcae3fde1552349ce5424f4fbda2; origin/main still exposes only main at that exact base immediately before report authorship. Vercel pte remains absent from the current linked Git-project list and its latest deployment still points to old commit a4ed91d7eb3003e51a65bd13db361481e0347ce3. This report is authored as the required sole report-only child; final remote and no-deployment closure can only be proven after the subsequent ordinary non-force single publication."
+
+deviations:
+  - "The first post-authoring word-count proof query used an incorrectly escaped E-string and reported impossible 46..61 counts. Fresh pg_get_constraintdef inspection plus a POSIX-whitespace recount proved the live CHECK was correct and the actual lecture counts are 117..124; no schema or data correction was needed."
+  - "The first WFD regression harness completed browser interaction but its Node output wrapper raised ReferenceError because windowResult lacked a const declaration. The one-line harness-only fix was applied under ignored coverage/TASK-0013, then a fresh target rerun produced the required WFD evidence. Product source was unchanged."
+
+result: NEEDS_REVIEW
