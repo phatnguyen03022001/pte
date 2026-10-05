@@ -1,0 +1,60 @@
+protocol_version: 3
+task_id: TASK-0010
+task_revision: 1
+review_revision: 1
+state: REVISION_REQUIRED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0010/report.yaml
+  commit: "fca683a90018a681e56b83b8cdd7bf89365342a5"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: NOT_PROVEN
+  verifier_evidence: NOT_PROVEN
+
+acceptance_basis:
+  - "Fresh canonical review proved remote main == exact reviewed report fca683a90018a681e56b83b8cdd7bf89365342a5, remote exposes only main, and the designated local checkout is clean on the same report commit with ahead/behind 0/0 and one worktree."
+  - "Partial implementation checkpoint 21786be56ad52a5b50978b4a569882897a4d3047 is the sole direct child of exact authorized base 64236b49f0a8ccb8c96ec4dbe21716443010b735. The reviewed report is its sole direct child and changes only .agent/tasks/TASK-0010/report.yaml."
+  - "Base-to-checkpoint scope is confined to the authorized dependency/stack, Repeat Sentence feature, shared word-sequence helper, WFD behavior-preserving extraction, Study bridge and styling surfaces. No qualified-candidate claim is made."
+  - "The execution capability blocker is independently reproduced as zero-effect at provider state: project ayqcpsdebldtzohwdmer remains ACTIVE_HEALTHY with exactly the six previously accepted migrations and exactly nine public application tables; repeat_sentence_items does not exist; existing Study/FIB/SWT/Essay/WFD counts remain unchanged; fresh Security Advisor returns zero findings."
+  - "Therefore no live TASK-0010 migration/data/RLS consequence exists to accept or roll back. The partial repository checkpoint is retained implementation input only."
+  - "The report correctly stops before generated live types, final frozen install/typecheck/build, live Data API/RLS proof and real Chrome local-Whisper end-to-end proof. AC-1 through AC-6 are consequently not proven."
+  - "Independent package-manager reconciliation on the published partial tree resolves the secondary pnpm concern without widening authority: pnpm install --frozen-lockfile currently exits 0. pnpm ignored-builds reports protobufjs and onnxruntime-node as automatically ignored. No onlyBuiltDependencies/ignoredBuiltDependencies configuration is present."
+  - "Revision 2 must not approve or execute transitive lifecycle scripts merely to silence pnpm. The selected learner path is browser-local Transformers.js; exact browser inference proof must establish that the current ignored-build posture is sufficient. If browser inference genuinely requires a new lifecycle-script trust decision, execution must stop for Architect revision rather than mutate allowBuilds/approve-builds."
+  - "The connected Supabase surface exposes an apply_migration capability in this Architect session, but action availability does not prove the Executor session will be permitted to dispatch it. Revision 2 must fresh-preflight the write action and fail closed if the platform blocks it again."
+
+gap_disposition:
+  - gap_id: "TASK-0010-SUPABASE-MIGRATION-ACTION-GATE"
+    decision: "REVISE_TASK"
+    rationale: "Continue the same TASK-0010 objective from the canonical blocked report. Preserve the partial checkpoint as inherited source state, retry only the exact authorized Repeat Sentence migration after fresh zero-effect/live-baseline proof, then complete all previously unproven qualification and real local-STT browser evidence. Do not bypass the connected migration action with raw migration-history manipulation or alternate credentials."
+  - gap_id: "TASK-0010-PNPM-IGNORED-TRANSITIVE-BUILDS"
+    decision: "REVISE_TASK"
+    rationale: "Freeze the current least-trust posture: protobufjs and onnxruntime-node lifecycle scripts remain ignored. Do not approve builds in revision 2. Acceptability is determined by frozen install plus real browser-local Whisper inference; any need to expand lifecycle-script trust requires another Architect revision."
+
+final_candidate:
+  commit: null
+  partial_checkpoint: "21786be56ad52a5b50978b4a569882897a4d3047"
+  report_commit: "fca683a90018a681e56b83b8cdd7bf89365342a5"
+  live_repeat_sentence_table: ABSENT
+  live_repeat_sentence_rows: 0
+  security_advisor_findings: 0
+  result: REVISION_REQUIRED
+
+notes:
+  - "TASK-0010 revision 1 is terminally REVISION_REQUIRED for exact report fca683a90018a681e56b83b8cdd7bf89365342a5."
+  - "This review does not reject or accept the partial source implementation. It establishes only that its scope is retainable and that no provider-side TASK-0010 effect occurred."
+  - "Revision 2 must continue TASK-0010; do not create TASK-0011 until TASK-0010 reaches terminal ACCEPTED or a separately reviewed terminal disposition."
