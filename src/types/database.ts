@@ -206,6 +206,54 @@ export type Database = {
         }
         Relationships: []
       }
+      retell_lecture_items: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string
+          difficulty: string
+          id: number
+          lecture_text: string
+          review_points: string[]
+          slug: string
+          source_ref: string | null
+          source_type: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by: string
+          difficulty: string
+          id?: never
+          lecture_text: string
+          review_points: string[]
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          id?: never
+          lecture_text?: string
+          review_points?: string[]
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
       skill_subskills: {
         Row: {
           skill_code: string

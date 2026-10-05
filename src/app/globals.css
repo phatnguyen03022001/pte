@@ -857,3 +857,66 @@ a {
     min-width: 30rem;
   }
 }
+
+.retell-lecture-exercise {
+  display: grid;
+  gap: 1rem;
+}
+
+.retell-lecture-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #d9d9d4;
+  padding-bottom: 1rem;
+}
+
+.retell-lecture-step > div {
+  flex: 1;
+}
+
+.retell-lecture-step strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.retell-lecture-original,
+.retell-lecture-review {
+  border: 1px solid #d9d9d4;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.retell-lecture-original h2 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.retell-lecture-review {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.retell-lecture-review legend {
+  padding: 0 0.35rem;
+  font-weight: 800;
+}
+
+.retell-lecture-review label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  line-height: 1.45;
+}
+
+.retell-lecture-review input {
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 720px) {
+  .retell-lecture-step {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

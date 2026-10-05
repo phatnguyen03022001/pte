@@ -102,6 +102,19 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/describe-image">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Listening</span>
+            <span>Speaking</span>
+          </div>
+          <h2>Retell Lecture</h2>
+          <p>
+            Hear one project-authored mini-lecture, organize notes during the
+            preparation window, record once, and self-review four connected points.
+          </p>
+          <Link href="/practice/retell-lecture">Open practice →</Link>
+        </article>
       </section>
     </main>
   );

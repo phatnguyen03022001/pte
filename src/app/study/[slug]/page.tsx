@@ -88,6 +88,12 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           </p>
         ) : null}
 
+        {item.slug === "retell-lecture-strategy" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/retell-lecture">Practice Retell Lecture →</Link>
+          </p>
+        ) : null}
+
         {sourceUrl ? (
           <p className="study-source">
             Reference:{" "}
