@@ -503,6 +503,9 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
           <p>
             <strong>Local transcript:</strong> {transcript}
           </p>
+          <p>
+            <strong>Expected sentence:</strong> {item.sentence}
+          </p>
           <p className="practice-score">
             Practice content accuracy: {matchedWords.length} / {expectedWords.length}
           </p>

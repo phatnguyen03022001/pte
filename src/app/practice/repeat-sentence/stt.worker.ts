@@ -26,7 +26,9 @@ function send(message: WorkerResponse) {
   self.postMessage(message);
 }
 
-async function loadBackend(nextBackend: Backend): Promise<Backend> {
+async function loadBackend(
+  nextBackend: Backend,
+): Promise<{ backend: Backend; transcriber: Transcriber }> {
   if (nextBackend === "webgpu" && !("gpu" in navigator)) {
     throw new Error("WebGPU is unavailable.");
   }
@@ -48,10 +50,11 @@ async function loadBackend(nextBackend: Backend): Promise<Backend> {
     },
   );
 
-  transcriber = loaded as unknown as Transcriber;
+  const loadedTranscriber = loaded as unknown as Transcriber;
+  transcriber = loadedTranscriber;
   backend = nextBackend;
   send({ type: "ready", backend: nextBackend });
-  return nextBackend;
+  return { backend: nextBackend, transcriber: loadedTranscriber };
 }
 
 async function prepare(): Promise<Backend> {
@@ -66,11 +69,11 @@ async function prepare(): Promise<Backend> {
 
   preparing = (async () => {
     try {
-      return await loadBackend("webgpu");
+      return (await loadBackend("webgpu")).backend;
     } catch {
       transcriber = null;
       backend = null;
-      return loadBackend("wasm");
+      return (await loadBackend("wasm")).backend;
     } finally {
       preparing = null;
     }
@@ -110,17 +113,12 @@ async function transcribe(requestId: number, audio: Float32Array) {
 
       transcriber = null;
       backend = null;
-      await loadBackend("wasm");
-
-      if (!transcriber || backend !== "wasm") {
-        throw new Error("WASM fallback did not initialize.");
-      }
-
-      const output = await transcriber(audio);
+      const fallback = await loadBackend("wasm");
+      const output = await fallback.transcriber(audio);
       send({
         type: "result",
         requestId,
-        backend,
+        backend: fallback.backend,
         transcript: transcriptFromOutput(output),
       });
     }

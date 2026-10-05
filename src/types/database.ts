@@ -62,6 +62,48 @@ export type Database = {
         }
         Relationships: []
       }
+      repeat_sentence_items: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string
+          difficulty: string
+          id: number
+          sentence: string
+          slug: string
+          source_ref: string | null
+          source_type: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by: string
+          difficulty: string
+          id?: never
+          sentence: string
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          id?: never
+          sentence?: string
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
       skill_subskills: {
         Row: {
           skill_code: string
