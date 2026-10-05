@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { decodeToMono16k, stopMediaTracks } from "@/lib/local-stt/audio";
 import { createLocalSttWorker } from "@/lib/local-stt/client";
@@ -13,55 +13,27 @@ import {
   normalizeWords,
 } from "@/lib/word-sequence";
 
-import type { RepeatSentenceItem } from "./content";
+import type { ReadAloudItem } from "./content";
 
 type ExerciseProps = {
-  item: RepeatSentenceItem;
+  item: ReadAloudItem;
 };
 
-function subscribeToSpeechSupport(): () => void {
-  return () => {};
-}
-
-function getSpeechSupportSnapshot(): boolean {
-  return (
-    "speechSynthesis" in window && "SpeechSynthesisUtterance" in window
-  );
-}
-
-function getSpeechSupportServerSnapshot(): boolean {
-  return false;
-}
-
-function selectEnglishVoice(
-  voices: SpeechSynthesisVoice[],
-): SpeechSynthesisVoice | undefined {
-  for (const language of ["en-AU", "en-GB", "en-US"]) {
-    const voice = voices.find(
-      (candidate) => candidate.lang.toLowerCase() === language.toLowerCase(),
-    );
-    if (voice) {
-      return voice;
-    }
-  }
-
-  return voices.find((voice) => voice.lang.toLowerCase().startsWith("en-"));
-}
-
-export default function RepeatSentenceExercise({ item }: ExerciseProps) {
-  const speechSupported = useSyncExternalStore(
-    subscribeToSpeechSupport,
-    getSpeechSupportSnapshot,
-    getSpeechSupportServerSnapshot,
-  );
+export default function ReadAloudExercise({ item }: ExerciseProps) {
   const workerRef = useRef<Worker | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const stopTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prepTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const prepRemainingRef = useRef(30);
   const requestIdRef = useRef(0);
+  const backendRef = useRef<LocalSttBackend | null>(null);
 
-  const [playbackUsed, setPlaybackUsed] = useState(false);
-  const [playbackComplete, setPlaybackComplete] = useState(false);
+  const [prepUsed, setPrepUsed] = useState(false);
+  const [prepRunning, setPrepRunning] = useState(false);
+  const [prepRemaining, setPrepRemaining] = useState(30);
+  const [prepComplete, setPrepComplete] = useState(false);
+  const [prepSkipped, setPrepSkipped] = useState(false);
   const [recordingUsed, setRecordingUsed] = useState(false);
   const [recording, setRecording] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -71,12 +43,19 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
   const [transcript, setTranscript] = useState("");
   const [localError, setLocalError] = useState<string | null>(null);
 
-  const expectedWords = useMemo(() => normalizeWords(item.sentence), [item.sentence]);
+  const expectedWords = useMemo(() => normalizeWords(item.passage), [item.passage]);
   const transcriptWords = useMemo(() => normalizeWords(transcript), [transcript]);
   const matchedWords = useMemo(
     () => longestCommonSubsequence(expectedWords, transcriptWords),
     [expectedWords, transcriptWords],
   );
+
+  function clearPreparationTimer() {
+    if (prepTimerRef.current) {
+      clearInterval(prepTimerRef.current);
+      prepTimerRef.current = null;
+    }
+  }
 
   function clearStopTimer() {
     if (stopTimerRef.current) {
@@ -113,6 +92,7 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
       }
 
       if (message.type === "ready") {
+        backendRef.current = message.backend;
         setBackend(message.backend);
         setSttState("ready");
         setSttStatus(
@@ -130,6 +110,7 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
       }
 
       if (message.type === "result") {
+        backendRef.current = message.backend;
         setBackend(message.backend);
         setSttState("ready");
         setSttStatus(
@@ -148,12 +129,14 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
       setProcessing(false);
       setLocalError(message.message);
       if (message.requestId === undefined) {
+        backendRef.current = null;
         setSttState("idle");
         setBackend(null);
       }
     };
 
     worker.onerror = () => {
+      backendRef.current = null;
       setProcessing(false);
       setSttState("idle");
       setBackend(null);
@@ -169,9 +152,11 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
   useEffect(() => {
     return () => {
       requestIdRef.current += 1;
-      clearStopTimer();
-      if (speechSupported) {
-        window.speechSynthesis.cancel();
+      if (prepTimerRef.current) {
+        clearInterval(prepTimerRef.current);
+      }
+      if (stopTimerRef.current) {
+        clearTimeout(stopTimerRef.current);
       }
       const recorder = recorderRef.current;
       if (recorder && recorder.state !== "inactive") {
@@ -182,7 +167,7 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
       workerRef.current?.terminate();
       workerRef.current = null;
     };
-  }, [speechSupported]);
+  }, []);
 
   function prepareLocalStt() {
     setLocalError(null);
@@ -191,44 +176,51 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
     ensureWorker().postMessage({ type: "prepare" });
   }
 
-  function playSentence() {
-    if (!speechSupported || playbackUsed) {
+  function startPreparation() {
+    if (prepUsed || recordingUsed || recording || processing) {
       return;
     }
 
     setLocalError(null);
-    setPlaybackUsed(true);
-    setPlaybackComplete(false);
+    setPrepUsed(true);
+    setPrepRunning(true);
+    setPrepComplete(false);
+    setPrepSkipped(false);
+    prepRemainingRef.current = 30;
+    setPrepRemaining(30);
 
-    try {
-      const utterance = new SpeechSynthesisUtterance(item.sentence);
-      const voice = selectEnglishVoice(window.speechSynthesis.getVoices());
+    clearPreparationTimer();
+    prepTimerRef.current = setInterval(() => {
+      const next = Math.max(0, prepRemainingRef.current - 1);
+      prepRemainingRef.current = next;
+      setPrepRemaining(next);
 
-      if (voice) {
-        utterance.voice = voice;
-        utterance.lang = voice.lang;
+      if (next === 0) {
+        clearPreparationTimer();
+        setPrepRunning(false);
+        setPrepComplete(true);
       }
+    }, 1_000);
+  }
 
-      utterance.rate = 0.92;
-      utterance.onend = () => {
-        setPlaybackComplete(true);
-      };
-      utterance.onerror = () => {
-        setPlaybackComplete(false);
-        setLocalError(
-          "Speech playback failed. Reset this item before trying again.",
-        );
-      };
-      window.speechSynthesis.speak(utterance);
-    } catch {
-      setPlaybackComplete(false);
-      setLocalError("Speech playback failed. Reset this item before trying again.");
+  function skipPreparation() {
+    if (prepComplete || prepSkipped || recordingUsed || recording || processing) {
+      return;
     }
+
+    clearPreparationTimer();
+    setPrepUsed(true);
+    setPrepRunning(false);
+    setPrepComplete(false);
+    setPrepSkipped(true);
+    prepRemainingRef.current = 0;
+    setPrepRemaining(0);
   }
 
   async function startRecording() {
+    const prepReady = prepComplete || prepSkipped;
     if (
-      !playbackComplete ||
+      !prepReady ||
       sttState !== "ready" ||
       recordingUsed ||
       recording ||
@@ -317,7 +309,7 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
         if (recorder.state !== "inactive") {
           recorder.stop();
         }
-      }, 15_000);
+      }, 60_000);
     } catch {
       stopMediaTracks(streamRef.current);
       streamRef.current = null;
@@ -338,25 +330,32 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
 
   function reset() {
     requestIdRef.current += 1;
-    if (speechSupported) {
-      window.speechSynthesis.cancel();
-    }
+    clearPreparationTimer();
     stopActiveRecording();
-    setPlaybackUsed(false);
-    setPlaybackComplete(false);
+
+    prepRemainingRef.current = 30;
+    setPrepUsed(false);
+    setPrepRunning(false);
+    setPrepRemaining(30);
+    setPrepComplete(false);
+    setPrepSkipped(false);
     setRecordingUsed(false);
     setProcessing(false);
     setTranscript("");
     setLocalError(null);
-    if (backend) {
+
+    if (backendRef.current) {
+      setBackend(backendRef.current);
       setSttState("ready");
-      setSttStatus(backend === "webgpu" ? "Local STT: WebGPU" : "Local STT: WASM");
+      setSttStatus(
+        backendRef.current === "webgpu" ? "Local STT: WebGPU" : "Local STT: WASM",
+      );
     }
   }
 
+  const prepReady = prepComplete || prepSkipped;
   const recordingReady =
-    speechSupported &&
-    playbackComplete &&
+    prepReady &&
     sttState === "ready" &&
     !recordingUsed &&
     !recording &&
@@ -364,17 +363,10 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
 
   return (
     <section
-      className="practice-exercise repeat-sentence-exercise"
+      className="practice-exercise read-aloud-exercise"
       aria-labelledby="practice-item-title"
     >
-      {!speechSupported ? (
-        <p className="practice-hint" role="status">
-          This browser does not support SpeechSynthesis, so this practice item is
-          unavailable.
-        </p>
-      ) : null}
-
-      <div className="repeat-sentence-setup">
+      <div className="read-aloud-setup">
         <div>
           <strong>1. Prepare local STT</strong>
           <p className="practice-hint">
@@ -399,37 +391,58 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
         {sttStatus}
       </p>
 
-      <div className="repeat-sentence-setup">
+      <div className="read-aloud-setup">
         <div>
-          <strong>2. Hear the prompt once</strong>
+          <strong>2. Prepare the passage</strong>
           <p className="practice-hint">
-            Browser speech is a practice approximation, not Pearson test audio.
+            Pearson gives 30–40 seconds to prepare. This local aid counts down from
+            30 seconds; you can skip it for practice.
           </p>
+          {prepRunning ? (
+            <p className="practice-status" role="timer">
+              Preparation: {prepRemaining} seconds remaining
+            </p>
+          ) : prepComplete ? (
+            <p className="practice-status">Preparation complete.</p>
+          ) : prepSkipped ? (
+            <p className="practice-status">Preparation skipped for practice.</p>
+          ) : null}
         </div>
-        <button
-          disabled={!speechSupported || playbackUsed}
-          onClick={playSentence}
-          type="button"
-        >
-          {playbackUsed ? "Played once" : "Play sentence"}
-        </button>
+        <div className="practice-actions">
+          <button
+            disabled={prepUsed || recordingUsed || recording || processing}
+            onClick={startPreparation}
+            type="button"
+          >
+            {prepUsed ? "Preparation started" : "Start 30-second preparation"}
+          </button>
+          <button
+            disabled={prepComplete || prepSkipped || recordingUsed || recording || processing}
+            onClick={skipPreparation}
+            type="button"
+          >
+            Skip preparation for practice
+          </button>
+        </div>
       </div>
 
-      <div className="repeat-sentence-setup">
+      <div className="read-aloud-setup">
         <div>
-          <strong>3. Record one response</strong>
+          <strong>3. Record one reading</strong>
           <p className="practice-hint">
-            Recording unlocks after playback finishes and local STT is ready. Maximum
-            15 seconds; audio stays ephemeral in memory.
+            Recording unlocks only after local STT is ready and preparation finishes
+            or is skipped. The 60-second limit is a local practice safety cap;
+            Pearson answer time varies with passage length. Audio stays ephemeral in
+            memory.
           </p>
         </div>
         {recording ? (
           <button onClick={stopRecording} type="button">
-            Stop response
+            Stop reading
           </button>
         ) : (
           <button disabled={!recordingReady} onClick={startRecording} type="button">
-            {recordingUsed ? "Response recorded" : "Start response"}
+            {recordingUsed ? "Reading recorded" : "Start reading"}
           </button>
         )}
       </div>
@@ -451,16 +464,14 @@ export default function RepeatSentenceExercise({ item }: ExerciseProps) {
           <p>
             <strong>Local transcript:</strong> {transcript}
           </p>
-          <p>
-            <strong>Expected sentence:</strong> {item.sentence}
-          </p>
           <p className="practice-score">
-            Practice content accuracy: {matchedWords.length} / {expectedWords.length}
+            Practice content coverage: {matchedWords.length} / {expectedWords.length}
           </p>
           <p className="practice-hint">
-            This is a local transcript/content proxy only. It is not Pearson Content,
-            Pronunciation, Oral Fluency, a PTE score, or points. STT errors can affect
-            the result.
+            Practice content coverage is a local transcript proxy only. It is not
+            Pearson Content, Pronunciation, Oral Fluency, a PTE score, or points.
+            This app does not judge pronunciation or oral fluency, and local STT
+            errors can affect M/N.
           </p>
         </div>
       ) : null}

@@ -1,34 +1,28 @@
 import { pipeline } from "@huggingface/transformers";
 
-const MODEL_ID = "onnx-community/whisper-tiny.en";
-const MODEL_REVISION = "2575352d61be1bf7225cf8f8b268a4678025fc58";
+import {
+  LOCAL_STT_MODEL_ID,
+  LOCAL_STT_MODEL_REVISION,
+  type LocalSttBackend,
+  type LocalSttWorkerRequest,
+  type LocalSttWorkerResponse,
+} from "./contract";
 
-type Backend = "webgpu" | "wasm";
 type Transcriber = (
   audio: Float32Array,
 ) => Promise<{ text?: string } | Array<{ text?: string }>>;
 
-type WorkerRequest =
-  | { type: "prepare" }
-  | { type: "transcribe"; requestId: number; audio: Float32Array };
-
-type WorkerResponse =
-  | { type: "status"; message: string }
-  | { type: "ready"; backend: Backend }
-  | { type: "result"; requestId: number; backend: Backend; transcript: string }
-  | { type: "error"; requestId?: number; message: string };
-
 let transcriber: Transcriber | null = null;
-let backend: Backend | null = null;
-let preparing: Promise<Backend> | null = null;
+let backend: LocalSttBackend | null = null;
+let preparing: Promise<LocalSttBackend> | null = null;
 
-function send(message: WorkerResponse) {
+function send(message: LocalSttWorkerResponse) {
   self.postMessage(message);
 }
 
 async function loadBackend(
-  nextBackend: Backend,
-): Promise<{ backend: Backend; transcriber: Transcriber }> {
+  nextBackend: LocalSttBackend,
+): Promise<{ backend: LocalSttBackend; transcriber: Transcriber }> {
   if (nextBackend === "webgpu" && !("gpu" in navigator)) {
     throw new Error("WebGPU is unavailable.");
   }
@@ -43,10 +37,10 @@ async function loadBackend(
 
   const loaded = await pipeline(
     "automatic-speech-recognition",
-    MODEL_ID,
+    LOCAL_STT_MODEL_ID,
     {
       device: nextBackend,
-      revision: MODEL_REVISION,
+      revision: LOCAL_STT_MODEL_REVISION,
     },
   );
 
@@ -57,7 +51,7 @@ async function loadBackend(
   return { backend: nextBackend, transcriber: loadedTranscriber };
 }
 
-async function prepare(): Promise<Backend> {
+async function prepare(): Promise<LocalSttBackend> {
   if (transcriber && backend) {
     send({ type: "ready", backend });
     return backend;
@@ -134,7 +128,7 @@ async function transcribe(requestId: number, audio: Float32Array) {
   }
 }
 
-self.onmessage = (event: MessageEvent<WorkerRequest>) => {
+self.onmessage = (event: MessageEvent<LocalSttWorkerRequest>) => {
   const message = event.data;
 
   if (message.type === "prepare") {

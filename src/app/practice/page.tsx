@@ -77,6 +77,19 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/repeat-sentence">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Speaking</span>
+            <span>Reading</span>
+          </div>
+          <h2>Read Aloud</h2>
+          <p>
+            Read a visible original passage once, transcribe it locally with Whisper,
+            and review transcript-based content coverage.
+          </p>
+          <Link href="/practice/read-aloud">Open practice →</Link>
+        </article>
       </section>
     </main>
   );

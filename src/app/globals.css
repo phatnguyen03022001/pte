@@ -336,6 +336,10 @@ a {
   margin: 0;
 }
 
+.read-aloud-passage {
+  margin-bottom: 1rem;
+}
+
 .practice-blank {
   min-width: 8.5rem;
   margin: 0 0.25rem;
@@ -646,12 +650,14 @@ a {
   line-height: 1.55;
 }
 
-.repeat-sentence-exercise {
+.repeat-sentence-exercise,
+.read-aloud-exercise {
   display: grid;
   gap: 1rem;
 }
 
-.repeat-sentence-setup {
+.repeat-sentence-setup,
+.read-aloud-setup {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -660,11 +666,13 @@ a {
   padding-bottom: 1rem;
 }
 
-.repeat-sentence-setup > div {
+.repeat-sentence-setup > div,
+.read-aloud-setup > div {
   flex: 1;
 }
 
-.repeat-sentence-setup strong {
+.repeat-sentence-setup strong,
+.read-aloud-setup strong {
   display: block;
   margin-bottom: 0.35rem;
 }
@@ -675,7 +683,8 @@ a {
 }
 
 @media (max-width: 720px) {
-  .repeat-sentence-setup {
+  .repeat-sentence-setup,
+  .read-aloud-setup {
     align-items: flex-start;
     flex-direction: column;
   }
