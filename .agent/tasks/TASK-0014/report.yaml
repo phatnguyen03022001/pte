@@ -1,0 +1,363 @@
+protocol_version: 3
+
+task_id: TASK-0014
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0014/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+  final_execution_head: "2cf0ea27bd76922332397c99e2df1136e2cab6bd"
+  final_execution_tree: "135e94281d26e2259a23c795fdea5203686da67b"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_read_write
+    - production_build_and_http_execution
+    - real_chrome_cdp_speechsynthesis_and_fake_microphone
+    - vercel_read_only_state_observation
+  available:
+    - Agent Runtime repository/filesystem/terminal surface
+    - GitHub canonical remote observation
+    - Supabase project/migration/query/advisor/type-generation surface
+    - local production Next.js and Google Chrome/CDP
+    - connected Vercel read-only project/deployment context
+  missing: []
+  passed: true
+
+qualification:
+  recovery:
+    continuation_of_same_execution: true
+    original_base: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+    remote_main_at_recovery: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+    local_head_at_recovery: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+    ahead_behind_at_recovery: "0/0"
+    worktrees_at_recovery: 1
+    remote_main_only: true
+    git_operation_active: false
+    interrupted_source_inventory_exact: true
+    live_provider_effects_replayed: false
+
+  provider_binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    migration_count: 11
+    latest_migration: "20261005103817/create_answer_short_question_items"
+    public_application_tables: 14
+    security_findings: 0
+
+  migration:
+    version: "20261005103817"
+    name: create_answer_short_question_items
+    repository_path: supabase/migrations/20261005103817_create_answer_short_question_items.sql
+    repository_sha256: "195506e596c090ebd11aa5b3acf61eb371cd8c4721868158f19bbaea47c89114"
+    migration_instances: 1
+    seed_rows_in_migration: 0
+    recovery_apply_migration_calls: 0
+    recovery_raw_ddl_calls: 0
+
+  live_schema:
+    table: public.answer_short_question_items
+    rls_enabled: true
+    required_columns: PASS
+    primary_key: "PASS; id is bigint generated always as identity primary key."
+    bounded_checks: "PASS; kebab-case slug, non-empty required scalar text, lowercase snake_case difficulty/source_type, 6..18 whitespace words, accepted_answers cardinality 1..4 with non-empty aliases."
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one answer_short_question_items_public_read_active SELECT policy allows anon/authenticated only when active=true."
+    browser_write_authority: "PASS; no INSERT/UPDATE/DELETE grant or write policy exists."
+
+  authored_content:
+    active_rows: 12
+    starter_rows: 6
+    developing_rows: 6
+    question_word_count_range: "8..12"
+    accepted_answer_cardinality_range: "1..2"
+    exact_task_rows: PASS
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    created_by: chatgpt_task_0014
+    updated_by: chatgpt_task_0014
+    ordered_slugs:
+      - measuring-temperature
+      - plant-water-uptake
+      - viewing-tiny-objects
+      - pumping-blood
+      - course-outline
+      - borrowing-books
+      - studying-stars
+      - plants-making-food
+      - electrical-power-unit
+      - comparing-categories
+      - earth-structure-science
+      - speech-sounds-field
+
+  study_content:
+    active_rows_after: 14
+    mappings_after: 0
+    new_slug: answer-short-question-strategy
+    new_title: "Answer Short Question: listen, answer only what is asked"
+    task_type: answer_short_question
+    skill_code: listening
+    target_score: 40
+    metadata_contract: PASS
+    mechanics_contract: "PASS; body states about 3-9 seconds of question audio, one word or a few words, 10-second answer window, Listening rather than Speaking, official correct/incorrect appropriateness, and local practice-only STT/alias limitations."
+
+  preservation:
+    prior_13_study_fingerprint_before: "6f59032164d916e3654888e7072d5766"
+    prior_13_study_fingerprint_after: "6f59032164d916e3654888e7072d5766"
+    prior_practice_full_row_fingerprints_match_pre_mutation: PASS
+    prior_practice_full_row_fingerprints_md5:
+      reading_fill_in_blanks_items: "3ff3cb2f304a577c407687814cbe9458"
+      summarize_written_text_items: "c3135490fdfdd5e4ebda8aff0b4f47e6"
+      write_essay_items: "14ce993d6d436430be2ac9af4ae7ea87"
+      write_from_dictation_items: "e533ee863d93dff82c6aba5314c189af"
+      repeat_sentence_items: "c7753d4ad73d1cff11e28590e65d291d"
+      read_aloud_items: "0a360b8207f23cf7985b429a71025723"
+      describe_image_items: "1088db6ec78e09d8bfe8ef7456728b5c"
+      retell_lecture_items: "795a5fb0152321efd714176b3ffc5d12"
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, E'\\n' order by id), ''))"
+
+  data_api:
+    publishable_key_disclosed: false
+    public_read: "PASS; public Data API returned HTTP 200 with exactly twelve active Answer Short Question slugs in authorized order."
+    public_write_authority: "PASS; catalog grants and RLS expose read-only access."
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "c0e7e7981044bbb7ac9bec4645172029fdc16f9910b9d6fae88d72d505a5080f"
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; production surface exposes nine implemented Practice task types and Answer Short Question is labeled Listening only."
+    answer_short_question_route: "PASS; server-first metadata load supports default, selected and invalid-item deterministic fallback."
+    initial_prompt_privacy: "PASS; production default/selected/invalid HTML does not contain question_text or accepted_answers."
+    prompt_endpoint: "PASS; feature-local no-store GET exposes question_text only before result; accepted_answers are fetched only after local transcription."
+    playback: "PASS; browser-native SpeechSynthesis uses exact DB question text, English voice when available, deterministic rate 0.92 and one-play gating."
+    microphone_gate: "PASS; local STT must be ready, microphone stream is acquired before playback, and a failed pre-play capture does not consume the one-play attempt."
+    recording: "PASS; MediaRecorder starts automatically only from SpeechSynthesis onend using the held stream, permits one response per reset/item, supports explicit Stop answer and has a hard 10-second cap."
+    result_reveal: "PASS; question text and accepted aliases remain hidden until result; learner transcript is shown after local transcription."
+    scoring_boundary: "PASS; exact normalized alias equality only; result is Practice answer match: Yes/No, explicitly not an official Pearson score/result, and Answer Short Question is presented as Listening rather than Speaking."
+    reset_and_item_change: PASS
+    study_bridge: "PASS; direct bidirectional Answer Short Question Study/Practice links exist."
+
+  normalization:
+    lowercase: PASS
+    trim: PASS
+    surrounding_basic_punctuation_strip: PASS
+    internal_whitespace_collapse: PASS
+    exact_alias_equality: PASS
+    fuzzy_matching: absent
+    edit_distance: absent
+    stemming: absent
+    keyword_matching: absent
+    semantic_matching: absent
+    focused_examples: "PASS; “LIBRARY!” -> library, Course + repeated spaces -> course syllabus, Unicode Ä lowercases without transliteration, library please does not equal library."
+
+  local_stt:
+    shared_substrate_changed: false
+    package: "@huggingface/transformers@4.3.0"
+    model: onnx-community/whisper-tiny.en
+    model_revision: "2575352d61be1bf7225cf8f8b268a4678025fc58"
+    webgpu_preferred: true
+    wasm_fallback_preserved: true
+    remote_inference: absent
+    feature_local_pin_guard: "PASS; Transformers 4.3.0 pipeline file discovery omits revision when probing config.json. The Answer Short Question worker rewrites only this exact model's resolve/main prefix to the pinned revision before importing the unchanged shared worker, and removes the unpinned cache alias before exposing ready/result state."
+    exact_revision_network_proof: "PASS; fresh Answer Short Question browser run observed zero whisper-tiny.en /resolve/main/ requests."
+    exact_revision_cache_proof: "PASS; immediate post-ASQ isolated profile contained only exact-revision Whisper assets plus accepted ONNX runtime assets, with no resolve/main entry."
+
+  production_http:
+    task_owned_port: 31014
+    practice_landing: PASS
+    answer_short_question_default: PASS
+    answer_short_question_selected: PASS
+    answer_short_question_invalid_fallback: PASS
+    answer_short_question_study_bridge: PASS
+    initial_question_hidden: PASS
+    initial_accepted_answers_hidden: PASS
+    prompt_endpoint_cache_control: no-store
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome headless over CDP port 9325 with ignored task-owned browser profiles and synthetic microphone fixtures; no browser-test dependency was added."
+    positive:
+      item: borrowing-books
+      initial_question_and_aliases_hidden: PASS
+      backend: webgpu
+      utterance_exact_db_text: PASS
+      utterance_rate: 0.9200000166893005
+      utterance_language: en-AU
+      speech_calls: 1
+      recorder_not_started_during_playback: PASS
+      recorder_started_after_speech_onend: PASS
+      recorder_observed_speech_stopped: PASS
+      explicit_stop_ms: 2692
+      explicit_stop_under_10_seconds: PASS
+      transcript: Library
+      transcript_nonempty: PASS
+      result: "Practice answer match: Yes"
+      question_revealed_after_result: PASS
+      aliases_revealed_after_result: PASS
+      replay_blocked: PASS
+      disclaimer: PASS
+      reset: PASS
+      item_change_reset: PASS
+    negative:
+      item: plants-making-food
+      initial_question_and_aliases_hidden: PASS
+      backend: webgpu
+      utterance_exact_db_text: PASS
+      speech_calls: 1
+      explicit_stop_ms: 2717
+      explicit_stop_under_10_seconds: PASS
+      transcript: Banana
+      transcript_nonempty: PASS
+      result: "Practice answer match: No"
+      question_revealed_after_result: PASS
+      aliases_revealed_after_result: PASS
+      disclaimer: PASS
+      media_track_final_state: ended
+    wfd_playback_regression:
+      initial_expected_sentence_hidden: PASS
+      utterance_exact_db_text: PASS
+      utterance_rate: 0.9200000166893005
+      replay_blocked: PASS
+    describe_image_local_stt_regression:
+      backend: webgpu
+      transcript_nonempty: PASS
+      transcript_observed: "A library"
+      media_track_final_state: ended
+      non_get_requests: 0
+      remote_inference_requests: 0
+
+  runtime_privacy:
+    asq_positive_checkpoint:
+      local_storage_entries: 0
+      session_storage_entries: 0
+      indexed_db_databases: 0
+      cookie_entries: 0
+      learner_data_in_cache_request_urls: false
+      learner_uploads: 0
+      remote_inference_requests: 0
+      page_surface_non_get_requests: 0
+      unpinned_model_requests: 0
+      media_track_final_state: ended
+      generated_prompt_audio_persisted: false
+      learner_audio_transcript_result_persisted: false
+    isolated_asq_cache:
+      exact_pinned_revision_only: PASS
+      accepted_model_assets:
+        - config.json
+        - preprocessor_config.json
+        - generation_config.json
+        - tokenizer_config.json
+        - tokenizer.json
+        - onnx/encoder_model.onnx
+        - onnx/decoder_model_merged.onnx
+      accepted_runtime_assets:
+        - ort-wasm-simd-threaded.asyncify.mjs
+        - ort-wasm-simd-threaded.asyncify.wasm
+    source_scan: "PASS; feature source contains no localStorage/sessionStorage/IndexedDB writer, SpeechRecognition/webkitSpeechRecognition, HF_TOKEN, OpenAI, Cloudinary, remote inference endpoint, recording_url or fuzzy/semantic scoring surface."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0014_attributable_performance_findings: 0
+
+  verification:
+    candidate: "2cf0ea27bd76922332397c99e2df1136e2cab6bd"
+    candidate_parent: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+    candidate_tree: "135e94281d26e2259a23c795fdea5203686da67b"
+    candidate_clean: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 build includes /practice/answer-short-question and its no-store prompt route plus all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    immutable_candidate_reverification: "PASS; frozen install, ignored-builds, lint, typecheck, production build and base-to-candidate diff-check were rerun on clean candidate 2cf0ea27bd76922332397c99e2df1136e2cab6bd."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned speech was cancelled. Task-owned Chrome/CDP and Next.js processes were terminated and ports 9325/31014 released. coverage/TASK-0014 was proven to be the exact non-symlink task root; cleanup unlinked Chrome singleton symlinks without following targets, recursively removed only task-owned entries, and proved the root absent afterward."
+
+vercel:
+  project_id: prj_FnnSeQyPhIQZ7DDn2cJe39N9EpvC
+  git_linked_in_current_context: false
+  git_context_evidence: "The connected Vercel Git context lists linked projects for the team and does not include pte."
+  latest_deployment_id_before_publication: dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd
+  latest_deployment_commit_before_publication: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  latest_deployment_state_before_publication: ERROR
+  configuration_modified: false
+  deployment_invoked: false
+
+authoritative_verification:
+  required: false
+  performed: false
+  result: NOT_REQUIRED
+  evidence: "TASK-0014 requires Executor qualification followed by independent Architect review; no separate authoritative verifier is designated."
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  report_requires_remote_candidate_visibility: false
+  remote_main_before_report_authorship: "eb59988f3c5fd691602b2abc47f927b41bbb6829"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_git_linked: false
+  vercel_deploy_invoked: false
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly one TASK-0014 migration 20261005103817/create_answer_short_question_items, fourteen public application tables, exactly twelve active original project-authored Answer Short Question rows in authorized order, six starter/six developing, 8..12 words and 1..2 accepted aliases, SELECT-only/RLS public access, exactly one new Study strategy, Study=14 active/mappings=0, public Data API read=12, and live-generated types byte-matching src/types/database.ts. Prior thirteen Study rows and all prior Practice tables retain pre-mutation fingerprints."
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Real Chrome/CDP positive flow prepared local STT first, acquired a microphone stream before playback, called actual SpeechSynthesis once with exact DB question at rate 0.92, kept recording off during playback, started MediaRecorder only after speech onend, explicitly stopped at 2692 ms, enforced one-play/one-response/reset semantics and never persisted prompt audio."
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome accepted-answer fixture produced non-empty transcript 'Library' and Practice answer match: Yes; a separate item with deliberately wrong fixture produced non-empty transcript 'Banana' and Practice answer match: No. Question/aliases stayed hidden until result. Feature-local normalization is lowercase + trim + basic edge punctuation stripping + whitespace collapse followed only by exact normalized alias equality; fuzzy/edit-distance/stemming/keyword/semantic matching is absent."
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "UI labels Answer Short Question as Listening only and rejects official-score claims. Runtime proof found localStorage=0, sessionStorage=0, IndexedDB=0, cookies=0, zero learner upload/non-GET request, zero remote inference, no learner data in cache request URLs, ended media tracks, no prompt-audio persistence, and an isolated ASQ CacheStorage containing only exact-pinned Whisper assets plus accepted ONNX runtime assets."
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Real WFD SpeechSynthesis regression preserved exact one-play DB sentence behavior and real Describe Image regression preserved shared local Whisper with non-empty transcript and ended track. Shared src/lib/local-stt bytes are unchanged. Fresh Security Advisor=0; only three pre-existing Performance INFO findings remain. Frozen install, exact ignored-builds, lint, typecheck, build, diff-check, package/lock identity and live-type byte-match all pass on immutable candidate."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 2cf0ea27bd76922332397c99e2df1136e2cab6bd is the fully verified direct child of exact base eb59988f3c5fd691602b2abc47f927b41bbb6829; origin/main still exposes only main at that exact base immediately before report authorship. Vercel pte is absent from the connected linked-Git-project list and latest deployment remains dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd from old commit a4ed91d7eb3003e51a65bd13db361481e0347ce3. Final report publication and no-deployment closure can only be proven after the subsequent ordinary non-force single publication."
+
+deviations:
+  - "Execution resumed after an interrupted Executor session. Recovery independently proved the exact dirty source inventory and the already-applied live Supabase effects, then continued without reapplying the migration, reseeding Answer Short Question rows, recreating the Study strategy, manipulating migration history, resetting or discarding local work."
+  - "Browser qualification exposed a Transformers.js 4.3.0 behavior where pipeline file discovery probes config.json through the default main revision even when the actual pipeline revision is pinned. A task-local Answer Short Question worker bootstrap now rewrites only the selected whisper-tiny.en resolve/main prefix to the exact authorized revision and verifies/removes the unpinned cache alias before ready/result state. Shared local-STT source and package/lock bytes remain unchanged."
+  - "An earlier proof fixture fed its spoken alias before the application's recorder began because the product correctly acquired the microphone stream before SpeechSynthesis. The final task-owned CDP harness started the synthetic microphone source when MediaRecorder.start was invoked; no product behavior was changed for this proof-harness timing correction."
+
+result: NEEDS_REVIEW
