@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      describe_image_items: {
+        Row: {
+          active: boolean
+          chart_type: string
+          created_at: string
+          created_by: string
+          difficulty: string
+          id: number
+          labels: string[]
+          review_points: string[]
+          slug: string
+          source_ref: string | null
+          source_type: string
+          title: string
+          unit: string
+          updated_at: string
+          updated_by: string
+          values: number[]
+        }
+        Insert: {
+          active?: boolean
+          chart_type: string
+          created_at?: string
+          created_by: string
+          difficulty: string
+          id?: never
+          labels: string[]
+          review_points: string[]
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          title: string
+          unit: string
+          updated_at?: string
+          updated_by: string
+          values: number[]
+        }
+        Update: {
+          active?: boolean
+          chart_type?: string
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          id?: never
+          labels?: string[]
+          review_points?: string[]
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          title?: string
+          unit?: string
+          updated_at?: string
+          updated_by?: string
+          values?: number[]
+        }
+        Relationships: []
+      }
       read_aloud_items: {
         Row: {
           active: boolean

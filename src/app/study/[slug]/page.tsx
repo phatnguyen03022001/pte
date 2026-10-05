@@ -82,6 +82,12 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           </p>
         ) : null}
 
+        {item.slug === "describe-image-template" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/describe-image">Practice Describe Image →</Link>
+          </p>
+        ) : null}
+
         {sourceUrl ? (
           <p className="study-source">
             Reference:{" "}

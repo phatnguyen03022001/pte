@@ -724,3 +724,136 @@ a {
     max-width: 100%;
   }
 }
+
+
+.describe-image-chart-panel,
+.describe-image-exercise {
+  display: grid;
+  gap: 1rem;
+}
+
+.describe-image-chart-panel {
+  border: 1px solid #d9d9d4;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.describe-image-synthetic {
+  margin: 0;
+  font-weight: 800;
+}
+
+.describe-image-chart-wrap {
+  overflow-x: auto;
+}
+
+.describe-image-chart {
+  display: block;
+  width: 100%;
+  min-width: 34rem;
+  height: auto;
+}
+
+.describe-image-axis {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.describe-image-bar {
+  fill: #666;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.describe-image-line {
+  stroke: currentColor;
+  stroke-width: 4;
+}
+
+.describe-image-point {
+  fill: white;
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.describe-image-label,
+.describe-image-value,
+.describe-image-unit {
+  fill: currentColor;
+  font: 700 13px/1 sans-serif;
+}
+
+.describe-image-table-wrap {
+  overflow-x: auto;
+}
+
+.describe-image-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.describe-image-table caption {
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-weight: 800;
+}
+
+.describe-image-table th,
+.describe-image-table td {
+  border-bottom: 1px solid #d9d9d4;
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+}
+
+.describe-image-setup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #d9d9d4;
+  padding-bottom: 1rem;
+}
+
+.describe-image-setup > div {
+  flex: 1;
+}
+
+.describe-image-setup strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.describe-image-review {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid #d9d9d4;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.describe-image-review legend {
+  padding: 0 0.35rem;
+  font-weight: 800;
+}
+
+.describe-image-review label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  line-height: 1.45;
+}
+
+.describe-image-review input {
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 720px) {
+  .describe-image-setup {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .describe-image-chart {
+    min-width: 30rem;
+  }
+}

@@ -90,6 +90,18 @@ export default function PracticePage() {
           </p>
           <Link href="/practice/read-aloud">Open practice →</Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Speaking</span>
+          </div>
+          <h2>Describe Image</h2>
+          <p>
+            Describe an original synthetic chart, transcribe one response locally,
+            and self-review coverage of three project-authored key points.
+          </p>
+          <Link href="/practice/describe-image">Open practice →</Link>
+        </article>
       </section>
     </main>
   );
