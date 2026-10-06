@@ -1,7 +1,7 @@
 protocol_version: 3
 
 task_id: TASK-0018
-task_revision: 2
+task_revision: 3
 state: APPROVED
 
 origin:
@@ -72,8 +72,9 @@ objective: "Ship a current PTE Academic Reading Reorder Paragraph Study + Practi
 
 scope:
   required_changes:
-    - "Fresh-resolve TASK-0018 revision 2, bound TASK-0017 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
-    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly fourteen accepted migrations through create_reading_multiple_choice_multiple_answers_items; Study=15 active / mappings=0; existing twelve learner-visible Practice task types and prior accepted table counts/fingerprints remain unchanged; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Fresh-resolve TASK-0018 revision 3, bound TASK-0017 ACCEPTED review and TASK-0018 revision 2 REVISION_REQUIRED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly fourteen accepted migrations through create_reading_multiple_choice_multiple_answers_items; Study=15 active / mappings=0; existing twelve learner-visible Practice task types and prior accepted table counts/fingerprints remain unchanged except for the explicitly normalized Reading MCMA evidence correction below; Security Advisor=0. Unexpected drift beyond that correction is BLOCKED."
+    - "Normalize the Reading MCMA accepted live baseline from the stale TASK-0017 report fingerprint e93c6bc204e175cb82c4254770a689f5 to the Architect-proven exact current full-row fingerprint 0f2e5ea4bb865106e35a7fd66aa1e6b0 using md5(coalesce(string_agg(to_jsonb(row)::text, '|' order by id), '')). TASK-0018 r2 review established this is an evidence correction, not live data drift: eight inserts, zero updates/deletes/hot-updates, zero dead tuples, all rows retain the original seed timestamp and xmin=1305. Do not mutate, reseed, normalize or otherwise change MCMA rows to chase the stale e93... value. Require the current MCMA fingerprint to remain exactly 0f2e5ea4bb865106e35a7fd66aa1e6b0 immediately before TASK-0018 live mutation."
     - "Create exactly one new repository/live migration for public.reading_reorder_paragraph_items. Do not create generic quiz/question/attempt/result/scoring/drag-drop tables."
     - "Table owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; segments text[] not null; initial_order integer[] not null; explanation_text text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
     - "Use bounded checks only: kebab-case slug; required scalar text non-empty; difficulty/source_type lowercase snake_case; segments cardinality exactly 5 with every segment non-empty; combined segments 70..110 whitespace-delimited words; initial_order cardinality exactly 5 and is an exact permutation of 0,1,2,3,4; initial_order must not equal [0,1,2,3,4]; explanation_text non-empty. No JSON metadata, function, trigger or view."
@@ -125,7 +126,7 @@ scope:
     - "No learner-data persistence: localStorage/sessionStorage/IndexedDB/cookies remain unused by Reorder Paragraph; no non-read external requests beyond existing Supabase read path; no runtime AI."
     - "Safely terminate task-owned Next.js/Chrome processes, release ports and remove task-owned profile/harness after exact containment/non-symlink proof."
     - "Vercel Git integration remains disconnected. Do not reconnect, configure or deploy Vercel."
-    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0018/report.yaml as sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0019."
+    - "Commit one coherent qualified candidate on main, replace the existing blocked .agent/tasks/TASK-0018/report.yaml with report_revision 2 bound to TASK-0018 revision 3 as the sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0019."
 
   allowed_existing_files_or_components:
     - "supabase/migrations"
