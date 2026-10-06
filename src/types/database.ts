@@ -254,6 +254,54 @@ export type Database = {
         }
         Relationships: []
       }
+      respond_to_a_situation_items: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string
+          difficulty: string
+          id: number
+          review_points: string[]
+          situation_text: string
+          slug: string
+          source_ref: string | null
+          source_type: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by: string
+          difficulty: string
+          id?: never
+          review_points: string[]
+          situation_text: string
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          id?: never
+          review_points?: string[]
+          situation_text?: string
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
       retell_lecture_items: {
         Row: {
           active: boolean

@@ -142,6 +142,19 @@ export default function PracticePage() {
             Open practice →
           </Link>
         </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
+            <span>Speaking</span>
+          </div>
+          <h2>Respond to a Situation</h2>
+          <p>
+            Read and hear one everyday or academic situation, prepare for 10
+            seconds, record one response, and self-review five prompt-specific
+            points.
+          </p>
+          <Link href="/practice/respond-to-a-situation">Open practice →</Link>
+        </article>
       </section>
     </main>
   );
