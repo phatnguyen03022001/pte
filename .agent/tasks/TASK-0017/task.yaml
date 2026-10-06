@@ -1,0 +1,198 @@
+protocol_version: 3
+
+task_id: TASK-0017
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0017
+  gap_id: PTE-READING-MCMA-PRACTICE-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one current Reading MCMA slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; keep item scoring feature-local and deterministic"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; provider -> content -> fixed-answer interaction -> browser proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0016/review.yaml in the exact handoff snapshot"
+    role: "accepted prior Practice/Study/provider baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Practice/Study/security/cost/architecture truth"
+    precedence: 2
+  - source: "Pearson current PTE Academic Reading guidance: https://www.pearsonpte.com/pte-academic/test-format/reading/"
+    role: "current task mechanics: second Reading type, passage up to 350 words, more than one correct response, Reading only"
+    precedence: 3
+  - source: "Pearson current PTE Academic Score Guide"
+    role: "item scoring boundary: +1 each correct selected option, -1 each incorrect selected option, minimum zero for the item"
+    precedence: 4
+  - source: "Current Supabase RLS/Data API guidance"
+    role: "explicit GRANT + RLS security HOW"
+    precedence: 5
+
+structure_authority:
+  status: RESOLVED
+  source: "accepted feature-specific Practice pattern and fixed-answer Reading task semantics"
+  rationale: "MCMA needs only project-authored passage/question/options/correct indexes and local deterministic fixed-answer scoring. Use one feature-specific table and client interaction. Do not create generic quiz/scoring infrastructure."
+
+objective: "Ship a current PTE Academic Reading Multiple Choice, Multiple Answers Study + Practice slice using eight original academic passages, exactly five options per item, exactly two correct responses per item, deterministic +1/-1 floor-zero practice scoring, and clear answer review without introducing generic scoring infrastructure or AI."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0017 revision 1, bound TASK-0016 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly thirteen accepted migrations through create_respond_to_a_situation_items; Study=14 active / mappings=0; existing eleven implemented Practice task types and all prior table counts/fingerprints remain accepted; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.reading_multiple_choice_multiple_answers_items. Do not create generic quiz/question/answer/attempt/result/scoring tables."
+    - "Table owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; passage_text text not null; question_text text not null; options text[] not null; correct_indexes integer[] not null; explanation_text text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use bounded checks only: kebab-case slug; required scalar text non-empty; difficulty/source_type lowercase snake_case; passage_text 120..220 whitespace-delimited words; options cardinality exactly 5 with every option non-empty; correct_indexes cardinality exactly 2, values distinct, each between 0 and 4; explanation_text non-empty. No JSON metadata, function, trigger or view."
+    - "Enable RLS; revoke anon/authenticated privileges; explicitly GRANT SELECT only; create exactly one active=true SELECT policy for anon/authenticated. No browser write authority."
+    - "Persist exactly eight active original project-authored MCMA rows after migration, not in migration bytes. Use source_type=project_authored, created_by=updated_by=chatgpt_task_0017, source_ref=https://www.pearsonpte.com/pte-academic/test-format/reading/; exactly four starter and four developing."
+    - "Use these exact item contracts:
+      1) urban-tree-canopy — title 'Urban tree canopy and heat' — starter — passage explains shade/evapotranspiration benefits while noting maintenance/species/site constraints — question asks which two statements are supported — correct indexes [0,3].
+      2) spaced-retrieval-learning — title 'Spaced retrieval in learning' — starter — passage contrasts spaced retrieval with massed rereading and explains effortful recall/long-term retention — correct indexes [1,4].
+      3) public-library-digital-services — title 'Digital services in public libraries' — starter — passage explains expansion of e-books, device support and digital-literacy help without replacing physical spaces — correct indexes [0,2].
+      4) food-waste-measurement — title 'Measuring household food waste' — starter — passage compares diaries, bin audits and survey limitations and argues combining methods improves estimates — correct indexes [1,3].
+      5) coastal-wetland-restoration — title 'Coastal wetland restoration' — developing — passage covers flood buffering/habitat benefits plus sediment, land-use and monitoring constraints — correct indexes [0,4].
+      6) open-science-replication — title 'Replication and open science' — developing — passage distinguishes replication from exact duplication and explains transparent materials improve diagnosis of disagreement — correct indexes [1,2].
+      7) electricity-demand-response — title 'Electricity demand response' — developing — passage explains shifting flexible demand can reduce peak pressure but requires incentives/automation and cannot eliminate all generation needs — correct indexes [0,3].
+      8) multilingual-classroom-feedback — title 'Feedback in multilingual classrooms' — developing — passage explains clear task-focused feedback and examples can help learners while excessive correction may overload attention — correct indexes [2,4]."
+    - "Executor owns exact original passage/question/options/explanation wording within those semantic contracts. Do not copy Pearson/web passages or sample answers."
+    - "Each item must have exactly five plausible options. Exactly two options are supported by the passage; three are clearly unsupported, contradicted, overgeneralized or outside scope. Avoid trick wording dependent on obscure world knowledge."
+    - "Add exactly one Study strategy through privileged authoring: slug reading-mcma-strategy; type strategy; skill_code reading; task_type multiple_choice_multiple_answers; title 'Reading MCMA: evidence before selection'; target_score 40; source_type project_authored; source_ref exact Pearson Reading URL; created_by=updated_by=chatgpt_task_0017; active=true."
+    - "Study body must state current mechanics conservatively: passage up to 350 words, more than one correct response, Reading only, and fixed-answer scoring where selected correct options add one, selected incorrect options subtract one, with item score not below zero. Provide an original method: read question -> scan options -> locate passage evidence -> select only supported statements -> avoid guessing extra options. Explain negative marking and common over-selection mistakes."
+    - "Preserve all existing 14 Study rows byte/metadata-identical; Study grows to exactly 15 active and mappings remain zero."
+    - "Implement /practice/reading-multiple-choice-multiple-answers as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to first active item or clear empty state."
+    - "Update /practice to expose twelve implemented task types, adding Multiple Choice, Multiple Answers under Reading."
+    - "Render passage_text and question_text in initial HTML. Render all five options as accessible checkboxes; learner may select/deselect freely before submitting."
+    - "Correct indexes and explanation_text must not be exposed in initial HTML/DOM or client props before Submit. Use one feature-local no-store review route that returns the selected item's correct indexes/explanation only after Submit."
+    - "Submit requires at least one selected option. After first successful Submit, freeze option selection until Reset/item change."
+    - "Compute one feature-local deterministic practice raw score: +1 for each selected correct option, -1 for each selected incorrect option, floor at 0. Because every authorized item has exactly two correct options, display 'Practice raw item score: X / 2'."
+    - "Also display selected-option review: each selected correct option marked Correct; each selected incorrect option marked Incorrect; unselected correct options visibly identified as Missed correct option. Reveal explanation_text after result."
+    - "Explicitly state that raw item score mirrors this item's fixed-answer marking logic but is not a scaled PTE Reading score, overall score, or score prediction."
+    - "Do not add timing, adaptive logic, confidence weighting, partial semantic scoring, AI explanations, attempt persistence or analytics."
+    - "Reset clears selection/result and permits a fresh submit on the same item. Item change clears selection/result and loads exact selected item."
+    - "Add direct bidirectional Study bridge between /study/reading-mcma-strategy and /practice/reading-multiple-choice-multiple-answers."
+    - "Do not install/update/remove npm dependencies. package.json and pnpm-lock.yaml remain byte-identical to TASK-0017 execution base."
+    - "After authoring, prove exactly eight active MCMA rows, four starter/four developing, exact slugs/titles/provenance/semantic contracts, 120..220-word passages, exactly five options and exactly two valid distinct correct indexes each. Prove prior Study/Practice counts/fingerprints/hashes unchanged except exact one new Study row."
+    - "Prove public Data API reads exactly eight active MCMA rows and browser writes remain absent by grants/policies. Never print/persist the publishable key."
+    - "Regenerate src/types/database.ts from exact project and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors; zero TASK-0017-attributable Security finding required and report INFO honestly."
+    - "Run pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check. ignored-builds remains exactly protobufjs + onnxruntime-node."
+    - "Run bounded production HTTP proof: /practice exposes twelve task types; MCMA default/selected/invalid routes return 200; initial HTML contains selected passage/question/options but not correct-index/explanation data; Study bridge returns 200."
+    - "Run real Chrome/CDP proof without adding browser-test dependencies. On one item, select one correct and one incorrect option, submit, and require Practice raw item score: 0 / 2 due +1-1 floor zero. Verify selected correct/incorrect labels, missed correct option and explanation reveal. Reset must clear result."
+    - "Run second browser case on another item selecting both correct options only; require Practice raw item score: 2 / 2 and no incorrect selection. Item change must reset state."
+    - "Browser accessibility proof must confirm five checkbox controls are keyboard-focusable, labels expose full option text, and result feedback is available as text rather than color alone."
+    - "Run one bounded regression for existing Reading Fill in the Blanks Dropdown route to prove prior Reading interaction remains healthy."
+    - "No learner-data persistence: localStorage/sessionStorage/IndexedDB/cookies remain unused by MCMA; no non-read external requests beyond existing Supabase read path; no runtime AI."
+    - "Safely terminate task-owned Next.js/Chrome processes, release ports and remove task-owned profile/harness after exact containment/non-symlink proof."
+    - "Vercel Git integration remains disconnected. Do not reconnect, configure or deploy Vercel."
+    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0017/report.yaml as sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0018."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/app/practice/reading-multiple-choice-multiple-answers and feature-local content/review/interaction source"
+    - "src/app/practice/page.tsx"
+    - "src/app/study/[slug]/page.tsx solely for MCMA Study bridge"
+    - "src/app/globals.css for minimal styling"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0017/report.yaml"
+    - "Supabase public.reading_multiple_choice_multiple_answers_items exact eight authorized rows"
+    - "Supabase study_content exact one new reading-mcma-strategy row"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Passages/questions/options/explanations are original project-authored content."
+  - "Correct indexes and explanation remain server-held until Submit."
+  - "Practice scoring is fixed deterministic +1/-1 floor zero only."
+  - "No AI, semantic scoring, learner persistence, analytics or npm dependency drift."
+  - "All prior accepted Study/Practice content remains unchanged except exact new MCMA Study/content."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases, force-push or rewrite history."
+  - "Install/update/remove npm dependencies."
+  - "Create generic quiz/question/attempt/result/scoring infrastructure."
+  - "Expose correct indexes/explanation in initial page props/HTML."
+  - "Persist learner selections/results."
+  - "Use OpenAI/LLM/remote scoring or semantic/fuzzy answer evaluation."
+  - "Call raw item score a scaled/official PTE Reading or overall score."
+  - "Copy Pearson/web passages/options."
+  - "Modify prior accepted content beyond exact navigation and bounded regression-safe reuse."
+  - "Reconnect/configure/deploy Vercel."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new MCMA table with eight exact original active items and exactly one new Study strategy; prior accepted content is preserved."
+    evidence_required: "Migration/schema identity, exact eight-row passage/options/correct-index/provenance proof, prior hashes/fingerprints/counts, one Study addition, RLS/grants/Data API and exact live types."
+  - id: AC-2
+    requirement: "Learners can answer Reading MCMA without answer leakage and receive deterministic fixed-answer feedback."
+    evidence_required: "Initial HTML/server-prop leakage proof, five accessible checkboxes, no-answer-before-submit, feature-local review fetch, fixed +1/-1 floor-zero implementation and post-submit frozen selection."
+  - id: AC-3
+    requirement: "Practice scoring and review behavior matches the authorized item-level marking logic."
+    evidence_required: "Real Chrome mixed selection produces 0/2; all-correct selection produces 2/2; correct/incorrect/missed labels and explanation reveal; reset/item-reset pass; explicit non-scaled-score disclaimer."
+  - id: AC-4
+    requirement: "No learner persistence, runtime AI or generic scoring infrastructure is introduced."
+    evidence_required: "Runtime storage/network proof, source scan and candidate diff boundary."
+  - id: AC-5
+    requirement: "Existing Reading behavior and repository/provider mechanics remain healthy."
+    evidence_required: "Reading FIB regression, Study bridge, advisors, types, frozen install/ignored-builds/lint/typecheck/build/diff-check and package/lock identity."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main without Vercel deployment."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh main-only/local-clean closure; Vercel remains disconnected."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
