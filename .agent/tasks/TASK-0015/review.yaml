@@ -1,0 +1,46 @@
+protocol_version: 3
+task_id: TASK-0015
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0015/report.yaml
+  commit: "9ed9283f65073a83986c951db2da0d38a7162d89"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0015 revision 1 and report revision 1 were independently re-resolved from canonical GitHub truth. Candidate ee83ec301532a0755aa1c29adc23bcd444ea7cee is the sole direct child of exact base 97408417580b77fced769b34304cd8add9a221f5. Report 9ed9283f65073a83986c951db2da0d38a7162d89 is the sole direct child of the candidate and changes only .agent/tasks/TASK-0015/report.yaml. Remote exposes only main; local equals origin/main clean with one worktree."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with exactly twelve migrations. summarize_group_discussion_items contains exactly six active rows, three starter/three developing, 150..158 combined six-turn words and exactly five review points each. Existing Study remains exactly 14 active rows / zero mappings and summarize-group-discussion-strategy body SHA-256 remains a916fece5db437e1848ea763754a5a8e944c1e4e003868762eec181d6d6eb578."
+  - "RLS/access PASS: exactly one active=true SELECT policy exists for anon/authenticated and both roles have SELECT only. Fresh Security Advisor returns zero findings; fresh Performance Advisor contains only the three pre-existing INFO findings."
+  - "Fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts; SHA-256 e29effd4b7c407d64d1b5437b4c4a1f58e67f3d11c95ec7350d07082b1a5267d."
+  - "AC-2 PASS on reviewed real-browser evidence: native SpeechSynthesis emitted exactly six DB-exact utterances in A-B-C-A-B-C order, speaker state followed the same sequence without transcript leakage, replay remained blocked, and no synthesized discussion audio was persisted."
+  - "AC-3 PASS: final speech onend started exact preparation at 10 seconds and decremented to 9; recording stayed blocked through playback/preparation and opened only after all gates including local STT readiness; one response stopped explicitly at 4209 ms; transcript was non-empty; exactly six turns and five review points revealed after result; learner-selected self-review displayed exactly 4 / 5; Reset and item-change passed."
+  - "AC-4 PASS: runtime evidence records localStorage/sessionStorage/IndexedDB/cookies all zero, zero learner upload, zero remote inference, no learner data in cache request URLs, ended MediaStream tracks and no persisted synthesized discussion audio. UI explicitly rejects Pearson Content, Pronunciation, Fluency, score and points."
+  - "The feature-local exact-revision worker guard is accepted as bounded HOW: it rewrites only the exact whisper-tiny.en resolve/main prefix to the authorized pinned revision and imports the unchanged shared local-STT worker. Fresh isolated SGD network evidence observed zero resolve/main requests."
+  - "AC-5 PASS: real Retell Lecture native-SpeechSynthesis regression and real Describe Image local-STT regression passed. Shared src/lib/local-stt bytes are unchanged."
+  - "Architect independently reran pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build, base-to-candidate git diff --check and package/lock/shared-local-STT byte-identity checks on the immutable candidate source. All PASS; ignored builds remain exactly protobufjs and onnxruntime-node."
+  - "AC-6 PASS: canonical main equals 9ed9283f65073a83986c951db2da0d38a7162d89 before review publication; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, clean one-worktree state and no active Git operation. Vercel pte remains disconnected; deployment count remains 27 and latest deployment still references old a4ed91d."
+  - "TASK-0015 is accepted. Acceptance grants no successor feature, learner persistence, automatic semantic/Content/Pronunciation/Fluency scoring, remote inference/TTS or Vercel deployment authority outside separately approved task authority."
+
+final_candidate:
+  commit: "ee83ec301532a0755aa1c29adc23bcd444ea7cee"
+  report_commit: "9ed9283f65073a83986c951db2da0d38a7162d89"
+  result: ACCEPTED
