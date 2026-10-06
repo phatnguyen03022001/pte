@@ -67,6 +67,20 @@ V1 must not silently:
 - replace local speech-to-text with a paid/cloud AI dependency;
 - add remote pronunciation scoring without new product/architecture authority.
 
+### Practice content provenance
+
+Learner-facing Practice must distinguish content provenance explicitly.
+
+- `project_authored` means original PTE-format practice created by the project/operator. It must never be presented as an official Pearson question, recalled exam question, or Pearson question-bank item.
+- `pearson_official_public` may be used only when the exact Pearson source is publicly accessible and the intended storage/reproduction/use is permitted. Persist the exact source reference and any applicable attribution/licensing evidence.
+- `pearson_authorized_copy` may be used only when the operator has explicit rights that permit the intended local/database reproduction and reuse. Personal study intent alone does not create copying or redistribution rights.
+- Purchased, account-gated, subscription, AI Practice, Question Bank, mock-test, or other restricted Pearson content is reference/access-only unless the applicable license or permission explicitly authorizes copying it into this product.
+- A public URL, account access, purchase receipt, or non-commercial intent is not by itself proof of permission to scrape, download, re-host, or persist the full question content.
+
+Every learner-visible Practice item must expose a truthful provenance label sufficient to distinguish official/authorized content from project-authored practice. The product must fail closed on ambiguous provenance: unlabeled or unverified material must not be described as official.
+
+The product may link the learner to official Pearson preparation surfaces for authentic questions. It must not manufacture an "official" local bank by copying restricted Pearson content without authority.
+
 ### Media and external source ingestion
 
 Supabase owns structured metadata/provenance. Cloudinary or another approved media/object store may hold media bytes only when the project has rights to persist and reuse the asset.
