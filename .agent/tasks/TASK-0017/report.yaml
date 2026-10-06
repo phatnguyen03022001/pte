@@ -1,0 +1,327 @@
+protocol_version: 3
+
+task_id: TASK-0017
+task_revision: 2
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0017/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "5cb03f29e2b037379a056a72e10ff860dccd1fb7"
+  final_execution_head: "31dc265d26c0986a369e8be74b11491aef7d7f27"
+  final_execution_tree: "9d79ba0f5411c648841d5274510c12d73648e9bf"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_migration_query_advisor_and_type_generation
+    - production_build_and_http_execution
+    - real_google_chrome_cdp
+    - vercel_read_only_state_observation
+  available:
+    - Agent Runtime repository/filesystem/terminal surface
+    - Supabase project/migration/query/advisor/type-generation surface
+    - local Next.js production runtime
+    - Google Chrome 154.0.8037.93 with native CDP
+    - connected Vercel read-only project/deployment context
+  missing: []
+  passed: true
+
+qualification:
+  provider_binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    migration_count: 14
+    latest_migration: "20261006061030/create_reading_multiple_choice_multiple_answers_items"
+    security_findings: 0
+
+  migration:
+    version: "20261006061030"
+    name: create_reading_multiple_choice_multiple_answers_items
+    repository_path: supabase/migrations/20261006061030_create_reading_multiple_choice_multiple_answers_items.sql
+    repository_sha256: "d6990646ef6871fddccf49042bf9006920e9d45157c8c3b3b414a3d01712f4db"
+    migration_instances: 1
+    schema_contract: PASS
+    schema_contract_evidence:
+      - exact authorized scalar columns, identity primary key, timestamps and active default
+      - kebab-case slug plus non-empty required scalar-text checks
+      - lowercase snake_case difficulty/source_type checks
+      - 120..220 whitespace-delimited passage word-count check
+      - exactly five non-empty options
+      - exactly two distinct zero-based correct indexes in range 0..4
+      - RLS enabled
+      - anon/authenticated privileges revoked then SELECT-only granted
+      - exactly one active=true SELECT policy
+    generic_json_or_metadata_columns_added: false
+    functions_triggers_or_views_added: false
+
+  live_schema:
+    table: public.reading_multiple_choice_multiple_answers_items
+    active_rows: 8
+    starter_rows: 4
+    developing_rows: 4
+    passage_word_count_range: "151..171"
+    rows_with_exactly_five_options: 8
+    rows_with_exactly_two_distinct_valid_correct_indexes: 8
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/reading/"
+    created_by: chatgpt_task_0017
+    updated_by: chatgpt_task_0017
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one reading_mcma_items_public_read_active SELECT policy permits active=true reads."
+    browser_write_authority: "PASS; no client write grant or write policy exists."
+    deterministic_full_row_fingerprint_md5: "e93c6bc204e175cb82c4254770a689f5"
+
+  authored_content:
+    exact_task_contracts: PASS
+    copied_pearson_prompt_or_sample_answer: false
+    items:
+      - slug: urban-tree-canopy
+        title: "Urban tree canopy and heat"
+        difficulty: starter
+        word_count: 151
+        correct_indexes: [0, 3]
+      - slug: spaced-retrieval-learning
+        title: "Spaced retrieval in learning"
+        difficulty: starter
+        word_count: 156
+        correct_indexes: [1, 4]
+      - slug: public-library-digital-services
+        title: "Digital services in public libraries"
+        difficulty: starter
+        word_count: 158
+        correct_indexes: [0, 2]
+      - slug: food-waste-measurement
+        title: "Measuring household food waste"
+        difficulty: starter
+        word_count: 162
+        correct_indexes: [1, 3]
+      - slug: coastal-wetland-restoration
+        title: "Coastal wetland restoration"
+        difficulty: developing
+        word_count: 163
+        correct_indexes: [0, 4]
+      - slug: open-science-replication
+        title: "Replication and open science"
+        difficulty: developing
+        word_count: 168
+        correct_indexes: [1, 2]
+      - slug: electricity-demand-response
+        title: "Electricity demand response"
+        difficulty: developing
+        word_count: 168
+        correct_indexes: [0, 3]
+      - slug: multilingual-classroom-feedback
+        title: "Feedback in multilingual classrooms"
+        difficulty: developing
+        word_count: 171
+        correct_indexes: [2, 4]
+
+  study_content:
+    active_rows_after: 15
+    mappings_after: 0
+    strategy_slug: reading-mcma-strategy
+    strategy_instances: 1
+    strategy_metadata_contract: PASS
+    strategy_mechanics_contract: PASS
+    prior_fourteen_row_fingerprint_before_md5: "9b5a74a41f665f7341027291741eb8dc"
+    prior_fourteen_row_fingerprint_after_md5: "9b5a74a41f665f7341027291741eb8dc"
+    prior_fourteen_rows_preserved: PASS
+
+  prior_practice_preservation:
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, '|' order by id), ''))"
+    before_and_after_match: PASS
+    deterministic_full_row_fingerprints_md5:
+      reading_fill_in_blanks_items: "268074e214f58ffe52e90a59c0ba38f3"
+      summarize_written_text_items: "e48fe083049e0b2f3250e91faf419b35"
+      write_essay_items: "6811f4eedc724c4c55d696e6748a7d41"
+      write_from_dictation_items: "ba449dbab75478cebf7ddbb21b52ce52"
+      repeat_sentence_items: "5cd37ba0cf4f8687217d57af02f6ca55"
+      read_aloud_items: "2a3cf95fb6023e324c91bf902c7b4db9"
+      describe_image_items: "d3d7e6d543df19ef1f6d54f3af2d221f"
+      retell_lecture_items: "7a2383184a62eb1482df1bc4a0cd8360"
+      answer_short_question_items: "b9305dcff9038e74000c43a2efa7d523"
+      summarize_group_discussion_items: "20c17aa818a9221c796d4953f4051a2c"
+      respond_to_a_situation_items: "9e5d4794367cb31c74fc9886610980b4"
+
+  data_api:
+    publishable_key_disclosed_or_persisted: false
+    public_read: "PASS; public Data API returned HTTP 200 with exactly eight active MCMA rows."
+    public_write_authority: "PASS; catalog grants and RLS expose read-only access."
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "9b8a4ff87565cb9db88cab57a86c370292e31e700da37c42e28da6c443c76a4b"
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; production /practice exposes exactly twelve implemented task cards including Reading Multiple Choice, Multiple Answers."
+    route: "PASS; /practice/reading-multiple-choice-multiple-answers is server-first and supports deterministic ?item=<slug> selection with invalid/missing fallback."
+    default_selected_invalid_http: PASS
+    initial_html:
+      selected_passage_visible: PASS
+      question_visible: PASS
+      checkbox_count: 5
+      correct_index_data_hidden: PASS
+      explanation_data_hidden: PASS
+    review_route: "PASS; feature-local no-store POST requires an item plus at least one valid selected index and reveals only correct indexes plus explanation."
+    selection_freeze_after_successful_submit: PASS
+    scoring: "PASS; +1 selected correct, -1 selected incorrect, item floor 0, raw maximum 2."
+    disclaimer: "PASS; UI explicitly rejects interpreting the raw item score as scaled PTE Reading, overall score, or score prediction."
+    study_bridge: "PASS; /study/reading-mcma-strategy returns HTTP 200 and bidirectional Study/Practice navigation is present."
+
+  production_http:
+    practice: PASS
+    mcma_default: PASS
+    mcma_selected: PASS
+    mcma_invalid_fallback: PASS
+    study_bridge: PASS
+    reading_fill_in_blanks: PASS
+    practice_task_card_count: 12
+    initial_checkbox_count: 5
+    initial_answer_data_leak: false
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome 154.0.8037.93 over native CDP and a task-owned Next.js production server; no browser-test dependency was added."
+    accessibility:
+      checkbox_count: 5
+      full_option_text_in_labels: PASS
+      keyboard_focusable_before_submit: PASS
+      result_feedback_is_textual_not_color_only: PASS
+    mixed_selection:
+      item: urban-tree-canopy
+      selected_indexes: [0, 1]
+      raw_score: "0/2"
+      selected_correct_label: PASS
+      selected_incorrect_label: PASS
+      missed_correct_label: PASS
+      explanation_revealed: PASS
+      selection_frozen_after_submit: PASS
+    reset:
+      result_cleared: PASS
+      selections_cleared: PASS
+      inputs_reenabled: PASS
+    all_correct:
+      item: spaced-retrieval-learning
+      selected_indexes: [1, 4]
+      raw_score: "2/2"
+      correct_labels: 2
+      incorrect_or_missed_labels: 0
+    item_change_reset:
+      result_cleared: PASS
+      selections_cleared: PASS
+    reading_fill_in_blanks_regression:
+      visible_blanks: 4
+      practice_accuracy_result_visible: PASS
+
+  runtime_privacy:
+    local_storage_entries_before: 0
+    local_storage_entries_after: 0
+    session_storage_entries_before: 0
+    session_storage_entries_after: 0
+    indexed_db_databases_before: 0
+    indexed_db_databases_after: 0
+    cookie_entries_before: 0
+    cookie_entries_after: 0
+    browser_page_requests_observed: 49
+    external_browser_page_requests: 0
+    external_non_read_requests: 0
+    source_scan: "PASS; no learner-storage writer, cookie writer, runtime AI/OpenAI surface, or external fetch URL was added in the MCMA feature."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0017_attributable_performance_findings: 0
+
+  verification:
+    candidate: "31dc265d26c0986a369e8be74b11491aef7d7f27"
+    candidate_parent: "5cb03f29e2b037379a056a72e10ff860dccd1fb7"
+    candidate_tree: "9d79ba0f5411c648841d5274510c12d73648e9bf"
+    candidate_direct_child_of_authorized_base: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 production build includes MCMA page/review route and all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    final_staged_reverification: "PASS; exact eight-path staged candidate reran lint, typecheck, production build, staged diff-check, package/lock identity and runtime-residue checks before candidate commit."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned Chrome was terminated through its Runtime carrier. Its exact repo-contained non-symlink profile root was removed and proved absent. The task-owned Next.js server launched at 13:21:37 on port 31717 was identified by exact command and repository cwd, terminated, and port 31717 was proved released. Task-owned REST/HTTP/qualification roots were removed; no .task0017-* root remained before candidate commit."
+
+vercel:
+  project_id: prj_FnnSeQyPhIQZ7DDn2cJe39N9EpvC
+  live_before_publication: false
+  git_linked_before_publication: false
+  git_context_evidence: "The connected Vercel Git context lists five linked team projects and does not include pte."
+  deployment_count_before_publication: 27
+  latest_deployment_id_before_publication: dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd
+  latest_deployment_commit_before_publication: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  latest_deployment_state_before_publication: ERROR
+  configuration_modified: false
+  deployment_triggered_by_executor: false
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  report_requires_remote_candidate_visibility: false
+  remote_main_before_report_authorship: "5cb03f29e2b037379a056a72e10ff860dccd1fb7"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_git_linked: false
+  vercel_deploy_invoked: false
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: PASS
+    evidence: "Live project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with one TASK-0017 migration, exactly eight active original MCMA rows, four starter/four developing, 151..171-word passages, five options and two valid correct indexes each, exact authorized provenance, SELECT-only active-row RLS, one exact Study strategy, preserved prior Study/content fingerprints, public Data API count=8, and exact live-generated types."
+  - criterion_id: AC-2
+    status: PASS
+    evidence: "Production initial HTML and real Chrome expose the selected passage, question, and five accessible checkbox choices while hiding correct-index/explanation data. Submit requires at least one selection; a feature-local no-store review POST reveals answer data only after Submit, and successful Submit freezes selection. The implementation uses +1/-1 with floor zero."
+  - criterion_id: AC-3
+    status: PASS
+    evidence: "Real Chrome/CDP produced 0/2 from mixed correct+incorrect selection with Correct/Incorrect/Missed labels and explanation, then Reset cleared state; a second item with both correct selections produced 2/2 and no Incorrect/Missed labels; subsequent item change cleared result/selections. The UI explicitly labels this as a raw item score rather than scaled PTE scoring."
+  - criterion_id: AC-4
+    status: PASS
+    evidence: "MCMA browser runtime remained localStorage=0, sessionStorage=0, IndexedDB=0 and cookies=0 before/after, with zero external browser-page requests and zero external non-read requests. Source scan and exact candidate boundary show no runtime AI, learner persistence, generic scoring infrastructure, dependency change, or unrelated component change."
+  - criterion_id: AC-5
+    status: PASS
+    evidence: "Reading Fill in the Blanks regression rendered four blanks and a Practice accuracy result. Study bridge, fresh Security Advisor=0, only three pre-existing Performance INFO findings, exact live types, frozen install, ignored-builds, lint, typecheck, production build, diff-check and package/lock byte identity all pass."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate 31dc265d26c0986a369e8be74b11491aef7d7f27 is the immutable qualified direct child of exact base 5cb03f29e2b037379a056a72e10ff860dccd1fb7; origin/main still exposes only main at that base immediately before report authorship. Vercel pte is not Git-linked and is at 27 deployments with latest deployment dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd from old commit a4ed91d7eb3003e51a65bd13db361481e0347ce3. Final report-only lineage, single non-force publication, fresh Git closure, and post-publication no-deployment evidence can only be proven after this report is committed."
+
+result: NEEDS_REVIEW
+
+notes:
+  - "No Vercel configuration or deployment action was performed."
+  - "Supabase CLI was unavailable locally; the already-authorized live DDL/type/advisor work used the connected exact-project Supabase surface without adding or changing repository dependencies."
