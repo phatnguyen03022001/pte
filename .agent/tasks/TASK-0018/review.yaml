@@ -1,0 +1,40 @@
+protocol_version: 3
+task_id: TASK-0018
+task_revision: 2
+review_revision: 1
+state: REVISION_REQUIRED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0018/report.yaml
+  commit: "9b61a9461203522b90c3ab8df3aebfb35abbea31"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: NOT_REACHED
+  verifier_evidence: PASS
+
+notes:
+  - "Executor correctly stopped before mutation because TASK-0018 revision 2 explicitly required prior accepted Practice fingerprints to match and classified unexpected drift as BLOCKED."
+  - "Architect independently resolved the apparent Reading MCMA drift and found no live row mutation. public.reading_multiple_choice_multiple_answers_items currently has exactly eight live rows with pg_stat_user_tables counters n_tup_ins=8, n_tup_upd=0, n_tup_del=0, n_tup_hot_upd=0 and n_dead_tup=0."
+  - "All eight current MCMA rows retain the same seed timestamps created_at=updated_at=2026-10-06 06:13:41.56399+00 and the same MVCC xmin=1305; current CTIDs remain consistent with the original insert batch."
+  - "The exact fingerprint basis documented by TASK-0017 report, md5(coalesce(string_agg(to_jsonb(row)::text, '|' order by id), '')), evaluates on the unchanged live table to 0f2e5ea4bb865106e35a7fd66aa1e6b0."
+  - "Therefore the TASK-0017 report value e93c6bc204e175cb82c4254770a689f5 is a stale/incorrect evidence value, not evidence that live MCMA content changed after acceptance. Do not mutate MCMA rows to chase the erroneous fingerprint."
+  - "TASK-0018 revision 2 must be superseded with a corrected pre-mutation oracle that normalizes the current unchanged MCMA baseline to 0f2e5ea4bb865106e35a7fd66aa1e6b0 and preserves the rest of the task boundary."
+
+final_candidate:
+  commit: "4464601aeaa18088f38f0403a0434f9d29d5cf53"
+  report_commit: "9b61a9461203522b90c3ab8df3aebfb35abbea31"
+  result: REVISION_REQUIRED
