@@ -1,0 +1,204 @@
+protocol_version: 3
+
+task_id: TASK-0016
+task_revision: 1
+state: APPROVED
+
+origin:
+  type: architect_progression
+  task_id: TASK-0016
+  gap_id: PTE-RESPOND-TO-A-SITUATION-PRACTICE-SLICE
+
+architect_binding:
+  target_repository: phatnguyen03022001/pte
+
+target:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+
+execution_base:
+  mode: handoff_snapshot
+  capture: after_final_planning_commit
+  require_exact_match: true
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+
+architect_analysis_skills:
+  - architect
+  - verification
+  - simplicity
+
+execution_skills:
+  required:
+    - executor
+    - verification
+  recommended: []
+
+external_skills:
+  architect_analysis:
+    - "ecc:intent-driven-development @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:skills/intent-driven-development/SKILL.md; normalize one current Respond to a Situation slice"
+    - "ecc:agent:code-architect @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/code-architect.md; keep prompt playback and self-review feature-local"
+    - "ecc:agent:planner @ affaan-m/ECC/bf70150eb2df8070024e5bdf08e4aa08959e2735:agents/planner.md; provider -> content -> read/listen playback -> preparation -> local-STT -> browser proof ordering"
+  execution_required: []
+  execution_recommended: []
+
+authority_sources:
+  - source: ".agent/tasks/TASK-0015/review.yaml in the exact handoff snapshot"
+    role: "accepted native SpeechSynthesis + shared local-STT baseline"
+    precedence: 1
+  - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
+    role: "target-owned Practice/Study/audio/privacy/cost/architecture truth"
+    precedence: 2
+  - source: "Pearson current PTE Academic Speaking & Writing Respond to a Situation guidance: https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    role: "current mechanics: read and listen to an everyday/academic situation, prompt text up to 60 words, 10-second preparation, 40-second spoken response, Speaking only"
+    precedence: 3
+  - source: "Pearson current task strategy guidance: https://www.pearsonpte.com/articles/how-to-respond-to-a-situation-task/"
+    role: "response boundary: identify situation/person/goal, speak in first person, use context-appropriate tone, cover prompt facts, avoid memorized answers or merely summarizing the situation"
+    precedence: 4
+  - source: "Existing Study row respond-to-a-situation-strategy"
+    role: "already-authorized Study strategy to reuse unchanged"
+    precedence: 5
+  - source: "Current Supabase RLS/Data API guidance"
+    role: "explicit GRANT + RLS security HOW"
+    precedence: 6
+
+structure_authority:
+  status: RESOLVED
+  source: "accepted feature-specific Practice pattern plus native SpeechSynthesis and shared local-STT substrates"
+  rationale: "Respond to a Situation needs one short visible text prompt plus matching browser-native audio and one spoken response. Use one feature-specific table and feature-local interaction/self-review. Avoid generic prompt/audio/scoring abstractions."
+
+objective: "Ship a current PTE Academic Respond to a Situation Study + Practice slice using eight original campus situations, visible read-along prompt plus one-play browser-native audio, exact 10-second preparation, one <=40-second ephemeral spoken response, browser-local Whisper transcription and five-point learner self-review without pretending to score Pearson Content, Pronunciation or Oral Fluency."
+
+scope:
+  required_changes:
+    - "Fresh-resolve TASK-0016 revision 1, bound TASK-0015 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly twelve accepted migrations through create_summarize_group_discussion_items; public application tables=15; Study=14 active / mappings=0; prior Practice counts remain FIB=8, SWT=6, Essay=6, WFD=12, Repeat Sentence=10, Read Aloud=8, Describe Image=8, Retell Lecture=8, Answer Short Question=12, Summarize Group Discussion=6; Security Advisor=0. Unexpected drift is BLOCKED."
+    - "Create exactly one new repository/live migration for public.respond_to_a_situation_items. Do not create generic prompt/audio/question/attempt/result/scoring tables."
+    - "respond_to_a_situation_items owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; situation_text text not null; review_points text[] not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
+    - "Use bounded checks only: kebab-case slug; required scalar text non-empty; difficulty/source_type lowercase snake_case; situation_text 35..60 whitespace-delimited words; exactly five review_points. No audio URL, generic JSON metadata, function, trigger or view."
+    - "Enable RLS; revoke anon/authenticated privileges; explicitly GRANT SELECT only; create exactly one active=true SELECT policy for anon/authenticated. No browser write authority."
+    - "Persist exactly eight active original project-authored rows after migration, not in migration bytes. Use source_type=project_authored, created_by=updated_by=chatgpt_task_0016, source_ref=https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/; exactly four starter and four developing."
+    - "Persist these exact scenario contracts and wording:
+      1) deadline-extension — title 'Requesting a deadline extension' — starter — situation_text 'You are speaking to your professor. A required data file was unavailable for two days, so you could not finish your report on time. The report is due Wednesday. Ask for a two-day extension until Friday, explain the reason briefly, and show that you will use the extra time responsibly.' — review points: address the professor appropriately; explain the unavailable data file; state the Wednesday deadline; clearly request extension until Friday; close responsibly/politely.
+      2) reschedule-project-meeting — title 'Rescheduling a project meeting' — starter — situation_text 'You are speaking to your project partner. Your laboratory class has been moved to the same time as your Wednesday afternoon meeting. Ask to move the meeting to Thursday morning, explain the clash, and confirm that you still want enough time to prepare before the group deadline on Friday.' — review points: address partner naturally; explain lab clash; request Thursday morning; preserve Friday group deadline; keep cooperative tone.
+      3) reserved-study-room — title 'Resolving a study-room booking problem' — starter — situation_text 'You are speaking to library staff. You booked a study room from 2 p.m., but another group is still using it after your booking has started. Politely explain that you have a valid reservation and ask the staff member to help you access the room or find an immediate alternative.' — review points: address library staff politely; state 2 p.m. reservation; explain current room conflict; request access or immediate alternative; keep calm practical tone.
+      4) missing-lecture-slides — title 'Requesting missing lecture slides' — starter — situation_text 'You are speaking to your lecturer. The slides from Monday's lecture are not available on the course site, and you need them to review an important diagram before Friday's tutorial. Politely explain the problem and ask whether the slides can be uploaded before the tutorial.' — review points: address lecturer appropriately; identify Monday slides missing; mention important diagram; request upload before Friday tutorial; use concise polite tone.
+      5) lab-booking-change — title 'Changing a laboratory booking' — developing — situation_text 'You are speaking to the laboratory coordinator. Your equipment booking for Thursday was cancelled because of maintenance, but your experiment must be completed before next Tuesday. Explain the scheduling problem, ask for the earliest suitable alternative slot, and make clear that you can adjust your other commitments if necessary.' — review points: address coordinator professionally; state Thursday cancellation/maintenance; preserve Tuesday completion constraint; ask earliest suitable slot; offer scheduling flexibility.
+      6) group-draft-delay — title 'Following up on a delayed group draft' — developing — situation_text 'You are speaking to a teammate. The shared draft is due tomorrow, but their section has not been added yet and the group needs time to edit the full document. Be direct but professional: explain the impact, ask them to upload their section this evening, and request an update if there is a problem.' — review points: address teammate directly; state draft due tomorrow; explain editing impact; request upload this evening; ask for an update while staying professional.
+      7) presentation-room-change — title 'Communicating a presentation room change' — developing — situation_text 'You are speaking to classmates before a presentation. The room listed in the timetable has been changed at short notice, and two group members have not seen the update. Explain the new room information, ask the classmates to contact the missing members, and confirm where everyone should meet before the presentation starts.' — review points: address classmates naturally; explain room change; mention two missing members; ask classmates to contact them; confirm meeting location/time before presentation.
+      8) club-event-accessibility — title 'Improving accessibility for a club event' — developing — situation_text 'You are speaking to a student club committee. The event budget is almost fixed, but the current plan does not include live captions for an invited speaker. Persuade the committee to move some printing money to captioning, explain why accessibility matters, and suggest using digital handouts to reduce printing costs.' — review points: address committee persuasively; identify missing live captions; request budget shift from printing; explain accessibility reason; suggest digital handouts as practical trade-off."
+    - "Do not copy Pearson example prompts or sample answers."
+    - "Do not create or revise Study content. Reuse existing active Study slug respond-to-a-situation-strategy exactly as-is and preserve body/metadata/hash fc7605cb6c67638a3d0f96dc5eaec61f748b6fd129d7c44062a769c0e470b7a5."
+    - "Implement /practice/respond-to-a-situation as a server-first route using the existing typed public Supabase client. Support ?item=<slug>; invalid/missing/inactive values deterministically fall back to first active item or clear empty state."
+    - "Update /practice to expose eleven implemented task types, adding Respond to a Situation under Speaking."
+    - "Render the exact selected situation_text visibly from initial HTML because the real task requires the learner to read and listen to the same situation. Do not expose review_points until result."
+    - "Use native browser SpeechSynthesis for the exact situation_text. Browser practice may require one explicit Play situation action after local STT readiness; explain that PTE plays the audio automatically."
+    - "Play the exact situation_text once per item/reset with an available English voice and deterministic bounded rate near natural speech. Do not persist audio or use remote TTS/media."
+    - "After speech onend, automatically start exact 10-second preparation. No practice skip. Recording remains disabled until playback complete, preparation complete and local STT ready."
+    - "Permit exactly one learner response per item/reset with getUserMedia({audio:true}) + MediaRecorder/native audio. Hard local response cap is 40 seconds; explicit Stop response allowed."
+    - "Learner audio remains ephemeral. Reuse accepted browser-local Whisper substrate and exact @huggingface/transformers 4.3.0 + onnx-community/whisper-tiny.en@2575352d61be1bf7225cf8f8b268a4678025fc58, WebGPU preferred with one WASM fallback, mono Float32 16 kHz, no HF_TOKEN and no remote inference."
+    - "If the Transformers.js resolve/main probe remains observable, reuse the smallest already-accepted feature-local exact-revision guard pattern from TASK-0014/0015; do not modify shared local-STT semantics."
+    - "After local transcription, display transcript and reveal exactly five review_points."
+    - "Provide five feature-local learner checkboxes and display 'Self-review coverage: K / 5'. These are learner-selected checks only."
+    - "Explicitly state transcript/self-review are practice aids and not Pearson Content, Pronunciation, Oral Fluency, score or points; local STT may mishear."
+    - "Do not add automatic semantic/content/keyword/tone/pronunciation/fluency/pace/template scoring or an LLM."
+    - "Reset cancels speech/prep timer, stops recording/tracks, clears transcript/review/error state and restores one playback/one response. Item change performs equivalent cleanup. Shared Whisper model may remain loaded for page session."
+    - "Add direct bidirectional Study bridge between /study/respond-to-a-situation-strategy and /practice/respond-to-a-situation."
+    - "Do not install/update/remove npm dependencies. package.json and pnpm-lock.yaml remain byte-identical to TASK-0016 execution base; ignored builds remain exactly protobufjs + onnxruntime-node."
+    - "After authoring, prove exactly eight active RTS rows, four starter/four developing, exact scenario/review/provenance contracts, situation_text 35..60 words and exactly five review points each. Prove prior Study/Practice counts/fingerprints/hashes unchanged."
+    - "Prove public Data API reads exactly eight active RTS rows and browser writes remain absent by grants/policies. Never print/persist the publishable key."
+    - "Regenerate src/types/database.ts from exact project and prove byte-match."
+    - "Run fresh Supabase Security and Performance Advisors; zero TASK-0016-attributable Security finding required and report INFO honestly."
+    - "Run pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build and git diff --check. ignored-builds remains exactly protobufjs + onnxruntime-node."
+    - "Run bounded production HTTP proof: /practice exposes eleven task types; /practice/respond-to-a-situation default/selected/invalid routes return 200; initial HTML contains exact situation_text but not review_points; Study bridge returns 200."
+    - "Run real Chrome/CDP proof without adding browser-test dependencies. Use actual SpeechSynthesis and one ignored task-owned fake microphone fixture containing an original situational response."
+    - "Browser proof must demonstrate: exact situation text visible initially; review points hidden; local STT reaches WebGPU or documented WebGPU failure + WASM fallback; Play situation invokes exactly one utterance with exact DB text; replay blocked; preparation starts 10 -> 9 only after speech onend; recording blocked through playback/prep; one response starts only after all gates and stops explicitly in <40 seconds; transcript non-empty; exactly five review points reveal after result; selecting exactly four boxes displays Self-review coverage: 4 / 5; disclaimer rejects official scoring; Reset/item-change restore state."
+    - "Runtime privacy proof must show no learner audio/transcript/self-review result in localStorage/sessionStorage/IndexedDB/cookies/CacheStorage request URLs; zero learner upload and zero remote inference; MediaStream tracks end; synthesized prompt audio is not persisted; model cache bounded to accepted public runtime/model assets at exact pinned revision."
+    - "Run one real bounded Summarize Group Discussion or Retell Lecture SpeechSynthesis regression and one real existing local-STT speaking regression."
+    - "Safely terminate task-owned Next.js/Chrome processes, cancel speech, release ports and remove task-owned profile/fake fixture/harness after exact containment/non-symlink proof."
+    - "Vercel Git integration remains disconnected. Do not reconnect, configure or deploy Vercel."
+    - "Commit one coherent qualified candidate on main, create .agent/tasks/TASK-0016/report.yaml as sole report-only child, publish ordinary non-force fast-forward to canonical main, fresh-resolve closure and stop at NEEDS_REVIEW. Do not self-review, deploy Vercel or create TASK-0017."
+
+  allowed_existing_files_or_components:
+    - "supabase/migrations"
+    - "src/types/database.ts"
+    - "src/lib/local-stt for reuse only"
+    - "smallest feature-local exact-revision worker guard pattern already accepted in TASK-0014/0015, only if required by observed runtime"
+    - "existing native SpeechSynthesis behavior/pattern"
+    - "src/app/practice/respond-to-a-situation and feature-local interaction source"
+    - "src/app/practice/page.tsx"
+    - "src/app/study/[slug]/page.tsx solely for RTS Practice bridge"
+    - "src/app/globals.css for minimal styling"
+    - "package.json/pnpm-lock.yaml only for byte-identity proof; mutation forbidden"
+    - ".agent/tasks/TASK-0016/report.yaml"
+    - "Supabase public.respond_to_a_situation_items exact eight authorized rows"
+
+invariants:
+  - "MAIN_ONLY remains exact."
+  - "Only Supabase project ayqcpsdebldtzohwdmer may be mutated."
+  - "Situation prompts/review points are original project-authored content."
+  - "Exact situation text is visible while also being played as browser-native speech."
+  - "Prompt audio is never persisted."
+  - "Learner response audio/transcript/self-review remains ephemeral."
+  - "No automatic Content/Pronunciation/Oral-Fluency/semantic/tone scoring."
+  - "No remote inference/TTS, runtime AI, learner persistence or npm dependency drift."
+  - "Existing respond-to-a-situation-strategy and all prior accepted content remain unchanged."
+
+forbidden_changes:
+  - "Create Git branches/worktree branches/tags/releases, force-push or rewrite history."
+  - "Install/update/remove npm dependencies."
+  - "Create generic scenario/audio/media/question/attempt/result/scoring infrastructure."
+  - "Persist synthesized prompt audio or learner audio/transcript/self-review."
+  - "Use remote TTS/STT/OpenAI/LLM, SpeechRecognition/webkitSpeechRecognition or semantic/tone scoring."
+  - "Call self-review/transcript an official Pearson Content/Pronunciation/Oral-Fluency score."
+  - "Copy Pearson/web prompts or sample answers."
+  - "Modify prior accepted content beyond exact navigation and bounded non-regressing substrate reuse."
+  - "Reconnect/configure/deploy Vercel."
+
+gap_policy:
+  local_auto_fix: true
+  scope_expansion: forbidden
+  architecture_change: revised_contract_required
+  spec_change: revised_contract_required
+  dependency_change: forbidden
+  public_contract_change: revised_contract_required
+  blocking_gap_behavior: BLOCKED
+
+acceptance_criteria:
+  - id: AC-1
+    requirement: "Live Supabase has exactly one new RTS table with eight exact original active situations; existing Study strategy and all prior accepted content are preserved."
+    evidence_required: "Migration/schema identity, exact eight-row prompt/review/provenance/word-count proof, prior hashes/fingerprints/counts, RLS/grants/Data API and exact live types."
+  - id: AC-2
+    requirement: "Learners can read and hear the exact same one-play situation prompt without persisted/remote media."
+    evidence_required: "Initial visible exact prompt, real browser exact-text SpeechSynthesis one-play, no review-point leak, no audio persistence/provider path and prior-feature TTS regression."
+  - id: AC-3
+    requirement: "Learners can complete the current RTS flow with 10-second preparation, one <=40-second ephemeral response, local transcript and five-point self-review."
+    evidence_required: "Real Chrome fake-mic proof through local Whisper, playback->prep->record gates, non-empty transcript, exact five-point reveal, exact 4/5 self-review, reset/item-reset and truthful disclaimer."
+  - id: AC-4
+    requirement: "Learner state/audio remains ephemeral and no remote inference or official scoring is introduced."
+    evidence_required: "Runtime storage/network/cache/media-track proof, source scan, no synthesized/learner audio persistence and safe cleanup."
+  - id: AC-5
+    requirement: "Existing SpeechSynthesis/local-STT behavior remains healthy and repository/provider mechanics stay clean."
+    evidence_required: "Real prior-feature TTS regression plus real existing local-STT regression, Study bridge/hash preservation, advisors, types, frozen install/ignored-builds/lint/typecheck/build/diff-check and package/lock identity."
+  - id: AC-6
+    requirement: "Candidate/report publication closes truthfully on canonical main without Vercel deployment."
+    evidence_required: "Candidate direct child of exact handoff base; report sole report-only child; ordinary non-force publication; fresh main-only/local-clean closure; Vercel remains disconnected."
+
+verification:
+  authoritative_verification:
+    required: false
+    mechanism: ""
+    expected_signal: ""
+
+git_authority:
+  create_branch: false
+  commit: true
+  push: true
+  promote_to_main: false
+
+blocking_decisions: []
+execution_ready: true
