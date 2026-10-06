@@ -270,6 +270,27 @@ For arbitrary web media, default to reference/provenance metadata only.
 
 Do not copy media bytes until rights are established.
 
+### Practice question provenance
+
+Practice question content must carry truthful provenance semantics independently of whether the product is commercial or only for the operator's personal study.
+
+Canonical source classes:
+
+- `project_authored` — original practice written for this project. Learner UI must label it as project-authored and must not imply Pearson authorship or official-question status.
+- `pearson_official_public` — exact Pearson material that is publicly accessible and whose intended reproduction/storage/use is permitted. Store the exact Pearson source reference and applicable attribution/licensing evidence.
+- `pearson_authorized_copy` — exact Pearson material for which the operator holds explicit permission/license allowing the intended local or database copy. Store evidence sufficient to reconstruct that authority.
+
+Restricted Pearson preparation products, paid question banks, subscription/account-gated practice, mock tests, AI Practice, or similar content remain reference/access-only unless their governing terms explicitly permit copying into this product. Personal use, purchase, or non-commercial intent alone does not authorize scraping, downloading, database persistence, or re-hosting.
+
+When provenance is incomplete or permission is ambiguous, fail closed:
+
+- keep only a reference/link where permitted;
+- do not persist the full third-party question;
+- do not label the material official;
+- use original project-authored practice instead.
+
+Every learner-visible Practice item must display a provenance label. At minimum, `project_authored` items must visibly say that they are not official Pearson questions.
+
 ### Text, transcripts, and question content
 
 Externally sourced text, transcripts, questions, explanations, and other content require provenance and lawful reuse. A public URL alone does not grant copying rights.
