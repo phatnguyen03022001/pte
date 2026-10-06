@@ -1,0 +1,98 @@
+protocol_version: 3
+
+task_id: TASK-0018
+task_revision: 2
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0018/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "4464601aeaa18088f38f0403a0434f9d29d5cf53"
+  final_execution_head: "4464601aeaa18088f38f0403a0434f9d29d5cf53"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+capability_preflight:
+  phase: EXECUTION
+  required:
+    - canonical_remote_observation
+    - bounded_repository_write
+    - git_commit_and_non_force_publication
+    - exact_supabase_project_observation
+  available:
+    - Agent Runtime repository/filesystem/Git surface
+    - connected exact-project Supabase observation/query/advisor surface
+  missing: []
+  passed: true
+
+pre_mutation_gate:
+  project_ref: ayqcpsdebldtzohwdmer
+  project_status: ACTIVE_HEALTHY
+  migration_count: 14
+  latest_migration: "20261006061030/create_reading_multiple_choice_multiple_answers_items"
+  security_findings: 0
+  study_active_rows: 15
+  study_subskill_mappings: 0
+  prior_practice_fingerprints:
+    reading_fill_in_blanks_items: "268074e214f58ffe52e90a59c0ba38f3"
+    summarize_written_text_items: "e48fe083049e0b2f3250e91faf419b35"
+    write_essay_items: "6811f4eedc724c4c55d696e6748a7d41"
+    write_from_dictation_items: "ba449dbab75478cebf7ddbb21b52ce52"
+    repeat_sentence_items: "5cd37ba0cf4f8687217d57af02f6ca55"
+    read_aloud_items: "2a3cf95fb6023e324c91bf902c7b4db9"
+    describe_image_items: "d3d7e6d543df19ef1f6d54f3af2d221f"
+    retell_lecture_items: "7a2383184a62eb1482df1bc4a0cd8360"
+    answer_short_question_items: "b9305dcff9038e74000c43a2efa7d523"
+    summarize_group_discussion_items: "20c17aa818a9221c796d4953f4051a2c"
+    respond_to_a_situation_items: "9e5d4794367cb31c74fc9886610980b4"
+  reading_mcma_expected_accepted_fingerprint: "e93c6bc204e175cb82c4254770a689f5"
+  reading_mcma_observed_fingerprint: "0f2e5ea4bb865106e35a7fd66aa1e6b0"
+  reading_mcma_row_count: 8
+  reading_mcma_active_rows: 8
+  reading_mcma_client_grants: "anon/authenticated SELECT only"
+  reading_mcma_select_policy: "exactly one active=true SELECT policy for anon/authenticated"
+  result: BLOCKED
+  reason: "TASK-0018 revision 2 requires prior accepted Practice fingerprints to remain unchanged immediately before live mutation and explicitly classifies unexpected drift as BLOCKED. The live reading_multiple_choice_multiple_answers_items full-row fingerprint no longer matches the TASK-0017 ACCEPTED fingerprint."
+
+pushed: false
+
+acceptance_evidence:
+  - criterion_id: AC-1
+    status: NOT_PROVEN
+    evidence: "Execution stopped before live mutation because the accepted TASK-0017 Reading MCMA full-row fingerprint drifted from e93c6bc204e175cb82c4254770a689f5 to 0f2e5ea4bb865106e35a7fd66aa1e6b0. No TASK-0018 table, rows, Study strategy, or migration was created."
+  - criterion_id: AC-2
+    status: NOT_PROVEN
+    evidence: "No TASK-0018 learner-facing implementation was started after the mandatory pre-mutation gate blocked execution."
+  - criterion_id: AC-3
+    status: NOT_PROVEN
+    evidence: "No TASK-0018 review/scoring implementation or browser scoring proof was performed."
+  - criterion_id: AC-4
+    status: NOT_PROVEN
+    evidence: "No TASK-0018 product implementation was started; only read-only preflight observations and this report artifact were produced."
+  - criterion_id: AC-5
+    status: NOT_PROVEN
+    evidence: "The task did not reach implementation verification because the mandatory live-state gate blocked before mutation."
+  - criterion_id: AC-6
+    status: NOT_PROVEN
+    evidence: "No qualified implementation candidate exists. This report-only terminal BLOCKED artifact is being published under the task's commit/push authority."
+
+blockers:
+  - "Unexpected live drift in public.reading_multiple_choice_multiple_answers_items relative to TASK-0017 ACCEPTED evidence. Architect/operator normalization is required before TASK-0018 can be executed safely."
+
+result: BLOCKED
+
+notes:
+  - "No TASK-0018 product source, dependency, migration, live schema, Study content, or Practice data mutation was performed."
+  - "No branch, worktree branch, tag, Vercel configuration change, or deployment was created."
