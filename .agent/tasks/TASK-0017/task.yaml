@@ -1,7 +1,7 @@
 protocol_version: 3
 
 task_id: TASK-0017
-task_revision: 1
+task_revision: 2
 state: APPROVED
 
 origin:
@@ -51,7 +51,7 @@ authority_sources:
     role: "accepted prior Practice/Study/provider baseline"
     precedence: 1
   - source: "docs/PRODUCT.md, docs/STUDY.md, docs/ARCHITECTURE.md, docs/STACK.md and docs/ENGINEERING_RULES.md in the exact handoff snapshot"
-    role: "target-owned Practice/Study/security/cost/architecture truth"
+    role: "target-owned complete-current-taxonomy Practice coverage objective plus Study/security/cost/architecture truth"
     precedence: 2
   - source: "Pearson current PTE Academic Reading guidance: https://www.pearsonpte.com/pte-academic/test-format/reading/"
     role: "current task mechanics: second Reading type, passage up to 350 words, more than one correct response, Reading only"
@@ -72,7 +72,7 @@ objective: "Ship a current PTE Academic Reading Multiple Choice, Multiple Answer
 
 scope:
   required_changes:
-    - "Fresh-resolve TASK-0017 revision 1, bound TASK-0016 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
+    - "Fresh-resolve TASK-0017 revision 2, bound TASK-0016 ACCEPTED review, canonical GitHub main, clean designated local checkout and exact live Supabase project ayqcpsdebldtzohwdmer. A clean correctly bound local main may ordinary FF-only synchronize to the handoff base."
     - "Immediately before live mutation, prove project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY; migration history is exactly thirteen accepted migrations through create_respond_to_a_situation_items; Study=14 active / mappings=0; existing eleven implemented Practice task types and all prior table counts/fingerprints remain accepted; Security Advisor=0. Unexpected drift is BLOCKED."
     - "Create exactly one new repository/live migration for public.reading_multiple_choice_multiple_answers_items. Do not create generic quiz/question/answer/attempt/result/scoring tables."
     - "Table owns: id bigint generated always as identity primary key; slug text unique not null; title text not null; passage_text text not null; question_text text not null; options text[] not null; correct_indexes integer[] not null; explanation_text text not null; difficulty text not null; source_type text not null; source_ref text nullable; created_by text not null; updated_by text not null; created_at timestamptz not null default now(); updated_at timestamptz not null default now(); active boolean not null default true."
