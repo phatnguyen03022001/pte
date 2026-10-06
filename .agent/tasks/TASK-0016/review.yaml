@@ -1,0 +1,47 @@
+protocol_version: 3
+task_id: TASK-0016
+task_revision: 1
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0016/report.yaml
+  commit: "82090ffa22ee1a4e209f33d70ac4b6ee2bad6524"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0016 revision 1 and report revision 1 were independently re-resolved from canonical GitHub truth. Candidate e9b484c1cf830a396a0015a5bb3c3b50ba55c017 is the sole direct child of exact base 94657643530c8314ef3005bbabeb3b3499f151e6. Report 82090ffa22ee1a4e209f33d70ac4b6ee2bad6524 is the sole direct child of the candidate and changes only .agent/tasks/TASK-0016/report.yaml. Remote exposes only main; local equals origin/main clean with one worktree."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with thirteen migrations and exactly eight active RTS rows, four starter/four developing, exact authorized contracts/provenance, valid 35..60-word prompts and exactly five review points each. Existing Study remains exactly 14 active rows / zero mappings and respond-to-a-situation-strategy body SHA-256 remains fc7605cb6c67638a3d0f96dc5eaec61f748b6fd129d7c44062a769c0e470b7a5."
+  - "RLS/access PASS: exactly one active=true SELECT policy exists for anon/authenticated and both roles have SELECT only. Fresh Security Advisor returns zero findings; fresh Performance Advisor contains only the three pre-existing INFO findings."
+  - "The repository/live migration timestamp mismatch is accepted as a truthful provider-version deviation, not schema drift. Repository migration 20261006113026_create_respond_to_a_situation_items.sql and live migration 20261006043106/create_respond_to_a_situation_items were independently compared and are schema-semantic equivalents across columns/types/defaults, bounded checks, RLS, privilege revocation, SELECT grants and active-row SELECT policy. Neither repository filename nor provider migration history was rewritten."
+  - "Fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts; SHA-256 2ed71f6fdc253622ff9ba6797a87b8c8a7145fe444cade99f472e085c80042da."
+  - "AC-2 PASS on reviewed real-browser evidence: the exact selected situation text is visible initially, review points remain hidden, native SpeechSynthesis emits exactly one DB-exact utterance, replay remains blocked and no prompt audio is persisted."
+  - "AC-3 PASS: preparation starts only from speech onend and visibly decrements 10 -> 9; recording remains gated through playback/preparation/STT readiness; one response stopped explicitly at approximately 6.2 seconds, well below the 40-second cap; transcript is non-empty; exactly five review points reveal after result; learner-selected self-review displays exactly 4 / 5; Reset and item-change passed."
+  - "AC-4 PASS: runtime evidence records localStorage/sessionStorage/IndexedDB/cookies all zero, zero learner upload, zero remote inference, no learner data in cache request URLs, ended MediaStream tracks and no persisted synthesized prompt audio. UI explicitly rejects Pearson Content, Pronunciation, Oral Fluency, score and points."
+  - "The feature-local exact-revision worker guard is accepted as bounded HOW: it rewrites only the exact whisper-tiny.en resolve/main prefix to the authorized pinned revision and imports the unchanged shared local-STT worker. Final accepted runtime evidence observed zero resolve/main cache/request URLs."
+  - "AC-5 PASS: real Retell Lecture SpeechSynthesis regression and real Describe Image local-STT regression passed. Shared src/lib/local-stt bytes remain unchanged."
+  - "Architect independently reran pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build, base-to-candidate git diff --check and package/lock/shared-local-STT byte-identity checks on the immutable candidate source. All PASS; ignored builds remain exactly protobufjs and onnxruntime-node."
+  - "AC-6 PASS: canonical main equals 82090ffa22ee1a4e209f33d70ac4b6ee2bad6524 before review publication; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, clean one-worktree state and no active Git operation. Vercel pte remains disconnected; deployment count remains 27 and latest deployment still references old a4ed91d."
+  - "TASK-0016 is accepted. Speaking & Writing coverage is now complete across all nine current question types. Acceptance grants no successor feature, learner persistence, automatic semantic/Content/Pronunciation/Oral-Fluency scoring, remote inference/TTS or Vercel deployment authority outside separately approved task authority."
+
+final_candidate:
+  commit: "e9b484c1cf830a396a0015a5bb3c3b50ba55c017"
+  report_commit: "82090ffa22ee1a4e209f33d70ac4b6ee2bad6524"
+  result: ACCEPTED
