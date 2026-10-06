@@ -1,0 +1,322 @@
+protocol_version: 3
+
+task_id: TASK-0016
+task_revision: 1
+report_revision: 1
+state: REPORTED
+
+task_source:
+  path: .agent/tasks/TASK-0016/task.yaml
+
+execution:
+  repository: phatnguyen03022001/pte
+  branch:
+    name: main
+    role: stable
+  authorized_base_head: "94657643530c8314ef3005bbabeb3b3499f151e6"
+  final_execution_head: "e9b484c1cf830a396a0015a5bb3c3b50ba55c017"
+  final_execution_tree: "2458acd02315a3da5e2b898ef72e18243d26fba5"
+  execution_surface: CHATGPT_LOCAL
+
+skill_library:
+  repository: phatnguyen03022001/agent-foundation
+  authorized_revision: "65a7921aba25bcb23620d7fb3bd24ad243dfbc54"
+  execution_skills:
+    - executor
+    - verification
+
+qualification:
+  recovery:
+    continuation_of_same_execution: true
+    interruption: "Power loss / CHATGPT_LOCAL tunnel interruption after live Supabase mutation and generated type refresh, before application implementation, qualification, commit, or publication."
+    original_base: "94657643530c8314ef3005bbabeb3b3499f151e6"
+    remote_main_at_recovery: "94657643530c8314ef3005bbabeb3b3499f151e6"
+    local_head_at_recovery: "94657643530c8314ef3005bbabeb3b3499f151e6"
+    ahead_behind_at_recovery: "0/0"
+    worktrees_at_recovery: 1
+    remote_main_only: true
+    git_operation_active: false
+    candidate_or_report_commit_present_at_recovery: false
+    expected_interrupted_inventory_exact: PASS
+    interrupted_modified_tracked:
+      - src/types/database.ts
+    interrupted_untracked:
+      - supabase/migrations/20261006113026_create_respond_to_a_situation_items.sql
+    unrelated_dirty_paths: 0
+    live_provider_effects_replayed: false
+    migration_reapplied: false
+    rows_reseeded: false
+    migration_history_rewritten: false
+    raw_ddl_recovery_shortcut_used: false
+
+  provider_binding:
+    project_ref: ayqcpsdebldtzohwdmer
+    project_status: ACTIVE_HEALTHY
+    migration_count: 13
+    latest_migration: "20261006043106/create_respond_to_a_situation_items"
+    security_findings: 0
+
+  migration:
+    name: create_respond_to_a_situation_items
+    repository_path: supabase/migrations/20261006113026_create_respond_to_a_situation_items.sql
+    repository_sha256: "ca2efa8bb0b37e462588a7630178c56284d99e2d7355c1a656257fb22c9cb26d"
+    repository_filename_version: "20261006113026"
+    live_provider_version: "20261006043106"
+    provider_timestamp_deviation: "The interrupted local migration filename timestamp differs from the Supabase migration-history version assigned by the original apply_migration call. The repository file was intentionally not renamed and live migration history was intentionally not rewritten."
+    live_schema_migration_statement_read: PASS
+    schema_semantic_equivalence: PASS
+    semantic_equivalence_scope:
+      - table columns, types, nullability, identity, and defaults
+      - kebab-case slug and required scalar-text checks
+      - lowercase snake_case difficulty/source_type checks
+      - 35..60 whitespace-delimited situation word-count check
+      - exactly five non-empty review points
+      - RLS enablement
+      - anon/authenticated privilege revocation followed by SELECT-only grants
+      - exactly one active-row SELECT policy
+    recovery_apply_migration_calls: 0
+    recovery_reseed_calls: 0
+    recovery_migration_history_mutations: 0
+
+  live_schema:
+    table: public.respond_to_a_situation_items
+    active_rows: 8
+    starter_rows: 4
+    developing_rows: 4
+    word_count_range: "45..54"
+    rows_with_exactly_five_review_points: 8
+    source_type: project_authored
+    source_ref: "https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/"
+    created_by: chatgpt_task_0016
+    updated_by: chatgpt_task_0016
+    client_grants: "PASS; anon/authenticated have SELECT only."
+    select_policy: "PASS; exactly one respond_to_a_situation_items_public_read_active SELECT policy permits active=true reads."
+    browser_write_authority: "PASS; no client write grant or write policy was observed."
+    deterministic_full_row_fingerprint_md5: "6dcbf76dc8a47743ee6c9fcefd945159"
+
+  authored_content:
+    exact_task_contracts: PASS
+    ordered_slugs:
+      - deadline-extension
+      - reschedule-project-meeting
+      - reserved-study-room
+      - missing-lecture-slides
+      - lab-booking-change
+      - group-draft-delay
+      - presentation-room-change
+      - club-event-accessibility
+    provenance_contract: PASS
+    copied_pearson_prompt_or_sample_answer: false
+
+  study_content:
+    active_rows_after: 14
+    mappings_after: 0
+    strategy_slug: respond-to-a-situation-strategy
+    strategy_instances: 1
+    strategy_body_sha256: "fc7605cb6c67638a3d0f96dc5eaec61f748b6fd129d7c44062a769c0e470b7a5"
+    task_0016_new_or_revised_study_rows: 0
+    current_full_table_fingerprint_md5: "9146db61a7919cd9ea27d73ba3ae44f9"
+    preservation: PASS
+
+  prior_practice_preservation:
+    active_counts:
+      reading_fill_in_blanks_items: 8
+      summarize_written_text_items: 6
+      write_essay_items: 6
+      write_from_dictation_items: 12
+      repeat_sentence_items: 10
+      read_aloud_items: 8
+      describe_image_items: 8
+      retell_lecture_items: 8
+      answer_short_question_items: 12
+      summarize_group_discussion_items: 6
+    deterministic_full_row_fingerprints_md5:
+      reading_fill_in_blanks_items: "3ff3cb2f304a577c407687814cbe9458"
+      summarize_written_text_items: "c3135490fdfdd5e4ebda8aff0b4f47e6"
+      write_essay_items: "14ce993d6d436430be2ac9af4ae7ea87"
+      write_from_dictation_items: "e533ee863d93dff82c6aba5314c189af"
+      repeat_sentence_items: "c7753d4ad73d1cff11e28590e65d291d"
+      read_aloud_items: "0a360b8207f23cf7985b429a71025723"
+      describe_image_items: "1088db6ec78e09d8bfe8ef7456728b5c"
+      retell_lecture_items: "795a5fb0152321efd714176b3ffc5d12"
+      answer_short_question_items: "85b0c53ed9ea05e49f853f72d867c339"
+      summarize_group_discussion_items: "942e6c02c644b24dc71757e9895fd557"
+    historical_baseline_note: "The first eight fingerprints exactly match the canonical TASK-0014 recorded baselines. TASK-0014 did not record an Answer Short Question post-create fingerprint and TASK-0015 did not record a Summarize Group Discussion post-create fingerprint; TASK-0016 therefore records fresh deterministic fingerprints for those two tables plus their unchanged accepted counts/contracts rather than inventing missing historical hashes."
+    deterministic_fingerprint_basis: "md5(coalesce(string_agg(to_jsonb(row)::text, E'\n' order by id), ''))"
+
+  data_api:
+    publishable_key_disclosed_or_persisted: false
+    public_read: "PASS; public Data API returned HTTP 200 with exactly eight active RTS slugs in the authorized order."
+    public_write_authority: "PASS; catalog grants and RLS expose read-only access."
+
+  generated_types:
+    source_project: ayqcpsdebldtzohwdmer
+    repository_path: src/types/database.ts
+    repository_sha256: "2ed71f6fdc253622ff9ba6797a87b8c8a7145fe444cade99f472e085c80042da"
+    interrupted_file_preserved_when_exact: true
+    exact_live_generation_byte_match: PASS
+
+  application:
+    practice_landing: "PASS; real browser DOM exposes exactly eleven implemented task cards including Respond to a Situation under Speaking."
+    route: "PASS; /practice/respond-to-a-situation is server-first and supports deterministic ?item=<slug> selection/fallback."
+    default_selected_invalid_http: PASS
+    selected_initial_html_exact_situation_text: PASS
+    initial_review_point_leak: false
+    study_bridge: "PASS; /study/respond-to-a-situation-strategy returns HTTP 200 and links to Practice; Practice links back to Study."
+    playback: "PASS; native SpeechSynthesis speaks the exact visible DB situation once per item/reset after local STT readiness."
+    preparation: "PASS; exact 10-second preparation begins only after speech onend; 10 then 9 was observed."
+    response: "PASS; one MediaRecorder response is gated by playback complete + preparation complete + local STT ready and capped at 40 seconds."
+    result: "PASS; local transcript is followed by exactly five learner-selected review points and Self-review coverage: K / 5."
+    scoring_boundary: "PASS; UI rejects Pearson Content, Pronunciation, Oral Fluency, score, and points and warns local STT may mishear."
+    reset_and_item_change_cleanup: PASS
+
+  local_stt:
+    shared_substrate_changed: false
+    package: "@huggingface/transformers@4.3.0"
+    model: onnx-community/whisper-tiny.en
+    model_revision: "2575352d61be1bf7225cf8f8b268a4678025fc58"
+    webgpu_observed: true
+    wasm_fallback_preserved: true
+    remote_inference: absent
+    pre_guard_observation: "A real Chrome run reached WebGPU but Transformers.js left one whisper-tiny.en /resolve/main/config.json cache entry, proving the task-authorized feature-local exact-revision guard was required."
+    feature_local_revision_guard: "PASS; the RTS worker rewrites only the exact whisper-tiny.en resolve/main prefix to the pinned revision before importing the unchanged shared worker, matching the accepted TASK-0015 pattern."
+    post_guard_resolve_main_cache_or_requests: 0
+    shared_src_lib_local_stt_byte_identity: PASS
+
+  production_http:
+    practice: PASS
+    respond_to_a_situation_default: PASS
+    respond_to_a_situation_selected: PASS
+    respond_to_a_situation_invalid_fallback: PASS
+    respond_to_a_situation_study_bridge: PASS
+    initial_exact_situation_visible: PASS
+    initial_review_points_hidden: PASS
+
+  browser_interaction:
+    surface: "Task-owned Google Chrome 154.0.8037.93 over CDP, task-owned Next.js production server, and an ignored task-owned original fake microphone fixture; no browser-test dependency was added."
+    respond_to_a_situation:
+      item: deadline-extension
+      backend: webgpu
+      exact_situation_visible_initially: PASS
+      five_review_points_hidden_initially: PASS
+      speech_calls: 1
+      utterance_exact_db_text: PASS
+      replay_blocked: PASS
+      preparation_started_after_speech_onend: PASS
+      preparation_10_to_9: PASS
+      recording_blocked_during_playback_and_preparation: PASS
+      all_start_gates_satisfied: PASS
+      explicit_stop_ms: 6221
+      below_40_second_cap: PASS
+      transcript: "you"
+      transcript_nonempty: PASS
+      revealed_review_point_count: 5
+      four_of_five_coverage: PASS
+      disclaimer: PASS
+      reset: PASS
+      item_change_reset: PASS
+    retell_lecture_speechsynthesis_regression:
+      native_speech_calls: 1
+      utterance_nonempty: PASS
+      utterance_ended: PASS
+    existing_local_stt_speaking_regression:
+      feature: describe-image
+      backend: webgpu
+      transcript: "you"
+      transcript_nonempty: PASS
+      media_track_final_state: ended
+
+  runtime_privacy:
+    local_storage_entries: 0
+    session_storage_entries: 0
+    indexed_db_databases: 0
+    cookie_entries: 0
+    learner_data_in_cache_request_urls: false
+    learner_uploads: 0
+    remote_inference_requests: 0
+    external_non_read_requests: 0
+    media_track_final_state: ended
+    synthesized_prompt_audio_persisted: false
+    accepted_cache_scope: "Only exact-pinned public Whisper model assets plus accepted public ONNX runtime assets were observed after the feature-local guard."
+    source_scan: "PASS; no learner-storage writer, SpeechRecognition/webkitSpeechRecognition, HF_TOKEN, OPENAI_API_KEY, XMLHttpRequest, FormData upload surface, or remote learner inference path was added."
+
+  advisors:
+    security: "PASS; fresh Security Advisor returned zero findings."
+    performance:
+      - "INFO pre-existing: study_content_skill_code_fkey has no covering index."
+      - "INFO pre-existing: skill_subskills_subskill_code_idx is currently unused."
+      - "INFO pre-existing: study_content_subskills_subskill_code_idx is currently unused."
+    task_0016_attributable_performance_findings: 0
+
+  verification:
+    candidate: "e9b484c1cf830a396a0015a5bb3c3b50ba55c017"
+    candidate_parent: "94657643530c8314ef3005bbabeb3b3499f151e6"
+    candidate_tree: "2458acd02315a3da5e2b898ef72e18243d26fba5"
+    candidate_direct_child_of_authorized_base: PASS
+    frozen_install: PASS
+    ignored_builds: "PASS; exactly protobufjs and onnxruntime-node."
+    lint: PASS
+    typecheck: PASS
+    production_build: "PASS; Next.js 16.3.8 production build includes RTS page/review route and all prior Practice routes."
+    diff_check: PASS
+    package_json_sha256: "1f60d4bbd90dfae7dc4cbe8558a7b9b5d934c2664a4b8eb35437c4b0ae03e86d"
+    pnpm_lock_sha256: "58759b561b05792737b4bc5bc289e022cd5459d714fa4094ba52bc9ed61329cc"
+    package_lock_identity: PASS
+    exact_live_type_byte_match: PASS
+    immutable_candidate_reverification: "PASS; frozen install, ignored-builds, lint, typecheck, build, base-to-candidate diff-check, and shared-local-STT/package/lock identity were rerun on immutable candidate e9b484c1cf830a396a0015a5bb3c3b50ba55c017."
+
+local_hygiene:
+  result: PASS
+  evidence: "Task-owned SpeechSynthesis was cancelled through CDP. The exact ignored proof root /Users/tienphat/Developer/pte/node_modules/.task-0016-proof was proved to be contained and non-symlink before removal. Only task-owned Next.js/Chrome sessions were terminated. Ports 4316, 9416, and 9417 were proved released and the proof root was proved absent."
+
+vercel:
+  project_id: prj_FnnSeQyPhIQZ7DDn2cJe39N9EpvC
+  live_before_publication: false
+  git_linked_before_publication: false
+  git_context_evidence: "The connected Vercel Git context lists five linked team projects and does not include pte."
+  deployment_count_before_publication: 27
+  latest_deployment_id_before_publication: dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd
+  latest_deployment_commit_before_publication: "a4ed91d7eb3003e51a65bd13db361481e0347ce3"
+  latest_deployment_state_before_publication: ERROR
+  configuration_modified: false
+  deployment_triggered_by_executor: false
+
+acceptance_criteria:
+  AC-1:
+    result: PASS
+    evidence: "One live RTS table exists with exactly eight authorized active rows, exact provenance/contracts, four starter/four developing, 35..60-word bounds, five review points each, SELECT-only RLS access, exact live generated types, preserved Study strategy/hash, and preserved prior content evidence."
+  AC-2:
+    result: PASS
+    evidence: "Initial HTML visibly contains the exact selected situation_text while review points remain hidden; real native SpeechSynthesis emits exactly one DB-exact utterance; no prompt audio is persisted."
+  AC-3:
+    result: PASS
+    evidence: "Real Chrome proves local STT readiness, speech-onend 10-second preparation, gated one-response flow below 40 seconds, non-empty transcript, five-point reveal, exact 4/5 self-review, Reset and item-change cleanup."
+  AC-4:
+    result: PASS
+    evidence: "Runtime storage is 0/0/0/0, MediaStream ends, learner data is absent from cache URLs, learner upload and remote inference are zero, and no official scoring is introduced."
+  AC-5:
+    result: PASS
+    evidence: "Retell Lecture SpeechSynthesis and Describe Image local-STT regressions pass; Study bridge/hash, advisors, exact live types, package/lock/shared STT identity, frozen install, ignored-builds, lint, typecheck, build, and diff-check pass."
+  AC-6:
+    result: NOT_PROVEN
+    evidence: "Prepublication predicates pass: candidate e9b484c1cf830a396a0015a5bb3c3b50ba55c017 is the immutable qualified direct child of exact base 94657643530c8314ef3005bbabeb3b3499f151e6; origin/main is required to remain at that base until the single publication. Vercel pte is not Git-linked and remains at 27 deployments with latest deployment dpl_3HoaG8pbKRbfeG9e22MN7bzfyzqd from old commit a4ed91d7eb3003e51a65bd13db361481e0347ce3. Final report-only lineage, single non-force publication, fresh Git closure, and post-publication no-deployment evidence can only be proven after this report is committed."
+
+publication_gate:
+  topology: SINGLE_PUBLICATION
+  candidate_immutable_and_verified: true
+  remote_main_before_report_authorship: "94657643530c8314ef3005bbabeb3b3499f151e6"
+  main_only_remote: true
+  candidate_direct_child_of_authorized_base: true
+  report_expected_as_sole_direct_child: true
+  vercel_git_linked: false
+  vercel_deploy_invoked: false
+
+pushed: false
+
+result: NEEDS_REVIEW
+
+notes:
+  - "TASK-0016 execution resumed after an external power/tunnel interruption. Recovery preserved the exact interrupted local work and did not replay provider effects."
+  - "The local/live migration timestamp mismatch is a truthful provider timestamp deviation only; live and repository migration semantics are equivalent and neither side was rewritten to cosmetically align timestamps."
+  - "The exact-revision worker guard was added only after real runtime evidence showed a resolve/main cache path; the final isolated RTS run showed zero resolve/main cache/request URLs."
+  - "No Vercel configuration or deployment action was performed."
