@@ -1,0 +1,44 @@
+protocol_version: 3
+task_id: TASK-0017
+task_revision: 2
+review_revision: 1
+state: ACCEPTED
+
+reviewed_report:
+  repository: phatnguyen03022001/pte
+  path: .agent/tasks/TASK-0017/report.yaml
+  commit: "137349bbff1f8ad457443b0dd4c60fae23eb2112"
+  report_revision: 1
+
+independence:
+  reviewer_role: ARCHITECT
+  separate_session_from_executor: true
+  exact_report_identity_verified: true
+
+contract_compliance:
+  protocol_version: PASS
+  identity: PASS
+  execution_base: PASS
+  skill_rules: PASS
+  scope: PASS
+  structure_policy: PASS
+  git_authority: PASS
+  acceptance_criteria: PASS
+  verifier_evidence: PASS
+
+notes:
+  - "Exact TASK-0017 revision 2 and report revision 1 were independently re-resolved from canonical GitHub truth. Candidate 31dc265d26c0986a369e8be74b11491aef7d7f27 is the sole direct child of exact base 5cb03f29e2b037379a056a72e10ff860dccd1fb7. Report 137349bbff1f8ad457443b0dd4c60fae23eb2112 is the sole direct child of the candidate and changes only .agent/tasks/TASK-0017/report.yaml. Remote exposes only main; local equals origin/main clean with one worktree."
+  - "AC-1 PASS: live Supabase project ayqcpsdebldtzohwdmer is ACTIVE_HEALTHY with fourteen migrations. reading_multiple_choice_multiple_answers_items contains exactly eight active rows, four starter/four developing, 151..171-word passages, exactly five non-empty options and exactly two distinct valid correct indexes each. Study is exactly 15 active rows / zero mappings with one reading-mcma-strategy row. Existing prior Study rows and Practice fingerprints are reported preserved."
+  - "RLS/access PASS: exactly one active=true SELECT policy exists for anon/authenticated and both roles have SELECT only. Fresh Security Advisor returns zero findings; fresh Performance Advisor contains only the three pre-existing INFO findings."
+  - "Fresh exact-project generated TypeScript is byte-identical to committed src/types/database.ts; SHA-256 9b8a4ff87565cb9db88cab57a86c370292e31e700da37c42e28da6c443c76a4b."
+  - "AC-2 PASS: server-first page data selects only slug/title/passage/question/options/difficulty/provenance and therefore does not expose correct indexes or explanation in initial props/HTML. A feature-local no-store POST review route validates one-to-five unique indexes, resolves only the selected active item server-side, and returns its result contract only after Submit."
+  - "AC-3 PASS: source inspection independently confirms the practice raw item score is Math.max(0, selectedCorrect - selectedIncorrect), with textual Correct/Incorrect/Missed-correct feedback, frozen selection after result and a non-scaled-score disclaimer. Reviewed real-browser evidence proves mixed correct+incorrect -> 0 / 2 and both-correct -> 2 / 2, with explanation reveal, Reset and item-change behavior."
+  - "AC-4 PASS: runtime evidence records localStorage/sessionStorage/IndexedDB/cookies all zero and zero external browser-page/non-read requests. Candidate diff introduces no runtime AI, learner persistence, generic scoring framework or dependency change."
+  - "AC-5 PASS: reviewed Reading Fill in the Blanks regression passed. Architect independently reran pnpm install --frozen-lockfile, pnpm ignored-builds, pnpm lint, pnpm typecheck, pnpm build, base-to-candidate git diff --check and package/lock byte-identity checks on the immutable candidate. All PASS; ignored builds remain exactly protobufjs and onnxruntime-node."
+  - "AC-6 PASS: canonical main equals 137349bbff1f8ad457443b0dd4c60fae23eb2112 before review publication; exact base -> candidate -> report-only lineage is proven; local main equals origin/main with ahead/behind 0/0, clean one-worktree state and no active Git operation. Vercel pte remains disconnected; deployment count remains 27 and latest deployment still references old a4ed91d."
+  - "TASK-0017 is accepted. Acceptance grants no successor implementation, learner persistence, runtime AI, generic scoring infrastructure or Vercel deployment authority outside separately approved task authority."
+
+final_candidate:
+  commit: "31dc265d26c0986a369e8be74b11491aef7d7f27"
+  report_commit: "137349bbff1f8ad457443b0dd4c60fae23eb2112"
+  result: ACCEPTED
