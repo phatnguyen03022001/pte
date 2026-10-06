@@ -48,6 +48,14 @@ export default async function StudyDetailPage({ params }: StudyDetailPageProps) 
           </p>
         ) : null}
 
+        {item.slug === "reading-mcma-strategy" ? (
+          <p className="study-practice-link">
+            <Link href="/practice/reading-multiple-choice-multiple-answers">
+              Practice Reading Multiple Choice, Multiple Answers →
+            </Link>
+          </p>
+        ) : null}
+
         {item.slug === "summarize-written-text-strategy" ? (
           <p className="study-practice-link">
             <Link href="/practice/summarize-written-text">

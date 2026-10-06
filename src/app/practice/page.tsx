@@ -30,6 +30,20 @@ export default function PracticePage() {
 
         <article className="study-card">
           <div className="study-card__meta">
+            <span>Reading</span>
+          </div>
+          <h2>Multiple Choice, Multiple Answers</h2>
+          <p>
+            Read an original academic passage, select only supported statements,
+            and review fixed-answer raw item scoring.
+          </p>
+          <Link href="/practice/reading-multiple-choice-multiple-answers">
+            Open practice →
+          </Link>
+        </article>
+
+        <article className="study-card">
+          <div className="study-card__meta">
             <span>Writing</span>
           </div>
           <h2>Summarize Written Text</h2>

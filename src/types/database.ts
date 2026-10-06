@@ -212,6 +212,63 @@ export type Database = {
         }
         Relationships: []
       }
+      reading_multiple_choice_multiple_answers_items: {
+        Row: {
+          active: boolean
+          correct_indexes: number[]
+          created_at: string
+          created_by: string
+          difficulty: string
+          explanation_text: string
+          id: number
+          options: string[]
+          passage_text: string
+          question_text: string
+          slug: string
+          source_ref: string | null
+          source_type: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          active?: boolean
+          correct_indexes: number[]
+          created_at?: string
+          created_by: string
+          difficulty: string
+          explanation_text: string
+          id?: never
+          options: string[]
+          passage_text: string
+          question_text: string
+          slug: string
+          source_ref?: string | null
+          source_type: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          active?: boolean
+          correct_indexes?: number[]
+          created_at?: string
+          created_by?: string
+          difficulty?: string
+          explanation_text?: string
+          id?: never
+          options?: string[]
+          passage_text?: string
+          question_text?: string
+          slug?: string
+          source_ref?: string | null
+          source_type?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
       repeat_sentence_items: {
         Row: {
           active: boolean
