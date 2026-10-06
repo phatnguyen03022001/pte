@@ -89,6 +89,18 @@ V1 does not require a custom admin dashboard. Privileged administration must not
 
 The MVP must have no mandatory paid external API in its core Study or Practice runtime paths. A future paid service requires explicit product and cost authority.
 
+## V1 Practice coverage objective
+
+The operator's V1 Practice target is complete learner-facing coverage of the current PTE Academic question-type taxonomy. At this decision boundary, that taxonomy contains 22 question types: 9 Speaking & Writing, 5 Reading, and 8 Listening.
+
+Coverage is a product objective, not a task-lifecycle inference. A question type counts toward this objective only when current target evidence shows a learner-visible Practice surface with task-appropriate original/authorized content and bounded feedback behavior accepted through the canonical task/review process.
+
+Rollout remains task-authorized one question type at a time unless one independently reviewable outcome genuinely requires a different boundary. After each accepted question-type task, the Architect must fresh-resolve current target evidence and current Pearson taxonomy/order before selecting the next missing type. Unless the operator explicitly overrides priority, select the earliest missing question type in current exam order.
+
+If Pearson changes the taxonomy, ordering, or material mechanics, re-normalize this coverage objective and subsequent task authority before implementation rather than treating the historical 22-type count as immutable external truth.
+
+This coverage objective does not by itself authorize runtime AI, paid APIs, persistent learner audio, copying unlicensed third-party media, generic scoring/attempt infrastructure, analytics, deployment, or any other behavior excluded elsewhere in this product truth.
+
 ## Scope discipline
 
 Study content/schema/UI, question-type rollout, scoring formulas, progress views, mock-test behavior, and other feature-specific semantics are authorized task by task. Repository bootstrap or infrastructure tasks do not imply those product behaviors.
