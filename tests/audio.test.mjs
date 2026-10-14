@@ -20,6 +20,7 @@ const recorder = await loadTs("../src/lib/audio/recorder.ts", [['from "@/lib/aud
 
 class FakeAudio {
   currentTime = 0;
+  duration = 20;
   playbackRate = 1;
   listeners = new Map();
   paused = true;
@@ -115,6 +116,17 @@ test("playback supports play, pause, replay, speed selection, and state transiti
   assert.deepEqual(seen, ["loading", "playing", "paused", "loading", "playing"]);
   assert.throws(() => player.setPlaybackRate(2), RangeError);
   player.dispose();
+});
+
+test("seeking clamps positions to the media duration and ignores invalid values", () => {
+  const audio = new FakeAudio();
+  assert.equal(playback.seekAudio(audio, 8.5), 8.5);
+  assert.equal(playback.seekAudio(audio, -3), 0);
+  assert.equal(playback.seekAudio(audio, 50), 20);
+  audio.duration = Number.NaN;
+  audio.currentTime = 4;
+  assert.equal(playback.seekAudio(audio, 8), 4);
+  assert.equal(playback.seekAudio(audio, Number.NaN), 4);
 });
 
 test("missing or unsafe audio sources are rejected and audio load failures are surfaced", async () => {

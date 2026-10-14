@@ -43,6 +43,7 @@ const adaptersCode = (await source("../src/lib/study/adapters.ts"))
   .replace('from "@/lib/study/item-identity"', `from "${identityUrl}"`);
 const adaptersUrl = `data:text/javascript;base64,${Buffer.from(adaptersCode).toString("base64")}`;
 const availability = await loadTs("../src/lib/study/mode-availability.ts");
+const availabilityUrl = await moduleUrl("../src/lib/study/mode-availability.ts");
 const comparison = await loadTs("../src/lib/study/answer-comparison.ts");
 const runner = await loadTs("../src/lib/study/runner-core.ts", [
   ['from "@/lib/review/fsrs"', `from "${fsrsUrl}"`],
@@ -50,6 +51,7 @@ const runner = await loadTs("../src/lib/study/runner-core.ts", [
   ['from "@/lib/study/adapters"', `from "${adaptersUrl}"`],
   ['from "@/lib/study/item-identity"', `from "${identityUrl}"`],
   ['from "@/lib/study/modes"', `from "${await moduleUrl("../src/lib/study/modes.ts")}"`],
+  ['from "@/lib/study/mode-availability"', `from "${availabilityUrl}"`],
 ]);
 const engineCode = (await source("../src/lib/datasets/engine.ts"))
   .replace('import "server-only";', "")
@@ -240,8 +242,54 @@ test("server service chooses new and due cards in canonical dataset order and ca
   const scheduled = await harness.service.start("02-rs", "all", "flashcards", "scheduled");
   assert.equal(scheduled.status, "ok");
   assert.deepEqual(scheduled.queue, [dueIdentity, "apeuni:question:02-rs:3"]);
+  assert.deepEqual(scheduled.reviewRevisions, { [dueIdentity]: "2026-10-14T03:59:59.000Z", "apeuni:question:02-rs:3": null });
   const all = await harness.service.start("02-rs", "all", "flashcards", "all");
   assert.deepEqual(all.queue, [futureIdentity, dueIdentity, "apeuni:question:02-rs:3"]);
+  assert.deepEqual(all.reviewRevisions, {
+    [futureIdentity]: "2026-10-14T04:00:00.000Z",
+    [dueIdentity]: "2026-10-14T03:59:59.000Z",
+    "apeuni:question:02-rs:3": null,
+  });
+});
+
+test("stale study snapshots conflict before a second review can overwrite the saved state", async () => {
+  const identity = "apeuni:question:02-rs:1";
+  const datasets = new Map([["02-rs:all", { dataset: { id: "all", label: "All", status: "available", count: 1 }, items: [{ id: 1, text: "Prompt." }] }]]);
+  const states = new Map([[identity, {
+    itemKey: identity,
+    card: fsrs.createReviewCard(fixedNow),
+    dueAt: fixedNow,
+    updatedAt: "2026-10-14T03:59:59.000Z",
+  }]]);
+  let saveCount = 0;
+  const service = runner.createStudyRunnerService({
+    authenticate: async () => "verified-user-only",
+    resolve: async (typeKey, datasetId) => datasets.get(`${typeKey}:${datasetId}`),
+    loadStates: async (keys) => keys.flatMap((key) => states.has(key) ? [states.get(key)] : []),
+    async save(itemKey, card, expectedUpdatedAt, now) {
+      const stored = states.get(itemKey);
+      if ((stored?.updatedAt ?? null) !== expectedUpdatedAt) return { status: "conflict" };
+      saveCount += 1;
+      states.set(itemKey, { itemKey, card, dueAt: card.due, updatedAt: now.toISOString() });
+      return { status: "saved" };
+    },
+    now: () => fixedNow,
+  });
+
+  const firstSnapshot = await service.start("02-rs", "all", "flashcards", "all");
+  const staleSnapshot = await service.start("02-rs", "all", "flashcards", "all");
+  const originalRevision = firstSnapshot.reviewRevisions[identity];
+  assert.equal(staleSnapshot.reviewRevisions[identity], originalRevision);
+
+  const firstWrite = await service.submitReview("02-rs", "all", identity, "Good", originalRevision, "flashcards");
+  assert.equal(firstWrite.status, "saved");
+  const stateAfterFirstWrite = states.get(identity);
+  const staleWrite = await service.submitReview("02-rs", "all", identity, "Easy", staleSnapshot.reviewRevisions[identity], "flashcards");
+
+  assert.equal(staleWrite.status, "conflict");
+  assert.equal(saveCount, 1);
+  assert.equal(states.get(identity).updatedAt, stateAfterFirstWrite.updatedAt);
+  assert.equal(states.get(identity).card.reps, 1);
 });
 
 test("overlapping dataset selection retains the canonical review identity", async () => {
@@ -264,18 +312,30 @@ test("unauthenticated sessions and arbitrary dataset/item identities are rejecte
   const authenticated = createHarness({ datasets });
   assert.equal((await authenticated.service.start("02-rs", "../data", "flashcards", "all")).status, "unavailable");
   assert.equal((await authenticated.service.getItem("02-rs", "all", "apeuni:question:02-rs:999", "flashcards")).status, "invalid-request");
-  assert.equal((await authenticated.service.submitReview("02-rs", "all", "apeuni:question:02-rs:999", "Good")).status, "invalid-request");
+  assert.equal((await authenticated.service.submitReview("02-rs", "all", "apeuni:question:02-rs:999", "Good", null, "flashcards")).status, "invalid-request");
 });
 
 test("ratings are recalculated server-side and persistence success is explicit", async () => {
   const datasets = new Map([["02-rs:all", { dataset: { id: "all", label: "All", status: "available", count: 1 }, items: [{ id: 3, text: "New." }] }]]);
   const harness = createHarness({ datasets });
-  const result = await harness.service.submitReview("02-rs", "all", "apeuni:question:02-rs:3", "Good");
+  const result = await harness.service.submitReview("02-rs", "all", "apeuni:question:02-rs:3", "Good", null, "flashcards");
   assert.equal(result.status, "saved");
   assert.equal(result.rating, "Good");
   assert.equal(harness.calls.saved.length, 1);
   assert.equal(harness.calls.saved[0].expectedUpdatedAt, null);
   assert.ok(harness.calls.saved[0].card.due instanceof Date);
+});
+
+test("server refuses FSRS ratings for an audio mode when verified audio is unavailable", async () => {
+  const datasets = new Map([[
+    "02-rs:all",
+    { dataset: { id: "all", label: "All", status: "available", count: 1 }, items: [{ id: 4, text: "No verified audio." }] },
+  ]]);
+  const harness = createHarness({ datasets });
+  const result = await harness.service.submitReview("02-rs", "all", "apeuni:question:02-rs:4", "Good", null, "listen-repeat");
+  assert.equal(result.status, "unavailable");
+  assert.match(result.message, /No FSRS review was saved/);
+  assert.equal(harness.calls.saved.length, 0);
 });
 
 test("failed persistence is never reported as success and local sessions are marked unsaved", async () => {
@@ -286,10 +346,10 @@ test("failed persistence is never reported as success and local sessions are mar
   assert.equal(session.persistenceAvailable, false);
   assert.equal(session.queue.length, 3);
   const failedSave = createHarness({ datasets, saveStatus: "conflict" });
-  const result = await failedSave.service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Again");
+  const result = await failedSave.service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Again", null, "flashcards");
   assert.equal(result.status, "conflict");
   const unavailable = createHarness({ datasets, loadError: true });
-  const notSaved = await unavailable.service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good");
+  const notSaved = await unavailable.service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards");
   assert.equal(notSaved.status, "not-saved");
 });
 
@@ -309,8 +369,8 @@ test("duplicate submissions are blocked by optimistic concurrency conflicts", as
     now: () => fixedNow,
   });
   const outcomes = await Promise.all([
-    service.submitReview("02-rs", "all", identity, "Good"),
-    service.submitReview("02-rs", "all", identity, "Good"),
+    service.submitReview("02-rs", "all", identity, "Good", null, "flashcards"),
+    service.submitReview("02-rs", "all", identity, "Good", null, "flashcards"),
   ]);
   assert.deepEqual(outcomes.map(({ status }) => status).sort(), ["conflict", "saved"]);
 });

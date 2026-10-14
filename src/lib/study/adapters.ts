@@ -54,8 +54,9 @@ function optionsByGap(value: unknown): string[] {
   });
 }
 
-function trustedMediaUrl(value: string | null | undefined): string | null {
+function trustedMediaUrl(value: string | null | undefined, allowedLocalUrl: string): string | null {
   if (!value || !isPlayableAudioSource(value)) return null;
+  if (value === allowedLocalUrl) return value;
   try {
     const url = new URL(value, "https://pte-study.invalid");
     return url.protocol === "https:" && url.origin !== "https://pte-study.invalid" && !url.username && !url.password
@@ -119,7 +120,9 @@ function questionReference(typeKey: string, record: QuestionRecord): string[] {
 }
 
 export function adaptQuestionItem(typeKey: string, record: QuestionRecord, media: TrustedMedia = {}): StudyItem {
-  const imageUrl = trustedMediaUrl(media.imageUrl);
+  const identity = questionIdentity(typeKey, record.id);
+  const mediaUrl = (role: "audio" | "image") => `/api/media?identity=${encodeURIComponent(identity)}&role=${role}`;
+  const imageUrl = trustedMediaUrl(media.imageUrl, mediaUrl("image"));
   const front = questionPrompt(typeKey, record);
   if (typeKey === "12-rop") {
     front.push(...strings(record.paragraphs).map((paragraph, index) => `${index + 1}. ${paragraph}`));
@@ -136,11 +139,11 @@ export function adaptQuestionItem(typeKey: string, record: QuestionRecord, media
   }
   const acceptsResponse = !["03-di", "04-rl", "06-sgd", "vocabulary"].includes(typeKey);
   return {
-    identity: questionIdentity(typeKey, record.id),
+    identity,
     front,
     reference: questionReference(typeKey, record),
     referenceAvailable: questionReference(typeKey, record).length > 0,
-    audioUrl: trustedMediaUrl(media.audioUrl),
+    audioUrl: trustedMediaUrl(media.audioUrl, mediaUrl("audio")),
     imageUrl,
     audioExpected: Boolean(record.audio || record.audio_provider_url),
     imageExpected: Boolean(record.image),

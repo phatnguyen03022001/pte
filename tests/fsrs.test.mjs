@@ -315,7 +315,7 @@ test("repository completely loads 5,968 distinct Vocabulary identities in bounde
 });
 
 test("review-state migration grants only authenticated ownership policies", async () => {
-  const migration = await readFile(new URL("../supabase/migrations/20261014000000_create_study_review_states.sql", import.meta.url), "utf8");
+  const migration = await readFile(new URL("../supabase/migrations/20261014090608_create_study_review_states.sql", import.meta.url), "utf8");
   assert.match(migration, /primary key \(user_id, item_key\)/i);
   assert.match(migration, /enable row level security/i);
   assert.match(migration, /for select\s+to authenticated\s+using[\s\S]*auth\.uid\(\)[\s\S]*user_id/i);

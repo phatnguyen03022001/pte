@@ -22,7 +22,7 @@ The application reads Question Banks, Collections, and Vocabulary from a local `
 
 Choose a Question Bank, Collection, Vocabulary tier, or Vocabulary list, then start a scheduled queue or manually review the selected items. References appear after Reveal. Manual review preserves existing scheduling history.
 
-FSRS uses `ts-fsrs`. Persistent reviews require the migration at `supabase/migrations/20261014000000_create_study_review_states.sql` to be applied to the intended Supabase project. The application scopes review state to the authenticated user. Without an available database, practice can be temporary and reviews are reported as unsaved.
+FSRS uses `ts-fsrs`. Persistent reviews require the migration at `supabase/migrations/20261014090608_create_study_review_states.sql` to be applied to the intended Supabase project. The application scopes review state to the authenticated user. Without an available database, practice can be temporary and reviews are reported as unsaved.
 
 Media resolution requires exact source identity, verified remote evidence, and an authorized delivery URL. Current Cloudinary assets use authenticated delivery, and the application has no configured server-side signing mechanism. Audio and image delivery are therefore not confirmed as usable in the application. Do not expose unsigned URLs for authenticated assets or store signed bearer URLs in public metadata.
 

@@ -43,6 +43,7 @@ const runnerUrl = await urlFor("../src/lib/study/runner-core.ts", [
   ['from "@/lib/study/adapters"', `from "${adaptersUrl}"`],
   ['from "@/lib/study/item-identity"', `from "${identityUrl}"`],
   ['from "@/lib/study/modes"', `from "${modesUrl}"`],
+  ['from "@/lib/study/mode-availability"', `from "${availabilityUrl}"`],
 ]);
 const engineUrl = await urlFor("../src/lib/datasets/engine.ts", [
   ['import "server-only";', ""],
@@ -191,7 +192,7 @@ test("unavailable media can be skipped without submitting a review", async () =>
   assert.match(source, /async function skipUnavailable\(\)[\s\S]*?await next\(\)/);
   assert.match(source, /No FSRS review was submitted/);
   const { service, calls } = harness();
-  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good")).status, "saved");
+  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards")).status, "saved");
   assert.equal(calls.saves.length, 1);
 });
 
@@ -207,7 +208,7 @@ test("failed persistence is displayed as unsaved and never as a successful revie
   const { service } = harness({ loadError: true });
   const session = await service.start("02-rs", "all", "flashcards", "scheduled");
   assert.equal(session.persistenceAvailable, false);
-  const saved = await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good");
+  const saved = await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards");
   assert.equal(saved.status, "not-saved");
   assert.doesNotMatch(JSON.stringify(saved), /saved successfully/i);
 });
@@ -239,8 +240,8 @@ test("stale and concurrent review updates are rejected with compare-and-set sema
     now: () => now,
   });
   const outcomes = await Promise.all([
-    concurrent.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good"),
-    concurrent.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good"),
+    concurrent.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards"),
+    concurrent.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards"),
   ]);
   assert.deepEqual(outcomes.map(({ status }) => status).sort(), ["conflict", "saved"]);
 });
@@ -258,11 +259,11 @@ test("authenticated Cloudinary assets cannot be exposed as unsigned browser URLs
   assert.deepEqual(mediaResolver.resolveQuestionMediaFromIndex("03-di", { id: 1, image: "images/q1.png" }, { registry: [registry], remote: { [registry.asset_id]: remote } }), {});
 });
 
-privateDataTest("the current verified DI image remains unavailable because its actual delivery is authenticated", async () => {
+privateDataTest("the current verified DI image resolves to the authenticated local media endpoint", async () => {
   const bank = JSON.parse(await readFile(new URL("../data/03-DI/items.json", import.meta.url), "utf8"));
   const imageQuestion = bank.find(({ id }) => id === 1);
   assert.ok(imageQuestion?.image);
-  assert.deepEqual(await mediaResolver.resolveQuestionMedia("03-di", imageQuestion), {});
+  assert.equal((await mediaResolver.resolveQuestionMedia("03-di", imageQuestion)).imageUrl, "/api/media?identity=apeuni%3Aquestion%3A03-di%3A1&role=image");
 });
 
 test("ambiguous exact registry associations are rejected", () => {
@@ -274,7 +275,7 @@ test("ambiguous exact registry associations are rejected", () => {
 test("public media is returned only when exact registry ownership and URL evidence agree", () => {
   const registry = { asset_id: "apeuni:03-di:1::image:03-describe-image/images/q1.png", owner: { provider: "apeuni", question_type: "03-di", question_id: 1 }, role: "image", source_path: "03-describe-image/images/q1.png", target_path: "data/03-DI/images/q1.png", expected_public_id: "pte/data/03-DI/images/q1", expected_delivery_type: "upload", resource_type: "image", source_sha256: "hash", association_status: "EXPLICIT_REFERENCE" };
   const deliveryUrl = "https://res.cloudinary.com/example/image/upload/v12/pte/data/03-DI/images/q1.png";
-  const remote = { asset_id: registry.asset_id, cloud_name: "example", delivery_type: "upload", public_id: registry.expected_public_id, remote_status: "REMOTE_VERIFIED", resource_type: "image", source_sha256: "hash", delivery_url: deliveryUrl, verification_evidence: { asset_id: "verified-asset-id", cloud_name: "example", delivery_type: "upload", etag_matches_source_md5: true, public_id: registry.expected_public_id, resource_type: "image", delivery_url: deliveryUrl, identity_conflicts: [] } };
+  const remote = { asset_id: registry.asset_id, cloudinary_asset_id: "verified-asset-id", cloud_name: "example", delivery_type: "upload", public_id: registry.expected_public_id, remote_status: "REMOTE_VERIFIED", resource_type: "image", source_sha256: "hash", delivery_url: deliveryUrl, verification_evidence: { asset_id: "verified-asset-id", cloud_name: "example", delivery_type: "upload", etag_matches_source_md5: true, public_id: registry.expected_public_id, resource_type: "image", delivery_url: deliveryUrl, identity_conflicts: [] } };
   const index = { registry: [registry], remote: { [registry.asset_id]: remote } };
   assert.equal(mediaResolver.resolveQuestionMediaFromIndex("03-di", { id: 1, image: "images/q1.png" }, index).imageUrl, deliveryUrl);
   const tampered = { ...remote, delivery_url: "https://evil.example/q1.png" };
@@ -299,13 +300,13 @@ test("DI without an actually resolved image is not usable image speaking practic
 
 test("review actions require verified authentication", async () => {
   const { service, calls } = harness({ authenticated: false });
-  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good")).status, "unauthenticated");
+  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:1", "Good", null, "flashcards")).status, "unauthenticated");
   assert.equal(calls.loads.length, 0);
   assert.equal(calls.saves.length, 0);
 });
 
 test("cross-user review access is constrained to the authenticated owner and migration RLS", async () => {
-  const path = new URL("../supabase/migrations/20261014000000_create_study_review_states.sql", import.meta.url);
+  const path = new URL("../supabase/migrations/20261014090608_create_study_review_states.sql", import.meta.url);
   const sql = await readFile(path, "utf8");
   assert.match(sql, /auth\.uid\(\).*user_id/s);
   assert.match(sql, /enable row level security/i);
@@ -318,7 +319,7 @@ test("server actions validate selected dataset membership before starting and sa
   const { service } = harness({ datasets: new Map([["02-rs:all", simpleDataset("all", [{ id: 1, text: "Only this item." }])]]) });
   assert.equal((await service.start("02-rs", "all", "flashcards", "all")).status, "ok");
   assert.equal((await service.getItem("02-rs", "all", "apeuni:question:02-rs:2", "flashcards")).status, "invalid-request");
-  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:2", "Good")).status, "invalid-request");
+  assert.equal((await service.submitReview("02-rs", "all", "apeuni:question:02-rs:2", "Good", null, "flashcards")).status, "invalid-request");
 });
 
 test("no untrusted filesystem paths reach the browser adapter", () => {

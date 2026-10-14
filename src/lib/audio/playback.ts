@@ -2,7 +2,7 @@ import { PLAYBACK_SPEEDS, type PlaybackSpeed, type PlaybackState } from "@/lib/a
 
 type AudioElement = Pick<
   HTMLAudioElement,
-  "currentTime" | "playbackRate" | "play" | "pause" | "addEventListener" | "removeEventListener"
+  "currentTime" | "duration" | "playbackRate" | "play" | "pause" | "addEventListener" | "removeEventListener"
 >;
 
 export function isPlayableAudioSource(source: unknown): source is string {
@@ -15,6 +15,12 @@ export function isPlayableAudioSource(source: unknown): source is string {
   } catch {
     return false;
   }
+}
+
+export function seekAudio(audio: Pick<AudioElement, "currentTime" | "duration">, seconds: number): number {
+  if (!Number.isFinite(seconds) || !Number.isFinite(audio.duration) || audio.duration <= 0) return audio.currentTime;
+  audio.currentTime = Math.max(0, Math.min(seconds, audio.duration));
+  return audio.currentTime;
 }
 
 export function createAudioPlayback(audio: AudioElement) {

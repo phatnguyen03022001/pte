@@ -4,6 +4,7 @@ import type { ReviewStateRecord, ReviewRating } from "@/lib/review/types";
 import { adaptStudyItem, type StudyItem, type TrustedMedia } from "@/lib/study/adapters";
 import { questionIdentity, vocabularyIdentity, isCanonicalItemIdentity } from "@/lib/study/item-identity";
 import { getStudyModes, isStudyMode, isStudyScope, type StudyMode } from "@/lib/study/modes";
+import { canPracticeMode } from "@/lib/study/mode-availability";
 
 export type StudyDataset = {
   dataset: { id: string; label: string; status: string; count: number };
@@ -11,7 +12,7 @@ export type StudyDataset = {
 };
 
 export type StudyResult =
-  | { status: "ok"; dataset: { id: string; label: string; count: number }; queue: string[]; item: StudyItem | null; persistenceAvailable: boolean; mode: StudyMode }
+  | { status: "ok"; dataset: { id: string; label: string; count: number }; queue: string[]; item: StudyItem | null; reviewRevisions: Record<string, string | null>; persistenceAvailable: boolean; mode: StudyMode }
   | { status: "unavailable" | "invalid-request" | "unauthenticated"; message: string };
 
 export type ReviewResult =
@@ -116,12 +117,14 @@ export function createStudyRunnerService(dependencies: RunnerDependencies) {
         const state = stateByKey.get(identity);
         return !state || getCardStatus(state.card, now) === "due";
       });
+    const queueIdentities = queue.map(({ identity }) => identity);
 
     return {
       status: "ok",
       dataset: { id: selection.dataset.id, label: selection.dataset.label, count: selectedItems.length },
-      queue: queue.map(({ identity }) => identity),
+      queue: queueIdentities,
       item: queue.length ? await publicItem(typeKey, queue[0].source, dependencies.resolveMedia) : null,
+      reviewRevisions: Object.fromEntries(queueIdentities.map((identity) => [identity, stateByKey.get(identity)?.updatedAt ?? null])),
       persistenceAvailable,
       mode,
     };
@@ -147,9 +150,14 @@ export function createStudyRunnerService(dependencies: RunnerDependencies) {
       : { status: "invalid-request" as const, message: "The item does not belong to the selected dataset." };
   }
 
-  async function submitReview(typeKey: string, datasetId: string, itemKey: string, rawRating: unknown): Promise<ReviewResult> {
+  async function submitReview(typeKey: string, datasetId: string, itemKey: string, rawRating: unknown, expectedUpdatedAt: string | null, mode: unknown): Promise<ReviewResult> {
     if (!await authenticated()) return { status: "unauthenticated", message: "Sign in to save a review." };
-    if (!isCanonicalItemIdentity(itemKey)) return { status: "invalid-request", message: "The review item is invalid." };
+    if (!isCanonicalItemIdentity(itemKey) || !isStudyMode(mode) || !getStudyModes(typeKey).includes(mode)) {
+      return { status: "invalid-request", message: "The review item or study mode is invalid." };
+    }
+    if (expectedUpdatedAt !== null && (typeof expectedUpdatedAt !== "string" || expectedUpdatedAt.length > 64)) {
+      return { status: "invalid-request", message: "The review snapshot is invalid." };
+    }
     let rating: ReviewRating;
     try {
       rating = parseRating(rawRating);
@@ -162,8 +170,13 @@ export function createStudyRunnerService(dependencies: RunnerDependencies) {
       return { status: "invalid-request", message: "The item does not belong to the selected dataset." };
     }
     try {
-      if (!selectionItems(typeKey, selection).some(({ identity }) => identity === itemKey)) {
+      const selected = selectionItems(typeKey, selection).find(({ identity }) => identity === itemKey);
+      if (!selected) {
         return { status: "invalid-request", message: "The item does not belong to the selected dataset." };
+      }
+      const item = await publicItem(typeKey, selected.source, dependencies.resolveMedia);
+      if (!canPracticeMode(mode, typeKey, item)) {
+        return { status: "unavailable", message: "Verified media is unavailable. No FSRS review was saved." };
       }
     } catch {
       return { status: "unavailable", message: "The selected dataset failed item validation." };
@@ -172,8 +185,11 @@ export function createStudyRunnerService(dependencies: RunnerDependencies) {
     const now = dependencies.now();
     try {
       const [current] = await dependencies.loadStates([itemKey]);
+      if ((current?.updatedAt ?? null) !== expectedUpdatedAt) {
+        return { status: "conflict", message: "This review changed elsewhere. Reload the item before trying again." };
+      }
       const reviewed = reviewCard(current?.card ?? createReviewCard(now), rating, now);
-      const result = await dependencies.save(itemKey, reviewed.card, current?.updatedAt ?? null, now);
+      const result = await dependencies.save(itemKey, reviewed.card, expectedUpdatedAt, now);
       if (result.status === "conflict") {
         return { status: "conflict", message: "This review changed elsewhere. Reload the item before trying again." };
       }

@@ -24,6 +24,7 @@ type Session = {
   queue: string[];
   index: number;
   item: StudyItem | null;
+  reviewRevisions: Record<string, string | null>;
   persistenceAvailable: boolean;
   mode: StudyMode;
 };
@@ -72,7 +73,7 @@ export function StudyRunner({ typeKey, datasetId, datasetLabel, datasetCount, av
         setMessage(result.message);
         return;
       }
-      setSession({ queue: result.queue, index: 0, item: result.item, persistenceAvailable: result.persistenceAvailable, mode: result.mode });
+      setSession({ queue: result.queue, index: 0, item: result.item, reviewRevisions: result.reviewRevisions, persistenceAvailable: result.persistenceAvailable, mode: result.mode });
       setMessage(result.queue.length ? "" : result.dataset.count === 0
         ? "This selected dataset is empty. Choose another dataset to study."
         : scope === "scheduled"
@@ -108,7 +109,7 @@ export function StudyRunner({ typeKey, datasetId, datasetLabel, datasetCount, av
     const item = session?.item;
     if (!session || !item || !revealed || rated || conflicted) return;
     await withBusy(async () => {
-      const result = await submitStudyReview(typeKey, datasetId, item.identity, rating);
+      const result = await submitStudyReview(typeKey, datasetId, item.identity, rating, session.reviewRevisions[item.identity] ?? null, session.mode);
       if (result.status === "saved") {
         setRated(true);
         setMessage(`Review saved. Next review is scheduled for ${new Date(result.nextDueAt).toLocaleString()}.`);

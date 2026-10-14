@@ -1,6 +1,8 @@
 # Private runtime datasets and local configuration
 /data/
-/tools/
+/tools/*
+!/tools/diagnostics/
+!/tools/diagnostics/check_brevo_smtp.py
 .env
 .env.*
 !.env.example

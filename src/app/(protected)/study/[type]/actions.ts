@@ -29,6 +29,6 @@ export async function loadStudyItem(typeKey: string, datasetId: string, itemKey:
   return createService().getItem(typeKey, datasetId, itemKey, mode);
 }
 
-export async function submitStudyReview(typeKey: string, datasetId: string, itemKey: string, rating: unknown) {
-  return createService().submitReview(typeKey, datasetId, itemKey, rating);
+export async function submitStudyReview(typeKey: string, datasetId: string, itemKey: string, rating: unknown, expectedUpdatedAt: string | null, mode: unknown) {
+  return createService().submitReview(typeKey, datasetId, itemKey, rating, expectedUpdatedAt, mode);
 }
