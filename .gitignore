@@ -1,0 +1,32 @@
+# Private runtime datasets and local configuration
+/data/
+/tools/
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated application output
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+
+# Local OS, editor, logs, and test artifacts
+.DS_Store
+**/.DS_Store
+*.log
+.cache/
+coverage/
+test-results/
+playwright-report/
+
+# Disposable microphone recordings and media binaries
+/recordings/
+/microphone-recordings/
+*.webm
+*.wav
+*.m4a
+*.mp3
+*.aac
+*.ogg
